@@ -1,5 +1,5 @@
 {
-  "name": "quack.js",
+  "name": "@n-f9/quack.js",
   "version": "0.0.1",
   "description": "A Discord.js bot framework for any purpose",
   "main": "lib/index.js",
@@ -15,7 +15,7 @@
     "url": "git+https://github.com/N-F9/quack.js.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nick Ferguson",
   "license": "MIT",
   "files": [
     "lib/**/*"
@@ -42,5 +42,9 @@
     "got": "^11.8.2",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   }
 }
