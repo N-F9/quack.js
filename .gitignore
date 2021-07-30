@@ -1,0 +1,10 @@
+node_modules
+
+test/js/logs
+test/js/.env
+test/js/*.yaml
+test/js/*.txt
+test/ts/logs
+test/ts/.env
+test/ts/*.yaml
+test/ts/*.txt

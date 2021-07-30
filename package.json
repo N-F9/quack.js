@@ -1,0 +1,46 @@
+{
+  "name": "quack.js",
+  "version": "0.0.1",
+  "description": "A Discord.js bot framework for any purpose",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/N-F9/quack.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "files": [
+    "lib/**/*"
+  ],
+  "bugs": {
+    "url": "https://github.com/N-F9/quack.js/issues"
+  },
+  "homepage": "https://github.com/N-F9/quack.js#readme",
+  "devDependencies": {
+    "@types/better-sqlite3": "^5.4.3",
+    "@types/js-yaml": "^4.0.2",
+    "@types/lodash": "^4.14.171",
+    "@types/ws": "^7.4.7",
+    "prettier": "^2.3.2",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "better-sqlite3": "^7.4.3",
+    "chalk": "^4.1.1",
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
+    "got": "^11.8.2",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
+  }
+}
