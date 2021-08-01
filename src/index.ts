@@ -15,7 +15,7 @@ import * as _ from 'lodash'
 import Utils from './modules/utils'
 import Log from './modules/log'
 import YAML from './modules/yaml'
-// import DB from './modules/database'
+import DB from './modules/database'
 import Discord from './modules/discord'
 import Variables from './modules/variables'
 
@@ -27,7 +27,7 @@ export const QuackJSUtils = {
   Log,
   Discord,
   Variables,
-  // DB
+  DB,
 }
 
 export class QuackJS implements QuackJSObject {
@@ -81,12 +81,22 @@ export class QuackJS implements QuackJSObject {
           const command: QuackJSCommand = QuackJS.commands[vars[0]] || undefined
 
           if (command)
-            if (command.permission === 'everyone') command.execute(client, message, args)
-            else if (message.member?.roles.cache.array().some(role => role.id == command.permission || role.name == command.permission)) command.execute(client, message, args)
+            if (command.permission === 'everyone')
+              command.execute(client, message, args)
+            else if (
+              message.member?.roles.cache
+                .array()
+                .some(
+                  (role) =>
+                    role.id === command.permission ||
+                    role.name === command.permission,
+                )
+            )
+              command.execute(client, message, args)
 
           return
         }
-        QuackJS.triggers.forEach(trigger => {
+        QuackJS.triggers.forEach((trigger) => {
           if (message.content.match(trigger.trigger)) {
             trigger.execute(client, message)
           }
@@ -98,10 +108,16 @@ export class QuackJS implements QuackJSObject {
       name: 'ready',
       execute(client: DiscordJS.Client) {
         console.log('Bot ready.')
-        const commandsNames = QuackJS.commands.map(c => c.name)
-        if ((new Set(commandsNames)).size !== commandsNames.length) Log('Two or more commands have the same name!', 'w')
+        const commandsNames = QuackJS.commands.map((c) => c.name)
+        if (new Set(commandsNames).size !== commandsNames.length)
+          Log('Two or more commands have the same name!', 'w')
       },
     })
+    try {
+      QuackJSUtils.DB.authenticate()
+    } catch (error: any) {
+      QuackJSUtils.Error(new Error(error))
+    }
 
     await this.YAML()
     this.files = (await this.GetFiles()) as string[]

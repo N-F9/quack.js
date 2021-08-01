@@ -1,5 +1,8 @@
-// import Database from 'better-sqlite3'
+import { Sequelize } from 'sequelize'
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: 'database.sqlite',
+  logging: false,
+})
 
-// const db = Database('database.sqlite')
-
-// export default db
+export default sequelize

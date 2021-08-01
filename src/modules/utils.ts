@@ -39,25 +39,34 @@ const Utils = {
     }
     return n
   },
-  Random (min: number, max: number) {
+  Random(min: number, max: number) {
     return Math.floor(Math.random() * (max + 1 - min)) + min
   },
   RandomizeCapitalization(string: string) {
-    return string.split('').map(chr => (Utils.Random(0, 1)) ? chr.toLowerCase() : chr.toUpperCase()).join('')
+    return string
+      .split('')
+      .map((chr) =>
+        Utils.Random(0, 1) ? chr.toLowerCase() : chr.toUpperCase(),
+      )
+      .join('')
   },
   GenerateID() {
     return Utils.RandomizeCapitalization(Math.random().toString(36).slice(-8))
   },
-  emoji(e: string) {
+  Emoji(e: string) {
     return e.replace(/<:.+:|>/g, '')
   },
-  backup (file: string) {
+  Backup(file: string) {
     const time = Utils.Time()
 
-    fs.copyFile(file, `./backups/${time.year}-${time.month}-${time.date}-${file}`, (err) => {
-      if (err) throw err
-      Log(`Created backup of ${file}`, 's')
-    })
+    fs.copyFile(
+      file,
+      `./backups/${time.year}-${time.month}-${time.date}-${file}`,
+      (err) => {
+        if (err) throw err
+        Log(`Created backup of ${file}`, 's')
+      },
+    )
   },
 }
 

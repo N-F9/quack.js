@@ -14,37 +14,44 @@ const Discord = {
       const Replacer = (obj: Record<string, any>) => {
         const keys = Object.keys(obj)
         for (const key of keys) {
-          if (typeof obj[key] == 'string') obj[key] = obj[key].replace(new RegExp(placeholder, 'g'), element)
-          else if (typeof obj[key] == 'object') obj[key] = Replacer(obj[key])
+          if (typeof obj[key] === 'string')
+            obj[key] = obj[key].replace(new RegExp(placeholder, 'g'), element)
+          else if (typeof obj[key] === 'object') obj[key] = Replacer(obj[key])
         }
         return obj
       }
       embed = Replacer(embed)
     }
-    
+
     return {
       embed,
-      content
+      content,
     }
   },
-  Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: QuackJSPromptOptions) {
+  Prompt(
+    message: DiscordJS.Message,
+    member: DiscordJS.GuildMember,
+    options: QuackJSPromptOptions,
+  ) {
     return new Promise((resolve, reject) => {
       if (options.type === 'message') {
-        const filter = (res: DiscordJS.Message) => res.author.id == member.id
-        message.channel.awaitMessages(filter, { max: 1 })
-          .then(collected => {
-            const c = collected.first()
-            resolve(c)
-          })
+        const filter = (res: DiscordJS.Message) => res.author.id === member.id
+        message.channel.awaitMessages(filter, { max: 1 }).then((collected) => {
+          const c = collected.first()
+          resolve(c)
+        })
       } else if (options.type === 'reaction') {
-        if (options.emoji == null) reject(Utils.Error(new Error('Invalid Emoji')))
-        const filter = (reaction: DiscordJS.MessageReaction, user: DiscordJS.User) => user.id == member.id && reaction.emoji.name === options.emoji
+        if (options.emoji == null)
+          reject(Utils.Error(new Error('Invalid Emoji')))
+        const filter = (
+          reaction: DiscordJS.MessageReaction,
+          user: DiscordJS.User,
+        ) => user.id === member.id && reaction.emoji.name === options.emoji
 
-        message.awaitReactions(filter, { max: 1 })
-          .then(collected => {
-            const c = collected.first()
-            resolve(c)
-          })
+        message.awaitReactions(filter, { max: 1 }).then((collected) => {
+          const c = collected.first()
+          resolve(c)
+        })
       }
     })
   },
@@ -105,7 +112,8 @@ const Discord = {
   DeleteChannel(guild: DiscordJS.Guild, finder: string | number) {
     // will be fixed
     // @ts-ignore
-    guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'text')
+    guild.channels.cache
+      .find((c) => (c.name === finder || c.id === finder) && c.type === 'text')
       .delete()
   },
 
@@ -117,7 +125,7 @@ const Discord = {
   },
 
   DeleteCategory(guild: DiscordJS.Guild, finder: string | number) {
-    // will be fixed 
+    // will be fixed
     // @ts-ignore
     guild.channels.cache
       .find(

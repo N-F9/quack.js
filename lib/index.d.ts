@@ -24,6 +24,7 @@ export declare const QuackJSUtils: {
         MoveChannelToCategory(guild: DiscordJS.Guild, channel: string | number, category: string | number): void;
     };
     Variables: Record<string, any>;
+    DB: import("sequelize/types").Sequelize;
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;
     MkDir(name: string): boolean;
