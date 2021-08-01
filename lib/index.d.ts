@@ -7,7 +7,7 @@ export declare const QuackJSUtils: {
     };
     Log: (message: any, type?: "i" | "s" | "e" | "w") => void;
     Discord: {
-        Embed(embed: import("../global").QuackJSEmbed): {
+        Embed(embed: import("../global").QuackJSEmbed, placeholders?: Record<string, any> | undefined): {
             embed: import("../global").QuackJSEmbed;
             content: string | undefined;
         };

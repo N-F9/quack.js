@@ -3,9 +3,24 @@ import { QuackJSEmbed, QuackJSPromptOptions } from '../../global'
 import Utils from './utils'
 
 const Discord = {
-  Embed(embed: QuackJSEmbed) {
-    const content = embed.content
+  Embed(embed: QuackJSEmbed, placeholders?: Record<string, any>) {
+    let content = embed.content
     delete embed.content
+
+    for (const placeholder in placeholders) {
+      const element = placeholders[placeholder]
+      content = content?.replace(new RegExp(placeholder, 'g'), element)
+
+      const Replacer = (obj: Record<string, any>) => {
+        const keys = Object.keys(obj)
+        for (const key of keys) {
+          if (typeof obj[key] == 'string') obj[key] = obj[key].replace(new RegExp(placeholder, 'g'), element)
+          else if (typeof obj[key] == 'object') obj[key] = Replacer(obj[key])
+        }
+        return obj
+      }
+      embed = Replacer(embed)
+    }
     
     return {
       embed,

@@ -1,7 +1,7 @@
 import * as DiscordJS from 'discord.js';
 import { QuackJSEmbed, QuackJSPromptOptions } from '../../global';
 declare const Discord: {
-    Embed(embed: QuackJSEmbed): {
+    Embed(embed: QuackJSEmbed, placeholders?: Record<string, any> | undefined): {
         embed: QuackJSEmbed;
         content: string | undefined;
     };
