@@ -56,6 +56,7 @@ export class QuackJS implements QuackJSObject {
   async Start(QuackJS: QuackJS) {
     QuackJSUtils.MkDir('logs')
     QuackJSUtils.MkDir('logs/console')
+    QuackJSUtils.MkDir('backups')
 
     this.CreateEvent({
       name: 'message',
@@ -76,10 +77,9 @@ export class QuackJS implements QuackJSObject {
 
           const command: QuackJSCommand = QuackJS.commands[vars[0]] || undefined
 
-          // check this
           if (command)
             if (command.permission === 'everyone') command.execute(client, message, args)
-            else if (message.member?.roles.cache.has(command.permission)) command.execute(client, message, args)
+            else if (message.member?.roles.cache.array().some(role => role.id == command.permission || role.name == command.permission)) command.execute(client, message, args)
 
           return
         }

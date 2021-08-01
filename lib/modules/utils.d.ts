@@ -7,5 +7,7 @@ declare const Utils: {
     Random(min: number, max: number): number;
     RandomizeCapitalization(string: string): string;
     GenerateID(): string;
+    emoji(e: string): string;
+    backup(file: string): void;
 };
 export default Utils;

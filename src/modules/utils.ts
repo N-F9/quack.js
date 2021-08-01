@@ -47,7 +47,18 @@ const Utils = {
   },
   GenerateID() {
     return Utils.RandomizeCapitalization(Math.random().toString(36).slice(-8))
-  }
+  },
+  emoji(e: string) {
+    return e.replace(/<:.+:|>/g, '')
+  },
+  backup (file: string) {
+    const time = Utils.Time()
+
+    fs.copyFile(file, `./backups/${time.year}-${time.month}-${time.date}-${file}`, (err) => {
+      if (err) throw err
+      Log(`Created backup of ${file}`, 's')
+    })
+  },
 }
 
 export default Utils
