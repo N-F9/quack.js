@@ -1,6 +1,11 @@
 import * as DiscordJS from 'discord.js';
+import { QuackJSEmbed, QuackJSPromptOptions } from '../../global';
 declare const Discord: {
-    Embed(): void;
+    Embed(embed: QuackJSEmbed): {
+        embed: QuackJSEmbed;
+        content: string | undefined;
+    };
+    Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: QuackJSPromptOptions): Promise<unknown>;
     CreateRole(guild: DiscordJS.Guild, options: Object): void;
     DeleteRole(guild: DiscordJS.Guild, finder: string | number): void;
     HasRole(member: DiscordJS.GuildMember, finder: string | number): Boolean;

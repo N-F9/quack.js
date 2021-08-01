@@ -1,8 +1,38 @@
 import * as DiscordJS from 'discord.js'
+import { QuackJSEmbed, QuackJSPromptOptions } from '../../global'
 import Utils from './utils'
 
 const Discord = {
-  Embed() {},
+  Embed(embed: QuackJSEmbed) {
+    const content = embed.content
+    delete embed.content
+    
+    return {
+      embed,
+      content
+    }
+  },
+  Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: QuackJSPromptOptions) {
+    return new Promise((resolve, reject) => {
+      if (options.type === 'message') {
+        const filter = (res: DiscordJS.Message) => res.author.id == member.id
+        message.channel.awaitMessages(filter, { max: 1 })
+          .then(collected => {
+            const c = collected.first()
+            resolve(c)
+          })
+      } else if (options.type === 'reaction') {
+        if (options.emoji == null) reject(Utils.Error(new Error('Invalid Emoji')))
+        const filter = (reaction: DiscordJS.MessageReaction, user: DiscordJS.User) => user.id == member.id && reaction.emoji.name === options.emoji
+
+        message.awaitReactions(filter, { max: 1 })
+          .then(collected => {
+            const c = collected.first()
+            resolve(c)
+          })
+      }
+    })
+  },
   CreateRole(guild: DiscordJS.Guild, options: Object) {
     guild.roles
       .create({
@@ -58,10 +88,9 @@ const Discord = {
   },
 
   DeleteChannel(guild: DiscordJS.Guild, finder: string | number) {
-    // will be fixed 
+    // will be fixed
     // @ts-ignore
-    guild.channels.cache
-      .find((c) => (c.name === finder || c.id === finder) && c.type === 'text')
+    guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'text')
       .delete()
   },
 

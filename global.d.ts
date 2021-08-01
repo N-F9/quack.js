@@ -13,6 +13,7 @@ declare interface QuackJSObject {
   client: DiscordJS.Client
   commands: QuackJSCommand[]
   events: QuackJSEvent[]
+  triggers: QuackJSTrigger[]
   files: string[]
   configs: Record<string, Object>
   modules: QuackJSModule[]
@@ -33,6 +34,12 @@ declare type QuackJSEvent = {
   execute: Function
 }
 
+declare type QuackJSTrigger = {
+  name: string
+  trigger: string | RegExp
+  execute: (client: DiscordJS.Client, message: DiscordJS.Message) => void
+}
+
 declare type QuackJSTime = {
   UTC: string
   ISO: string
@@ -49,4 +56,36 @@ declare type QuackJSModule = {
   name: string
   file: string
   module: (QuackJS: QuackJS) => void
+}
+
+declare type QuackJSField = {
+  name: string
+  value: string
+  inline?: boolean
+}
+
+declare type QuackJSEmbed = {
+  color?: number | string
+  title?: string
+  url?: string
+  author?: {
+    name?: string
+    icon_url?: string
+    url?: string
+  }
+  description?: string
+  thumbnail?: string
+  fields?: QuackJSField[]
+	image?: string
+	timestamp?: Date | string | number
+  footer?: {
+		text?: string
+		icon_url?: string
+	}
+  content?: string
+}
+
+declare type QuackJSPromptOptions = {
+  type: 'message' | 'reaction'
+  emoji?: string
 }

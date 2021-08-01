@@ -4,6 +4,7 @@ import {
   QuackJSEvent,
   QuackJSModule,
   QuackJSObject,
+  QuackJSTrigger,
 } from '../global'
 import * as DiscordJS from 'discord.js'
 import * as fs from 'fs'
@@ -33,6 +34,7 @@ export class QuackJS implements QuackJSObject {
   public config: QuackJSConfig
   public client: DiscordJS.Client
   public commands: QuackJSCommand[]
+  public triggers: QuackJSTrigger[]
   public events: QuackJSEvent[]
   public files: string[]
   public configs: Record<string, object>
@@ -46,6 +48,7 @@ export class QuackJS implements QuackJSObject {
 
     this.commands = []
     this.events = []
+    this.triggers = []
     this.files = []
     this.configs = {}
     this.modules = []
@@ -83,6 +86,11 @@ export class QuackJS implements QuackJSObject {
 
           return
         }
+        QuackJS.triggers.forEach(trigger => {
+          if (message.content.match(trigger.trigger)) {
+            trigger.execute(client, message)
+          }
+        })
       },
     })
 
@@ -90,6 +98,8 @@ export class QuackJS implements QuackJSObject {
       name: 'ready',
       execute(client: DiscordJS.Client) {
         console.log('Bot ready.')
+        const commandsNames = QuackJS.commands.map(c => c.name)
+        if ((new Set(commandsNames)).size !== commandsNames.length) Log('Two or more commands have the same name!', 'w')
       },
     })
 
@@ -178,5 +188,9 @@ export class QuackJS implements QuackJSObject {
 
   public CreateEvent(event: QuackJSEvent) {
     this.events.push(event)
+  }
+
+  public CreateTrigger(trigger: QuackJSTrigger) {
+    this.triggers.push(trigger)
   }
 }

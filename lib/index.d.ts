@@ -1,4 +1,4 @@
-import { QuackJSCommand, QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject } from '../global';
+import { QuackJSCommand, QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
 export declare const QuackJSUtils: {
     YAML: {
@@ -7,7 +7,11 @@ export declare const QuackJSUtils: {
     };
     Log: (message: any, type?: "i" | "s" | "e" | "w") => void;
     Discord: {
-        Embed(): void;
+        Embed(embed: import("../global").QuackJSEmbed): {
+            embed: import("../global").QuackJSEmbed;
+            content: string | undefined;
+        };
+        Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: import("../global").QuackJSPromptOptions): Promise<unknown>;
         CreateRole(guild: DiscordJS.Guild, options: Object): void;
         DeleteRole(guild: DiscordJS.Guild, finder: string | number): void;
         HasRole(member: DiscordJS.GuildMember, finder: string | number): Boolean;
@@ -34,6 +38,7 @@ export declare class QuackJS implements QuackJSObject {
     config: QuackJSConfig;
     client: DiscordJS.Client;
     commands: QuackJSCommand[];
+    triggers: QuackJSTrigger[];
     events: QuackJSEvent[];
     files: string[];
     configs: Record<string, object>;
@@ -48,4 +53,5 @@ export declare class QuackJS implements QuackJSObject {
     private Login;
     CreateCommand(command: QuackJSCommand): void;
     CreateEvent(event: QuackJSEvent): void;
+    CreateTrigger(trigger: QuackJSTrigger): void;
 }
