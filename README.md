@@ -8,4 +8,5 @@
 A Discord.JS framework for all of your needs! From basic prototyping or production needs this framework is able to handle it all.
 
 **THIS FRAMEWORK IS A WORK IN PROGRESS!**
+
 Documentation of all of the features will be coming soon (likely when the first stable release is ready)

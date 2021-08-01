@@ -39,6 +39,15 @@ const Utils = {
     }
     return n
   },
+  Random (min: number, max: number) {
+    return Math.floor(Math.random() * (max + 1 - min)) + min
+  },
+  RandomizeCapitalization(string: string) {
+    return string.split('').map(chr => (Utils.Random(0, 1)) ? chr.toLowerCase() : chr.toUpperCase()).join('')
+  },
+  GenerateID() {
+    return Utils.RandomizeCapitalization(Math.random().toString(36).slice(-8))
+  }
 }
 
 export default Utils
