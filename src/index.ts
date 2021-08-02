@@ -100,7 +100,8 @@ export class QuackJS implements QuackJSObject {
           const parseArgs = (ar: string[]) => {
             return ar.map((arg) => {
               const url = QuackJSUtils.Validator('URL', arg) && new URL(arg)
-              const num = QuackJSUtils.Validator('Number', arg) && new Number(arg)
+              const num =
+                QuackJSUtils.Validator('Number', arg) && new Number(arg)
               const date = QuackJSUtils.Validator('Date', arg) && new Date(arg)
 
               if (url) return url
@@ -192,20 +193,28 @@ export class QuackJS implements QuackJSObject {
   private async GetFiles() {
     return new Promise((resolve, reject) => {
       const getAllFiles = (dirPath: string, arrayOfFiles: string[]) => {
-        const files = fs.readdirSync(path.join(__dirname, dirPath, '/'))
+        const files = fs.readdirSync(
+          path.join(process.env.PWD as string, dirPath, '/'),
+        )
         arrayOfFiles = arrayOfFiles || []
         files.forEach((file: string) => {
           if (
-            fs.statSync(path.join(__dirname, dirPath, '/', file)).isDirectory()
+            fs
+              .statSync(
+                path.join(process.env.PWD as string, dirPath, '/', file),
+              )
+              .isDirectory()
           ) {
             arrayOfFiles = getAllFiles(dirPath + '/' + file, arrayOfFiles)
           } else {
-            arrayOfFiles.push(path.join(__dirname, dirPath, '/', file))
+            arrayOfFiles.push(
+              path.join(process.env.PWD as string, dirPath, '/', file),
+            )
           }
         })
         return arrayOfFiles
       }
-      const files: string[] = getAllFiles(`../${this.config.srcDir}`, [])
+      const files: string[] = getAllFiles(`/${this.config.srcDir}`, [])
       if (files) resolve(files)
       else reject(files)
     })
@@ -213,19 +222,17 @@ export class QuackJS implements QuackJSObject {
 
   private async GetModules(QuackJS: QuackJS) {
     return new Promise((resolve, _reject) => {
-      let c = 0
       QuackJS.files
         // .map((file) => /*'file:\\\\\\' +*/ file.replace(/\.ts/g, '.js'))
-        .forEach(async (file, _index) => {
-          if (!file.endsWith('.js')) return
+        .forEach(async (file, index) => {
+          if (!file.endsWith('.js') && !file.endsWith('.ts')) return
           const name = file
             .substring(0, file.indexOf('.js'))
             .replace(/^.*[\\\/]/, '')
           const module = (await import(file)).default || (await import(file))
           await module(QuackJS)
           QuackJS.modules.push({ name, file, module })
-          c++
-          if (c === QuackJS.files.length) resolve(QuackJS.files)
+          if (index + 1 === QuackJS.files.length) resolve(QuackJS.files)
         })
     })
   }

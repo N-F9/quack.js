@@ -21,7 +21,7 @@ wow: wow!
     `
   },
   slash: false,
-  srcDir: 'test/js/src',
+  srcDir: 'src',
   doubleQuoteArgs: true,
   parseArgs: true
 }) 

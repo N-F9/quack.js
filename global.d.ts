@@ -28,7 +28,7 @@ declare type QuackJSCommand = {
   usage: string
   type: string
   permission: string
-  execute: (client: DiscordJS.Client, message: DiscordJS.Message, args: string[], command?: string, prefix?: string) => void
+  execute: (client: DiscordJS.Client, message: DiscordJS.Message, args: any[], command?: string, prefix?: string) => void
 }
 
 declare type QuackJSEvent = {
