@@ -5,6 +5,8 @@ declare type QuackJSConfig = {
   prefix: string
   slash?: boolean
   srcDir: string
+  doubleQuoteArgs?: boolean
+  parseArgs?: boolean
   configs: Record<string, Object>
 }
 

@@ -68,6 +68,30 @@ const Utils = {
       },
     )
   },
+  Validator(type: 'URL' | 'Number' | 'Date', value: any) {
+    try {
+      let v = null
+
+      switch (type) {
+        case 'URL':
+          v = new URL(value)
+          if (v) return true
+          break
+        case 'Number':
+          v = new Number(value)
+          if (v) return true
+          break
+        case 'Date':
+          v = new Date(value)
+          if (v) return true
+          break
+        default:
+          return false
+      }
+    } catch (error) {
+      if (error) return false
+    }
+  },
 }
 
 export default Utils

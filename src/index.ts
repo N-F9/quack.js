@@ -9,8 +9,7 @@ import {
 import * as DiscordJS from 'discord.js'
 import * as fs from 'fs'
 import * as _ from 'lodash'
-// import * as logs from 'discord-logs'
-// import disbut from 'discord-buttons'
+import * as logs from 'discord-logs'
 
 import Utils from './modules/utils'
 import Log from './modules/log'
@@ -61,15 +60,60 @@ export class QuackJS implements QuackJSObject {
     QuackJSUtils.MkDir('logs/console')
     QuackJSUtils.MkDir('backups')
 
+    logs.default(QuackJS.client)
+
     this.CreateEvent({
       name: 'message',
       execute(client: DiscordJS.Client, message: DiscordJS.Message) {
         if (message.author.bot) return
         if (message.content.startsWith(QuackJS.config.prefix)) {
-          const args: string[] = message.content
+          const unformattedArgs: string[] = message.content
             .slice(QuackJS.config.prefix.length)
             .split(/ +/)
-          const commandName: string = (args.shift() as string).toLowerCase()
+          const commandName: string = (
+            unformattedArgs.shift() as string
+          ).toLowerCase()
+
+          const generateDobuleQuoteArgs = () => {
+            const ar: string[] = []
+            let temp = ''
+
+            unformattedArgs.forEach((arg, i) => {
+              if (arg[0] === '"') {
+                temp += arg.substring(1) + ' '
+              } else if (temp && arg[arg.length - 1] !== '"') {
+                temp += arg + ' '
+              } else if (temp && arg[arg.length - 1] === '"') {
+                temp += arg.slice(0, -1)
+                ar.push(temp)
+                temp = ''
+              } else ar.push(arg)
+
+              if (temp && unformattedArgs.length === i + 1) {
+                ar.push(...temp.split(' '))
+              }
+            })
+
+            return ar.filter((a) => a)
+          }
+
+          const parseArgs = (ar: string[]) => {
+            return ar.map((arg) => {
+              const url = QuackJSUtils.Validator('URL', arg) && new URL(arg)
+              const num = QuackJSUtils.Validator('Number', arg) && new Number(arg)
+              const date = QuackJSUtils.Validator('Date', arg) && new Date(arg)
+
+              if (url) return url
+              else if (!isNaN(num as number)) return num
+              else if ((date as Date).toString() !== 'Invalid Date') return date
+              else return arg
+            })
+          }
+
+          let args: any[] = QuackJS.config.doubleQuoteArgs
+            ? generateDobuleQuoteArgs()
+            : unformattedArgs
+          args = QuackJS.config.parseArgs ? parseArgs(args) : args
 
           const vars: number[] = [
             _.findIndex(QuackJS.commands, { name: commandName }),

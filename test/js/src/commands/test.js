@@ -8,8 +8,8 @@ module.exports = (QuackJS) => {
     type: 'fdsa',
     usage: 'fdsf',
     permission: 'everyone',
-    execute(QuackJS, message, args) {
-      console.log(QuackJS, message, args)
+    execute(client, message, args) {
+      console.log(args)
     }
   })
 

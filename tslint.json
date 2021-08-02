@@ -5,6 +5,7 @@
     "no-shadowed-variable": [false],
     "forin": [false],
     "variable-name": [false],
-    "ban-types": [false]
+    "ban-types": [false],
+    "no-construct": [false]
   }
 }

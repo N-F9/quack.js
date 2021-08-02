@@ -7,7 +7,8 @@ declare const Utils: {
     Random(min: number, max: number): number;
     RandomizeCapitalization(string: string): string;
     GenerateID(): string;
-    emoji(e: string): string;
-    backup(file: string): void;
+    Emoji(e: string): string;
+    Backup(file: string): void;
+    Validator(type: 'URL' | 'Number' | 'Date', value: any): boolean | undefined;
 };
 export default Utils;

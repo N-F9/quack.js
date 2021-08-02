@@ -21,7 +21,9 @@ wow: wow!
     `
   },
   slash: false,
-  srcDir: 'test/js/src'
+  srcDir: 'test/js/src',
+  doubleQuoteArgs: true,
+  parseArgs: true
 }) 
 
 Quack.Start(Quack)
