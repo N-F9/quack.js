@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "esModuleInterop": true
   },
-  "include": ["src"],
+  "include": ["src", "global.d.ts"],
   "exclude": ["node_modules", "**/__tests__/*"],
   "lib": ["es2015"]
 }

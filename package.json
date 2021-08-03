@@ -18,12 +18,14 @@
   "author": "Nick Ferguson",
   "license": "MIT",
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "global.d.ts",
+    "README.md"
   ],
   "bugs": {
     "url": "https://github.com/N-F9/quack.js/issues"
   },
-  "homepage": "https://github.com/N-F9/quack.js#readme",
+  "homepage": "https://n-f9.github.io/quack.js-website/",
   "devDependencies": {
     "@types/better-sqlite3": "^5.4.3",
     "@types/js-yaml": "^4.0.2",
