@@ -1,5 +1,5 @@
 const variables: Record<string, any> = {
-  set(name: string, variable: any) {
+  Set(name: string, variable: any) {
     variables[name] = variable
   },
 }

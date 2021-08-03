@@ -1,5 +1,5 @@
 import * as DiscordJS from 'discord.js'
-import { QuackJS } from './src'
+import { QuackJS } from './lib/index'
 
 declare type QuackJSConfig = {
   prefix: string
