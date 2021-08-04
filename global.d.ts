@@ -1,5 +1,5 @@
 import * as DiscordJS from 'discord.js'
-import { QuackJS } from './lib/index'
+// import { QuackJS } from './src/'
 
 declare type QuackJSConfig = {
   prefix: string
@@ -57,7 +57,7 @@ declare type QuackJSTime = {
 declare type QuackJSModule = {
   name: string
   file: string
-  module: (QuackJS: QuackJS) => void
+  module: (QuackJS: any) => void // this will need to be fixed
 }
 
 declare type QuackJSField = {
@@ -78,12 +78,12 @@ declare type QuackJSEmbed = {
   description?: string
   thumbnail?: string
   fields?: QuackJSField[]
-	image?: string
-	timestamp?: Date | string | number
+  image?: string
+  timestamp?: Date | string | number
   footer?: {
-		text?: string
-		icon_url?: string
-	}
+    text?: string
+    icon_url?: string
+  }
   content?: string
 }
 
