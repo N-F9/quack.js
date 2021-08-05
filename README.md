@@ -10,7 +10,8 @@
 [Documentation/Wiki](https://github.com/N-F9/quack.js/wiki) |
 [NPM](https://www.npmjs.com/package/@n-f9/quack.js) |
 [Github](https://www.npmjs.com/package/@n-f9/quack.js) |
-[Website](https://n-f9.github.io/quack.js-website/)
+[Website](https://n-f9.github.io/quack.js-website/) |
+[Issues](https://github.com/N-F9/quack.js/issues)
 
 A Discord.JS framework for all of your needs! From basic prototyping or production needs this framework is able to handle it all.
 

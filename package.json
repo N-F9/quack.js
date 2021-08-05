@@ -1,6 +1,6 @@
 {
   "name": "@n-f9/quack.js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Discord.js bot framework for any purpose",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
