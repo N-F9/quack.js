@@ -1,11 +1,10 @@
 import * as DiscordJS from 'discord.js'
-import { QuackJSEmbed, QuackJSPromptOptions } from '../../global'
+import { QuackJSEmbed, QuackJSMessage, QuackJSPromptOptions } from '../../global'
 import Utils from './utils'
 
 const Discord = {
-  Embed(embed: QuackJSEmbed, placeholders?: Record<string, any>) {
-    let content = embed.content
-    delete embed.content
+  Embed(message: QuackJSMessage, placeholders?: Record<string, any>): DiscordJS.MessageOptions {
+    let content = message.content
 
     for (const placeholder in placeholders) {
       const element = placeholders[placeholder]
@@ -20,12 +19,17 @@ const Discord = {
         }
         return obj
       }
-      embed = Replacer(embed)
+      
+      for (const [i, embed] of message.embeds.entries()) {
+        message.embeds[i] = Replacer(embed)
+      }
     }
 
     return {
-      embed,
+      embeds: message.embeds as unknown as DiscordJS.MessageEmbed[],
       content,
+      files: message.files,
+      components: message.components,
     }
   },
   Prompt(
@@ -36,7 +40,7 @@ const Discord = {
     return new Promise((resolve, reject) => {
       if (options.type === 'message') {
         const filter = (res: DiscordJS.Message) => res.author.id === member.id
-        message.channel.awaitMessages(filter, { max: 1 }).then((collected) => {
+        message.channel.awaitMessages({ filter, max: 1 }).then((collected) => {
           const c = collected.first()
           resolve(c)
         })
@@ -48,18 +52,16 @@ const Discord = {
           user: DiscordJS.User,
         ) => user.id === member.id && reaction.emoji.name === options.emoji
 
-        message.awaitReactions(filter, { max: 1 }).then((collected) => {
+        message.awaitReactions({ filter, max: 1 }).then((collected) => {
           const c = collected.first()
           resolve(c)
         })
       }
     })
   },
-  CreateRole(guild: DiscordJS.Guild, options: Object) {
+  CreateRole(guild: DiscordJS.Guild, options: DiscordJS.CreateRoleOptions) {
     guild.roles
-      .create({
-        data: options,
-      })
+      .create(options)
       .then()
       .catch(Utils.Error)
   },
@@ -104,7 +106,7 @@ const Discord = {
 
   CreateChannel(guild: DiscordJS.Guild, name: string, options: Object) {
     return guild.channels.create(name, {
-      type: 'text',
+      type: 'GUILD_TEXT',
       ...options,
     })
   },
@@ -113,13 +115,13 @@ const Discord = {
     // will be fixed
     // @ts-ignore
     guild.channels.cache
-      .find((c) => (c.name === finder || c.id === finder) && c.type === 'text')
+      .find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_TEXT')
       .delete()
   },
 
   CreateCategory(guild: DiscordJS.Guild, name: string, options: Object) {
     return guild.channels.create(name, {
-      type: 'category',
+      type: 'GUILD_CATEGORY',
       ...options,
     })
   },
@@ -129,7 +131,7 @@ const Discord = {
     // @ts-ignore
     guild.channels.cache
       .find(
-        (c) => (c.name === finder || c.id === finder) && c.type === 'category',
+        (c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_CATEGORY',
       )
       .delete()
   },
@@ -141,16 +143,16 @@ const Discord = {
   ) {
     const newCategory = guild.channels.cache.find(
       (c) =>
-        (c.name === category || c.id === category) && c.type === 'category',
+        (c.name === category || c.id === category) && c.type === 'GUILD_CATEGORY',
     )
     const newChannel = guild.channels.cache.find(
-      (c) => (c.name === channel || c.id === channel) && c.type === 'text',
+      (c) => (c.name === channel || c.id === channel) && c.type === 'GUILD_TEXT',
     )
 
     if (!newCategory)
       throw Utils.Error(new Error('Category channel does not exist'))
     if (!newChannel) throw Utils.Error(new Error('Channel does not exist'))
-    newChannel.setParent(newCategory.id)
+    ;(newChannel as DiscordJS.GuildChannel).setParent(newCategory.id)
   },
 }
 

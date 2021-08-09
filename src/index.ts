@@ -4,6 +4,7 @@ import {
   QuackJSEvent,
   QuackJSModule,
   QuackJSObject,
+  QuackJSSlashCommand,
   QuackJSTrigger,
 } from '../global'
 import * as DiscordJS from 'discord.js'
@@ -33,6 +34,7 @@ export class QuackJS implements QuackJSObject {
   public config: QuackJSConfig
   public client: DiscordJS.Client
   public commands: QuackJSCommand[]
+  public slashCommands: QuackJSSlashCommand[]
   public triggers: QuackJSTrigger[]
   public events: QuackJSEvent[]
   public files: string[]
@@ -46,13 +48,31 @@ export class QuackJS implements QuackJSObject {
     this.config = config
 
     this.commands = []
+    this.slashCommands = []
     this.events = []
     this.triggers = []
     this.files = []
     this.configs = {}
     this.modules = []
 
-    this.client = new DiscordJS.Client()
+    this.client = new DiscordJS.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], intents: [
+      // DiscordJS.Intents.FLAGS.DIRECT_MESSAGES,
+      // DiscordJS.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+      // DiscordJS.Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+      DiscordJS.Intents.FLAGS.GUILDS, //-
+      // DiscordJS.Intents.FLAGS.GUILD_BANS,
+      // DiscordJS.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+      // DiscordJS.Intents.FLAGS.GUILD_INTEGRATIONS,
+      // DiscordJS.Intents.FLAGS.GUILD_INVITES,
+      DiscordJS.Intents.FLAGS.GUILD_MEMBERS, //-
+      DiscordJS.Intents.FLAGS.GUILD_MESSAGES, //-
+      DiscordJS.Intents.FLAGS.GUILD_MESSAGE_REACTIONS, //-
+      // DiscordJS.Intents.FLAGS.GUILD_MESSAGE_TYPING,
+      // DiscordJS.Intents.FLAGS.GUILD_PRESENCES,
+      // DiscordJS.Intents.FLAGS.GUILD_VOICE_STATES,
+      // DiscordJS.Intents.FLAGS.GUILD_WEBHOOKS,
+      ...this.config.intents
+    ] })
   }
 
   async Start(QuackJS: QuackJS) {
@@ -63,7 +83,7 @@ export class QuackJS implements QuackJSObject {
     logs.default(QuackJS.client)
 
     this.CreateEvent({
-      name: 'message',
+      name: 'messageCreate',
       execute(client: DiscordJS.Client, message: DiscordJS.Message) {
         if (message.author.bot) return
         if (message.content.startsWith(QuackJS.config.prefix)) {
@@ -128,15 +148,7 @@ export class QuackJS implements QuackJSObject {
           if (command)
             if (command.permission === 'everyone')
               command.execute(client, message, args)
-            else if (
-              message.member?.roles.cache
-                .array()
-                .some(
-                  (role) =>
-                    role.id === command.permission ||
-                    role.name === command.permission,
-                )
-            )
+            else if (message.member?.roles.cache.find((role) => role.id === command.permission || role.name === command.permission))
               command.execute(client, message, args)
 
           return
@@ -150,14 +162,63 @@ export class QuackJS implements QuackJSObject {
     })
 
     this.CreateEvent({
+      name: 'interactionCreate',
+      execute(client: DiscordJS.Client, interaction: DiscordJS.Interaction) {
+        if (!interaction.isCommand()) return
+  
+        const i = _.findIndex(QuackJS.slashCommands, { name: interaction.commandName})
+  
+        if (i === -1) return
+      
+        try {
+          QuackJS.slashCommands[i].execute(interaction)
+        } catch (error: any) {
+          Utils.Error(error)
+          interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+        }
+      }
+    })
+
+    this.CreateEvent({
       name: 'ready',
       execute(client: DiscordJS.Client) {
         console.log('Bot ready.')
         const commandsNames = QuackJS.commands.map((c) => c.name)
         if (new Set(commandsNames).size !== commandsNames.length)
           Log('Two or more commands have the same name!', 'w')
+
+        ;(async () => {
+          if (!client.application?.owner) await client.application?.fetch()
+  
+          for (const command of QuackJS.slashCommands) {
+            const cpermission = command.permission
+
+            if (command.guilds.length === 0) {
+              await client.application?.commands.create(command)
+            } else {
+              for (const guild of command.guilds) {
+                try {
+                  const c = await client.guilds.cache.get(guild)?.commands.create(command)
+        
+                  if (cpermission !== 'everyone') {
+                    c?.permissions.add({
+                      permissions: [{
+                        id: cpermission,
+                        type: 'ROLE',
+                        permission: true,
+                      }]
+                    })
+                  }
+                } catch (error) {
+                  Utils.Error(new Error('An error occurred while creating guild specific commands!'))
+                }
+              }
+            }
+          }
+        })()
       },
     })
+
     try {
       QuackJSUtils.DB.authenticate()
     } catch (error: any) {
@@ -251,6 +312,10 @@ export class QuackJS implements QuackJSObject {
 
   public CreateCommand(command: QuackJSCommand) {
     this.commands.push(command)
+  }
+
+  public CreateSlash(slashCommand: QuackJSSlashCommand) {
+    this.slashCommands.push(slashCommand)
   }
 
   public CreateEvent(event: QuackJSEvent) {

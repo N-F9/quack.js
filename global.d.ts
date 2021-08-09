@@ -3,10 +3,10 @@ import * as DiscordJS from 'discord.js'
 
 declare type QuackJSConfig = {
   prefix: string
-  slash?: boolean
   srcDir: string
   doubleQuoteArgs?: boolean
   parseArgs?: boolean
+  intents: DiscordJS.Intents[]
   configs: Record<string, Object>
 }
 
@@ -14,6 +14,7 @@ declare interface QuackJSObject {
   config: QuackJSConfig
   client: DiscordJS.Client
   commands: QuackJSCommand[]
+  slashCommands: QuackJSSlashCommand[]
   events: QuackJSEvent[]
   triggers: QuackJSTrigger[]
   files: string[]
@@ -29,6 +30,16 @@ declare type QuackJSCommand = {
   type: string
   permission: string
   execute: (client: DiscordJS.Client, message: DiscordJS.Message, args: any[], command?: string, prefix?: string) => void
+}
+
+declare type QuackJSSlashCommand = {
+  name: string
+  description: string
+  options?: DiscordJS.ApplicationCommandOptionData[]
+  defaultPermission?: boolean
+  permission: string
+  guilds: string[] // put nothing for global command, if global then permissions will not work
+  execute: (interaction: DiscordJS.CommandInteraction) => void
 }
 
 declare type QuackJSEvent = {
@@ -85,6 +96,13 @@ declare type QuackJSEmbed = {
     icon_url?: string
   }
   content?: string
+}
+
+declare type QuackJSMessage = {
+  embeds: QuackJSEmbed[]
+  content: string
+  files?: DiscordJS.MessageAttachment[]
+  components?: (DiscordJS.MessageActionRow | DiscordJS.MessageActionRowOptions)[]
 }
 
 declare type QuackJSPromptOptions = {

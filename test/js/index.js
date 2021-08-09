@@ -20,10 +20,10 @@ const Quack = new QuackJS.QuackJS(process.env.TOKEN, {
 wow: wow!
     `
   },
-  slash: false,
   srcDir: 'src',
   doubleQuoteArgs: true,
-  parseArgs: true
+  parseArgs: true,
+  intents: []
 }) 
 
 Quack.Start(Quack)

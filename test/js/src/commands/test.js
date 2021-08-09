@@ -34,4 +34,15 @@ module.exports = (QuackJS) => {
       })
     }
   })
+
+  QuackJS.CreateSlash({
+    name: 'test',
+    description: 'this is a test command',
+    permission: 'everyone',
+    guilds: ['728269506710995034'],
+    execute(interaction) {
+      console.log(interaction)
+      interaction.reply('yay!')
+    }
+  })
 }

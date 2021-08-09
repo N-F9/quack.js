@@ -1,4 +1,4 @@
-import { QuackJSCommand, QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject, QuackJSTrigger } from '../global';
+import { QuackJSCommand, QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
 export declare const QuackJSUtils: {
     YAML: {
@@ -7,12 +7,9 @@ export declare const QuackJSUtils: {
     };
     Log: (message: any, type?: "i" | "s" | "e" | "w") => void;
     Discord: {
-        Embed(embed: import("../global").QuackJSEmbed, placeholders?: Record<string, any> | undefined): {
-            embed: import("../global").QuackJSEmbed;
-            content: string | undefined;
-        };
+        Embed(message: import("../global").QuackJSMessage, placeholders?: Record<string, any> | undefined): DiscordJS.MessageOptions;
         Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: import("../global").QuackJSPromptOptions): Promise<unknown>;
-        CreateRole(guild: DiscordJS.Guild, options: Object): void;
+        CreateRole(guild: DiscordJS.Guild, options: DiscordJS.CreateRoleOptions): void;
         DeleteRole(guild: DiscordJS.Guild, finder: string | number): void;
         HasRole(member: DiscordJS.GuildMember, finder: string | number): Boolean;
         GiveRole(member: DiscordJS.GuildMember, guild: DiscordJS.Guild, finder: string | number): Promise<DiscordJS.GuildMember>;
@@ -40,6 +37,7 @@ export declare class QuackJS implements QuackJSObject {
     config: QuackJSConfig;
     client: DiscordJS.Client;
     commands: QuackJSCommand[];
+    slashCommands: QuackJSSlashCommand[];
     triggers: QuackJSTrigger[];
     events: QuackJSEvent[];
     files: string[];
@@ -54,6 +52,7 @@ export declare class QuackJS implements QuackJSObject {
     private StartEvents;
     private Login;
     CreateCommand(command: QuackJSCommand): void;
+    CreateSlash(slashCommand: QuackJSSlashCommand): void;
     CreateEvent(event: QuackJSEvent): void;
     CreateTrigger(trigger: QuackJSTrigger): void;
 }
