@@ -19,15 +19,11 @@ const yaml = {
   },
   Generate(file: string, contents: object | string): void {
     if (!fs.existsSync(`./${file}.yaml`)) {
-      fs.writeFile(
-        `./${file}.yaml`,
-        typeof contents === 'object' ? YAML.dump(contents) : contents,
-        () => {
-          wait(1000).then(() => {
-            Log(`Successfully created ${file}.yaml`, 's')
-          })
-        },
-      )
+      fs.writeFile(`./${file}.yaml`, typeof contents === 'object' ? YAML.dump(contents) : contents, () => {
+        wait(1000).then(() => {
+          Log(`Successfully created ${file}.yaml`, 's')
+        })
+      })
     }
   },
 }

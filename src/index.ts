@@ -1,12 +1,4 @@
-import {
-  QuackJSCommand,
-  QuackJSConfig,
-  QuackJSEvent,
-  QuackJSModule,
-  QuackJSObject,
-  QuackJSSlashCommand,
-  QuackJSTrigger,
-} from '../global'
+import { QuackJSCommand, QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global'
 import * as DiscordJS from 'discord.js'
 import * as fs from 'fs'
 import * as _ from 'lodash'
@@ -55,24 +47,27 @@ export class QuackJS implements QuackJSObject {
     this.configs = {}
     this.modules = []
 
-    this.client = new DiscordJS.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], intents: [
-      // DiscordJS.Intents.FLAGS.DIRECT_MESSAGES,
-      // DiscordJS.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-      // DiscordJS.Intents.FLAGS.DIRECT_MESSAGE_TYPING,
-      DiscordJS.Intents.FLAGS.GUILDS, //-
-      // DiscordJS.Intents.FLAGS.GUILD_BANS,
-      // DiscordJS.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-      // DiscordJS.Intents.FLAGS.GUILD_INTEGRATIONS,
-      // DiscordJS.Intents.FLAGS.GUILD_INVITES,
-      DiscordJS.Intents.FLAGS.GUILD_MEMBERS, //-
-      DiscordJS.Intents.FLAGS.GUILD_MESSAGES, //-
-      DiscordJS.Intents.FLAGS.GUILD_MESSAGE_REACTIONS, //-
-      // DiscordJS.Intents.FLAGS.GUILD_MESSAGE_TYPING,
-      // DiscordJS.Intents.FLAGS.GUILD_PRESENCES,
-      // DiscordJS.Intents.FLAGS.GUILD_VOICE_STATES,
-      // DiscordJS.Intents.FLAGS.GUILD_WEBHOOKS,
-      ...this.config.intents
-    ] })
+    this.client = new DiscordJS.Client({
+      partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+      intents: [
+        // DiscordJS.Intents.FLAGS.DIRECT_MESSAGES,
+        // DiscordJS.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+        // DiscordJS.Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+        DiscordJS.Intents.FLAGS.GUILDS, // -
+        // DiscordJS.Intents.FLAGS.GUILD_BANS,
+        // DiscordJS.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+        // DiscordJS.Intents.FLAGS.GUILD_INTEGRATIONS,
+        // DiscordJS.Intents.FLAGS.GUILD_INVITES,
+        DiscordJS.Intents.FLAGS.GUILD_MEMBERS, // -
+        DiscordJS.Intents.FLAGS.GUILD_MESSAGES, // -
+        DiscordJS.Intents.FLAGS.GUILD_MESSAGE_REACTIONS, // -
+        // DiscordJS.Intents.FLAGS.GUILD_MESSAGE_TYPING,
+        // DiscordJS.Intents.FLAGS.GUILD_PRESENCES,
+        // DiscordJS.Intents.FLAGS.GUILD_VOICE_STATES,
+        // DiscordJS.Intents.FLAGS.GUILD_WEBHOOKS,
+        ...this.config.intents,
+      ],
+    })
   }
 
   async Start(QuackJS: QuackJS) {
@@ -87,12 +82,8 @@ export class QuackJS implements QuackJSObject {
       execute(client: DiscordJS.Client, message: DiscordJS.Message) {
         if (message.author.bot) return
         if (message.content.startsWith(QuackJS.config.prefix)) {
-          const unformattedArgs: string[] = message.content
-            .slice(QuackJS.config.prefix.length)
-            .split(/ +/)
-          const commandName: string = (
-            unformattedArgs.shift() as string
-          ).toLowerCase()
+          const unformattedArgs: string[] = message.content.slice(QuackJS.config.prefix.length).split(/ +/)
+          const commandName: string = (unformattedArgs.shift() as string).toLowerCase()
 
           const generateDobuleQuoteArgs = () => {
             const ar: string[] = []
@@ -120,8 +111,7 @@ export class QuackJS implements QuackJSObject {
           const parseArgs = (ar: string[]) => {
             return ar.map((arg) => {
               const url = QuackJSUtils.Validator('URL', arg) && new URL(arg)
-              const num =
-                QuackJSUtils.Validator('Number', arg) && new Number(arg)
+              const num = QuackJSUtils.Validator('Number', arg) && new Number(arg)
               const date = QuackJSUtils.Validator('Date', arg) && new Date(arg)
 
               if (url) return url
@@ -131,25 +121,16 @@ export class QuackJS implements QuackJSObject {
             })
           }
 
-          let args: any[] = QuackJS.config.doubleQuoteArgs
-            ? generateDobuleQuoteArgs()
-            : unformattedArgs
+          let args: any[] = QuackJS.config.doubleQuoteArgs ? generateDobuleQuoteArgs() : unformattedArgs
           args = QuackJS.config.parseArgs ? parseArgs(args) : args
 
-          const vars: number[] = [
-            _.findIndex(QuackJS.commands, { name: commandName }),
-            _.findIndex(QuackJS.commands, (e: QuackJSCommand) =>
-              e.aliases.includes(commandName),
-            ),
-          ].filter((e) => e !== -1)
+          const vars: number[] = [_.findIndex(QuackJS.commands, { name: commandName }), _.findIndex(QuackJS.commands, (e: QuackJSCommand) => e.aliases.includes(commandName))].filter((e) => e !== -1)
 
           const command: QuackJSCommand = QuackJS.commands[vars[0]] || undefined
 
           if (command)
-            if (command.permission === 'everyone')
-              command.execute(client, message, args)
-            else if (message.member?.roles.cache.find((role) => role.id === command.permission || role.name === command.permission))
-              command.execute(client, message, args)
+            if (command.permission === 'everyone') command.execute(client, message, args)
+            else if (message.member?.roles.cache.find((role) => role.id === command.permission || role.name === command.permission)) command.execute(client, message, args)
 
           return
         }
@@ -165,18 +146,23 @@ export class QuackJS implements QuackJSObject {
       name: 'interactionCreate',
       execute(client: DiscordJS.Client, interaction: DiscordJS.Interaction) {
         if (!interaction.isCommand()) return
-  
-        const i = _.findIndex(QuackJS.slashCommands, { name: interaction.commandName})
-  
+
+        const i = _.findIndex(QuackJS.slashCommands, {
+          name: interaction.commandName,
+        })
+
         if (i === -1) return
-      
+
         try {
           QuackJS.slashCommands[i].execute(interaction)
         } catch (error: any) {
           Utils.Error(error)
-          interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true })
+          interaction.reply({
+            content: 'There was an error while executing this command!',
+            ephemeral: true,
+          })
         }
-      }
+      },
     })
 
     this.CreateEvent({
@@ -184,12 +170,10 @@ export class QuackJS implements QuackJSObject {
       execute(client: DiscordJS.Client) {
         console.log('Bot ready.')
         const commandsNames = QuackJS.commands.map((c) => c.name)
-        if (new Set(commandsNames).size !== commandsNames.length)
-          Log('Two or more commands have the same name!', 'w')
-
+        if (new Set(commandsNames).size !== commandsNames.length) Log('Two or more commands have the same name!', 'w')
         ;(async () => {
           if (!client.application?.owner) await client.application?.fetch()
-  
+
           for (const command of QuackJS.slashCommands) {
             const cpermission = command.permission
 
@@ -199,14 +183,16 @@ export class QuackJS implements QuackJSObject {
               for (const guild of command.guilds) {
                 try {
                   const c = await client.guilds.cache.get(guild)?.commands.create(command)
-        
+
                   if (cpermission !== 'everyone') {
                     c?.permissions.add({
-                      permissions: [{
-                        id: cpermission,
-                        type: 'ROLE',
-                        permission: true,
-                      }]
+                      permissions: [
+                        {
+                          id: cpermission,
+                          type: 'ROLE',
+                          permission: true,
+                        },
+                      ],
                     })
                   }
                 } catch (error) {
@@ -237,40 +223,23 @@ export class QuackJS implements QuackJSObject {
       for (const conf in this.config.configs) {
         QuackJSUtils.YAML.Generate(conf, this.config.configs[conf])
         const con = QuackJSUtils.YAML.Get(conf)
-        if (!con)
-          reject(
-            QuackJSUtils.Error(new Error(`YAML File ${conf} had an error!`)),
-          )
+        if (!con) reject(QuackJSUtils.Error(new Error(`YAML File ${conf} had an error!`)))
         this.configs[conf] = con as object
       }
-      if (
-        Object.values(this.config.configs).length ===
-        Object.values(this.configs).length
-      )
-        resolve(this.configs)
+      if (Object.values(this.config.configs).length === Object.values(this.configs).length) resolve(this.configs)
     })
   }
 
   private async GetFiles() {
     return new Promise((resolve, reject) => {
       const getAllFiles = (dirPath: string, arrayOfFiles: string[]) => {
-        const files = fs.readdirSync(
-          path.join(process.env.PWD as string, dirPath, '/'),
-        )
+        const files = fs.readdirSync(path.join(process.env.PWD as string, dirPath, '/'))
         arrayOfFiles = arrayOfFiles || []
         files.forEach((file: string) => {
-          if (
-            fs
-              .statSync(
-                path.join(process.env.PWD as string, dirPath, '/', file),
-              )
-              .isDirectory()
-          ) {
+          if (fs.statSync(path.join(process.env.PWD as string, dirPath, '/', file)).isDirectory()) {
             arrayOfFiles = getAllFiles(dirPath + '/' + file, arrayOfFiles)
           } else {
-            arrayOfFiles.push(
-              path.join(process.env.PWD as string, dirPath, '/', file),
-            )
+            arrayOfFiles.push(path.join(process.env.PWD as string, dirPath, '/', file))
           }
         })
         return arrayOfFiles
@@ -287,9 +256,7 @@ export class QuackJS implements QuackJSObject {
         // .map((file) => /*'file:\\\\\\' +*/ file.replace(/\.ts/g, '.js'))
         .forEach(async (file, index) => {
           if (!file.endsWith('.js') && !file.endsWith('.ts')) return
-          const name = file
-            .substring(0, file.indexOf('.js'))
-            .replace(/^.*[\\\/]/, '')
+          const name = file.substring(0, file.indexOf('.js')).replace(/^.*[\\\/]/, '')
           const module = (await import(file)).default || (await import(file))
           await module(QuackJS)
           QuackJS.modules.push({ name, file, module })

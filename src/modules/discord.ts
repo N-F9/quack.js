@@ -13,13 +13,12 @@ const Discord = {
       const Replacer = (obj: Record<string, any>) => {
         const keys = Object.keys(obj)
         for (const key of keys) {
-          if (typeof obj[key] === 'string')
-            obj[key] = obj[key].replace(new RegExp(placeholder, 'g'), element)
+          if (typeof obj[key] === 'string') obj[key] = obj[key].replace(new RegExp(placeholder, 'g'), element)
           else if (typeof obj[key] === 'object') obj[key] = Replacer(obj[key])
         }
         return obj
       }
-      
+
       for (const [i, embed] of message.embeds.entries()) {
         message.embeds[i] = Replacer(embed)
       }
@@ -32,11 +31,7 @@ const Discord = {
       components: message.components,
     }
   },
-  Prompt(
-    message: DiscordJS.Message,
-    member: DiscordJS.GuildMember,
-    options: QuackJSPromptOptions,
-  ) {
+  Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: QuackJSPromptOptions) {
     return new Promise((resolve, reject) => {
       if (options.type === 'message') {
         const filter = (res: DiscordJS.Message) => res.author.id === member.id
@@ -45,12 +40,8 @@ const Discord = {
           resolve(c)
         })
       } else if (options.type === 'reaction') {
-        if (options.emoji == null)
-          reject(Utils.Error(new Error('Invalid Emoji')))
-        const filter = (
-          reaction: DiscordJS.MessageReaction,
-          user: DiscordJS.User,
-        ) => user.id === member.id && reaction.emoji.name === options.emoji
+        if (options.emoji == null) reject(Utils.Error(new Error('Invalid Emoji')))
+        const filter = (reaction: DiscordJS.MessageReaction, user: DiscordJS.User) => user.id === member.id && reaction.emoji.name === options.emoji
 
         message.awaitReactions({ filter, max: 1 }).then((collected) => {
           const c = collected.first()
@@ -60,46 +51,27 @@ const Discord = {
     })
   },
   CreateRole(guild: DiscordJS.Guild, options: DiscordJS.CreateRoleOptions) {
-    guild.roles
-      .create(options)
-      .then()
-      .catch(Utils.Error)
+    guild.roles.create(options).then().catch(Utils.Error)
   },
 
   DeleteRole(guild: DiscordJS.Guild, finder: string | number) {
-    const roleDeleted = guild.roles.cache.find(
-      (role) => role.name === finder || role.id === finder,
-    )
+    const roleDeleted = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
     if (roleDeleted == null) throw Utils.Error(new Error('Role does not exist'))
     roleDeleted.delete()
   },
 
   HasRole(member: DiscordJS.GuildMember, finder: string | number): Boolean {
-    return member.roles.cache.some(
-      (role) => role.name === finder || role.id === finder,
-    )
+    return member.roles.cache.some((role) => role.name === finder || role.id === finder)
   },
 
-  GiveRole(
-    member: DiscordJS.GuildMember,
-    guild: DiscordJS.Guild,
-    finder: string | number,
-  ) {
-    const role = guild.roles.cache.find(
-      (role) => role.name === finder || role.id === finder,
-    )
+  GiveRole(member: DiscordJS.GuildMember, guild: DiscordJS.Guild, finder: string | number) {
+    const role = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
     if (role == null) throw Utils.Error(new Error('Role does not exist'))
     return member.roles.add(role)
   },
 
-  RemoveRole(
-    member: DiscordJS.GuildMember,
-    guild: DiscordJS.Guild,
-    finder: string | number,
-  ) {
-    const role = guild.roles.cache.find(
-      (role) => role.name === finder || role.id === finder,
-    )
+  RemoveRole(member: DiscordJS.GuildMember, guild: DiscordJS.Guild, finder: string | number) {
+    const role = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
     if (role == null) throw Utils.Error(new Error('Role does not exist'))
     return member.roles.remove(role)
   },
@@ -114,9 +86,7 @@ const Discord = {
   DeleteChannel(guild: DiscordJS.Guild, finder: string | number) {
     // will be fixed
     // @ts-ignore
-    guild.channels.cache
-      .find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_TEXT')
-      .delete()
+    guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_TEXT').delete()
   },
 
   CreateCategory(guild: DiscordJS.Guild, name: string, options: Object) {
@@ -129,28 +99,14 @@ const Discord = {
   DeleteCategory(guild: DiscordJS.Guild, finder: string | number) {
     // will be fixed
     // @ts-ignore
-    guild.channels.cache
-      .find(
-        (c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_CATEGORY',
-      )
-      .delete()
+    guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_CATEGORY').delete()
   },
 
-  MoveChannelToCategory(
-    guild: DiscordJS.Guild,
-    channel: string | number,
-    category: string | number,
-  ) {
-    const newCategory = guild.channels.cache.find(
-      (c) =>
-        (c.name === category || c.id === category) && c.type === 'GUILD_CATEGORY',
-    )
-    const newChannel = guild.channels.cache.find(
-      (c) => (c.name === channel || c.id === channel) && c.type === 'GUILD_TEXT',
-    )
+  MoveChannelToCategory(guild: DiscordJS.Guild, channel: string | number, category: string | number) {
+    const newCategory = guild.channels.cache.find((c) => (c.name === category || c.id === category) && c.type === 'GUILD_CATEGORY')
+    const newChannel = guild.channels.cache.find((c) => (c.name === channel || c.id === channel) && c.type === 'GUILD_TEXT')
 
-    if (!newCategory)
-      throw Utils.Error(new Error('Category channel does not exist'))
+    if (!newCategory) throw Utils.Error(new Error('Category channel does not exist'))
     if (!newChannel) throw Utils.Error(new Error('Channel does not exist'))
     ;(newChannel as DiscordJS.GuildChannel).setParent(newCategory.id)
   },

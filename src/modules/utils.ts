@@ -18,10 +18,7 @@ const Utils = {
     }
   },
   Error(e: Error): void {
-    fs.appendFileSync(
-      'errors.txt',
-      `${Utils.Time().TZ}\n${e.stack}\n───────────────\n`,
-    )
+    fs.appendFileSync('errors.txt', `${Utils.Time().TZ}\n${e.stack}\n───────────────\n`)
     Log('An error has occured!', 'e')
   },
   MkDir(name: string): boolean {
@@ -45,9 +42,7 @@ const Utils = {
   RandomizeCapitalization(string: string) {
     return string
       .split('')
-      .map((chr) =>
-        Utils.Random(0, 1) ? chr.toLowerCase() : chr.toUpperCase(),
-      )
+      .map((chr) => (Utils.Random(0, 1) ? chr.toLowerCase() : chr.toUpperCase()))
       .join('')
   },
   GenerateID() {
@@ -59,14 +54,10 @@ const Utils = {
   Backup(file: string) {
     const time = Utils.Time()
 
-    fs.copyFile(
-      file,
-      `./backups/${time.year}-${time.month}-${time.date}-${file}`,
-      (err) => {
-        if (err) throw err
-        Log(`Created backup of ${file}`, 's')
-      },
-    )
+    fs.copyFile(file, `./backups/${time.year}-${time.month}-${time.date}-${file}`, (err) => {
+      if (err) throw err
+      Log(`Created backup of ${file}`, 's')
+    })
   },
   Validator(type: 'URL' | 'Number' | 'Date', value: any) {
     try {
