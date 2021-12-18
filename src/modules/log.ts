@@ -1,4 +1,4 @@
-import { gray, blue, white, red, green, yellow } from 'chalk'
+import { gray, blue, white, red, green, yellow } from 'picocolors'
 import * as fs from 'fs'
 import Utils from './utils'
 

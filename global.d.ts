@@ -1,6 +1,9 @@
 import * as DiscordJS from 'discord.js'
 // import { QuackJS } from './src/'
 
+// https://stackoverflow.com/a/65948871
+// https://stackoverflow.com/a/62081238
+
 declare type QuackJSConfig = {
   prefix: string
   srcDir: string
@@ -102,7 +105,7 @@ declare type QuackJSMessage = {
   embeds: QuackJSEmbed[]
   content: string
   files?: DiscordJS.MessageAttachment[]
-  components?: (DiscordJS.MessageActionRow | DiscordJS.MessageActionRowOptions)[]
+  components?: (DiscordJS.MessageActionRow | (Required<DiscordJS.BaseMessageComponentOptions> & DiscordJS.MessageActionRowOptions))[]
 }
 
 declare type QuackJSPromptOptions = {
