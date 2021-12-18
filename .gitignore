@@ -1,14 +1,9 @@
 node_modules
 
-test/js/logs
-test/js/backups
-test/js/.env
-test/js/*.yaml
-test/js/*.txt
-test/js/*.sqlite
-test/ts/logs
-test/js/backups
-test/ts/.env
-test/ts/*.yaml
-test/ts/*.txt
-test/ts/*.sqlite
+**/*.env
+**/*.sqlite
+**/*.txt
+**/*.yaml
+
+test/**/*/logs
+test/**/*/backups
