@@ -106,8 +106,8 @@ const Discord = {
 
   GetChannel(guild: DiscordJS.Guild, finder: string | DiscordJS.Channel) {
     let channel: DiscordJS.GuildChannel | DiscordJS.ThreadChannel | undefined
-    if (typeof finder == 'string') channel = guild.channels.cache.find((c) => (c.name === finder || c.id === finder))
-    else channel = guild.channels.cache.find((c) => (c.id === finder.id))
+    if (typeof finder === 'string') channel = guild.channels.cache.find((c) => c.name === finder || c.id === finder)
+    else channel = guild.channels.cache.find((c) => c.id === finder.id)
     return channel
   },
 

@@ -52,7 +52,15 @@ const Utils = {
   },
 
   GenerateID(length: number = 8, base: number = 16) {
-    const id = "x".repeat(length).split('').map(() => Math.floor(Math.random() * base).toString(base).slice(-1)).join('')
+    const id = 'x'
+      .repeat(length)
+      .split('')
+      .map(() =>
+        Math.floor(Math.random() * base)
+          .toString(base)
+          .slice(-1),
+      )
+      .join('')
     return Utils.RandomizeCapitalization(id)
   },
 

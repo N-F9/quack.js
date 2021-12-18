@@ -45,11 +45,13 @@ export class QuackJS implements QuackJSObject {
     this.modules = []
     this.variables = {}
 
-    this.sequelize = new Sequelize(config.database || {
-      dialect: 'sqlite',
-      storage: 'database.sqlite',
-      logging: false,
-    })
+    this.sequelize = new Sequelize(
+      config.database || {
+        dialect: 'sqlite',
+        storage: 'database.sqlite',
+        logging: false,
+      },
+    )
 
     this.client = new DiscordJS.Client({
       partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
