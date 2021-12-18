@@ -1,4 +1,4 @@
-import { QuackJSCommand, QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global'
+import { QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global'
 import * as DiscordJS from 'discord.js'
 import * as fs from 'fs'
 import * as _ from 'lodash'
