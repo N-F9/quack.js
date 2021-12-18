@@ -1,20 +1,15 @@
-import { QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global'
+import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global'
 import * as DiscordJS from 'discord.js'
-import * as fs from 'fs'
-import * as _ from 'lodash'
+import _ from 'lodash'
 import * as logs from 'discord-logs'
 import { Sequelize } from 'sequelize'
 
 import Utils from './modules/utils'
 import Log from './modules/log'
-import YAML from './modules/yaml'
 import Discord from './modules/discord'
-
-import * as path from 'path'
 
 export const QuackJSUtils = {
   ...Utils,
-  YAML,
   Log,
   Discord,
 }
@@ -25,9 +20,6 @@ export class QuackJS implements QuackJSObject {
   public commands: QuackJSSlashCommand[]
   public triggers: QuackJSTrigger[]
   public events: QuackJSEvent[]
-  public files: string[]
-  public configs: Record<string, object>
-  public modules: QuackJSModule[]
   public variables: Record<string, object>
   public sequelize: Sequelize
 
@@ -40,9 +32,6 @@ export class QuackJS implements QuackJSObject {
     this.commands = []
     this.events = []
     this.triggers = []
-    this.files = []
-    this.configs = {}
-    this.modules = []
     this.variables = {}
 
     this.sequelize = new Sequelize(
@@ -71,15 +60,15 @@ export class QuackJS implements QuackJSObject {
         // DiscordJS.Intents.FLAGS.GUILD_PRESENCES,
         // DiscordJS.Intents.FLAGS.GUILD_VOICE_STATES,
         // DiscordJS.Intents.FLAGS.GUILD_WEBHOOKS,
-        ...this.config.intents,
+        ...(this.config.intents || []),
       ],
     })
   }
 
   async Start(QuackJS: QuackJS) {
-    QuackJSUtils.MkDir('logs')
-    QuackJSUtils.MkDir('logs/console')
-    QuackJSUtils.MkDir('backups')
+    if (QuackJS.config.logsFolder) QuackJSUtils.MkDir('logs')
+    if (QuackJS.config.logsFolder) QuackJSUtils.MkDir('logs/console')
+    if (QuackJS.config.backups) QuackJSUtils.MkDir('backups')
 
     logs.default(QuackJS.client)
 
@@ -164,58 +153,8 @@ export class QuackJS implements QuackJSObject {
       QuackJSUtils.Error(new Error(error))
     }
 
-    await this.YAML()
-    this.files = (await this.GetFiles()) as string[]
-    await this.GetModules(QuackJS)
     await this.StartEvents()
     await this.Login()
-  }
-
-  private async YAML() {
-    return new Promise((resolve, reject) => {
-      for (const conf in this.config.configs) {
-        QuackJSUtils.YAML.Generate(conf, this.config.configs[conf])
-        const con = QuackJSUtils.YAML.Get(conf)
-        if (!con) reject(QuackJSUtils.Error(new Error(`YAML File ${conf} had an error!`)))
-        this.configs[conf] = con as object
-      }
-      if (Object.values(this.config.configs).length === Object.values(this.configs).length) resolve(this.configs)
-    })
-  }
-
-  private async GetFiles() {
-    return new Promise((resolve, reject) => {
-      const getAllFiles = (dirPath: string, arrayOfFiles: string[]) => {
-        const files = fs.readdirSync(path.join(process.env.PWD as string, dirPath, '/'))
-        arrayOfFiles = arrayOfFiles || []
-        files.forEach((file: string) => {
-          if (fs.statSync(path.join(process.env.PWD as string, dirPath, '/', file)).isDirectory()) {
-            arrayOfFiles = getAllFiles(dirPath + '/' + file, arrayOfFiles)
-          } else {
-            arrayOfFiles.push(path.join(process.env.PWD as string, dirPath, '/', file))
-          }
-        })
-        return arrayOfFiles
-      }
-      const files: string[] = getAllFiles(`/${this.config.srcDir}`, [])
-      if (files) resolve(files)
-      else reject(files)
-    })
-  }
-
-  private async GetModules(QuackJS: QuackJS) {
-    return new Promise((resolve, _reject) => {
-      QuackJS.files
-        // .map((file) => /*'file:\\\\\\' +*/ file.replace(/\.ts/g, '.js'))
-        .forEach(async (file, index) => {
-          if (!file.endsWith('.js') && !file.endsWith('.ts')) return
-          const name = file.substring(0, file.indexOf('.js')).replace(/^.*[\\\/]/, '')
-          const module = (await import(file)).default || (await import(file))
-          await module(QuackJS)
-          QuackJS.modules.push({ name, file, module })
-          if (index + 1 === QuackJS.files.length) resolve(QuackJS.files)
-        })
-    })
   }
 
   private async StartEvents() {

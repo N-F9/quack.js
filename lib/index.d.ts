@@ -1,11 +1,7 @@
-import { QuackJSConfig, QuackJSEvent, QuackJSModule, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
+import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
 import { Sequelize } from 'sequelize';
 export declare const QuackJSUtils: {
-    YAML: {
-        Get(file: string): object | null | undefined;
-        Generate(file: string, contents: string | object): void;
-    };
     Log: (message: string, type?: "i" | "s" | "e" | "w") => void;
     Discord: {
         Embed(message: import("../global").QuackJSMessage, placeholders?: Record<string, any> | undefined): DiscordJS.MessageOptions;
@@ -38,17 +34,11 @@ export declare class QuackJS implements QuackJSObject {
     commands: QuackJSSlashCommand[];
     triggers: QuackJSTrigger[];
     events: QuackJSEvent[];
-    files: string[];
-    configs: Record<string, object>;
-    modules: QuackJSModule[];
     variables: Record<string, object>;
     sequelize: Sequelize;
     private token;
     constructor(token: string, config: QuackJSConfig);
     Start(QuackJS: QuackJS): Promise<void>;
-    private YAML;
-    private GetFiles;
-    private GetModules;
     private StartEvents;
     private Login;
     CreateCommand(slashCommand: QuackJSSlashCommand): void;

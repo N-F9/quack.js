@@ -6,12 +6,9 @@ import * as Sequelize from 'sequelize'
 // https://stackoverflow.com/a/62081238
 
 declare type QuackJSConfig = {
-  prefix: string
-  srcDir: string
-  doubleQuoteArgs?: boolean
-  parseArgs?: boolean
-  intents: DiscordJS.Intents[]
-  configs: Record<string, Object>
+  logsFolder?: boolean 
+  backups?: boolean
+  intents?: DiscordJS.Intents[]
   database?: Sequelize.Options
 }
 
@@ -21,9 +18,6 @@ declare interface QuackJSObject {
   commands: QuackJSSlashCommand[]
   events: QuackJSEvent[]
   triggers: QuackJSTrigger[]
-  files: string[]
-  configs: Record<string, Object>
-  modules: QuackJSModule[]
   sequelize: Sequelize.Sequelize
 }
 
@@ -58,12 +52,6 @@ declare type QuackJSTime = {
   hours: number
   minutes: number
   seconds: number
-}
-
-declare type QuackJSModule = {
-  name: string
-  file: string
-  module: (QuackJS: any) => void // this will need to be fixed
 }
 
 declare type QuackJSField = {
