@@ -1,18 +1,6 @@
-const { QuackJSUtils } = require('../../../../lib')
+const { QuackJSUtils } = require('../../../lib')
 
 module.exports = (QuackJS) => {
-  QuackJS.CreateCommand({
-    name: 'test2',
-    aliases: [],
-    description: 'gfd',
-    type: 'fdsa',
-    usage: 'fdsf',
-    permission: 'everyone',
-    execute(client, message, args) {
-      console.log(args)
-    }
-  })
-
   QuackJS.CreateTrigger({
     name: 'test',
     trigger: /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,
@@ -35,7 +23,7 @@ module.exports = (QuackJS) => {
     }
   })
 
-  QuackJS.CreateSlash({
+  QuackJS.CreateCommand({
     name: 'test',
     description: 'this is a test command',
     permission: 'everyone',
