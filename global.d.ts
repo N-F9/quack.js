@@ -1,4 +1,5 @@
 import * as DiscordJS from 'discord.js'
+import * as Sequelize from 'sequelize'
 // import { QuackJS } from './src/'
 
 // https://stackoverflow.com/a/65948871
@@ -11,28 +12,19 @@ declare type QuackJSConfig = {
   parseArgs?: boolean
   intents: DiscordJS.Intents[]
   configs: Record<string, Object>
+  database?: Sequelize.Options
 }
 
 declare interface QuackJSObject {
   config: QuackJSConfig
   client: DiscordJS.Client
-  commands: QuackJSCommand[]
-  slashCommands: QuackJSSlashCommand[]
+  commands: QuackJSSlashCommand[]
   events: QuackJSEvent[]
   triggers: QuackJSTrigger[]
   files: string[]
   configs: Record<string, Object>
   modules: QuackJSModule[]
-}
-
-declare type QuackJSCommand = {
-  name: string
-  aliases: string[]
-  description: string
-  usage: string
-  type: string
-  permission: string
-  execute: (client: DiscordJS.Client, message: DiscordJS.Message, args: any[], command?: string, prefix?: string) => void
+  sequelize: Sequelize.Sequelize
 }
 
 declare type QuackJSSlashCommand = {

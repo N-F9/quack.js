@@ -17,10 +17,12 @@ const Utils = {
       seconds: d.getSeconds(),
     }
   },
+
   Error(e: Error): void {
     fs.appendFileSync('errors.txt', `${Utils.Time().TZ}\n${e.stack}\n───────────────\n`)
     Log('An error has occured!', 'e')
   },
+
   MkDir(name: string): boolean {
     if (!fs.existsSync(`./${name}`)) {
       fs.mkdirSync(`./${name}`)
@@ -29,6 +31,7 @@ const Utils = {
       return false
     }
   },
+
   PadWithZeros(number: number, length: number): string {
     let n = '' + number
     while (n.length < length) {
@@ -36,21 +39,27 @@ const Utils = {
     }
     return n
   },
+
   Random(min: number, max: number) {
     return Math.floor(Math.random() * (max + 1 - min)) + min
   },
+
   RandomizeCapitalization(string: string) {
     return string
       .split('')
       .map((chr) => (Utils.Random(0, 1) ? chr.toLowerCase() : chr.toUpperCase()))
       .join('')
   },
-  GenerateID() {
-    return Utils.RandomizeCapitalization(Math.random().toString(36).slice(-8))
+
+  GenerateID(length: number = 8, base: number = 16) {
+    const id = "x".repeat(length).split('').map(() => Math.floor(Math.random() * base).toString(base).slice(-1)).join('')
+    return Utils.RandomizeCapitalization(id)
   },
+
   Emoji(e: string) {
     return e.replace(/<:.+:|>/g, '')
   },
+
   Backup(file: string) {
     const time = Utils.Time()
 
@@ -58,30 +67,6 @@ const Utils = {
       if (err) throw err
       Log(`Created backup of ${file}`, 's')
     })
-  },
-  Validator(type: 'URL' | 'Number' | 'Date', value: any) {
-    try {
-      let v = null
-
-      switch (type) {
-        case 'URL':
-          v = new URL(value)
-          if (v) return true
-          break
-        case 'Number':
-          v = new Number(value)
-          if (v) return true
-          break
-        case 'Date':
-          v = new Date(value)
-          if (v) return true
-          break
-        default:
-          return false
-      }
-    } catch (error) {
-      if (error) return false
-    }
   },
 }
 

@@ -3,11 +3,11 @@ import * as DiscordJS from 'discord.js'
 import * as fs from 'fs'
 import * as _ from 'lodash'
 import * as logs from 'discord-logs'
+import { Sequelize } from 'sequelize'
 
 import Utils from './modules/utils'
 import Log from './modules/log'
 import YAML from './modules/yaml'
-import DB from './modules/database'
 import Discord from './modules/discord'
 
 import * as path from 'path'
@@ -17,20 +17,19 @@ export const QuackJSUtils = {
   YAML,
   Log,
   Discord,
-  DB,
 }
 
 export class QuackJS implements QuackJSObject {
   public config: QuackJSConfig
   public client: DiscordJS.Client
-  public commands: QuackJSCommand[]
-  public slashCommands: QuackJSSlashCommand[]
+  public commands: QuackJSSlashCommand[]
   public triggers: QuackJSTrigger[]
   public events: QuackJSEvent[]
   public files: string[]
   public configs: Record<string, object>
   public modules: QuackJSModule[]
   public variables: Record<string, object>
+  public sequelize: Sequelize
 
   private token: string
 
@@ -39,13 +38,18 @@ export class QuackJS implements QuackJSObject {
     this.config = config
 
     this.commands = []
-    this.slashCommands = []
     this.events = []
     this.triggers = []
     this.files = []
     this.configs = {}
     this.modules = []
     this.variables = {}
+
+    this.sequelize = new Sequelize(config.database || {
+      dialect: 'sqlite',
+      storage: 'database.sqlite',
+      logging: false,
+    })
 
     this.client = new DiscordJS.Client({
       partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -81,59 +85,6 @@ export class QuackJS implements QuackJSObject {
       name: 'messageCreate',
       execute(client: DiscordJS.Client, message: DiscordJS.Message) {
         if (message.author.bot) return
-        if (message.content.startsWith(QuackJS.config.prefix)) {
-          const unformattedArgs: string[] = message.content.slice(QuackJS.config.prefix.length).split(/ +/)
-          const commandName: string = (unformattedArgs.shift() as string).toLowerCase()
-
-          const generateDobuleQuoteArgs = () => {
-            const ar: string[] = []
-            let temp = ''
-
-            unformattedArgs.forEach((arg, i) => {
-              if (arg[0] === '"') {
-                temp += arg.substring(1) + ' '
-              } else if (temp && arg[arg.length - 1] !== '"') {
-                temp += arg + ' '
-              } else if (temp && arg[arg.length - 1] === '"') {
-                temp += arg.slice(0, -1)
-                ar.push(temp)
-                temp = ''
-              } else ar.push(arg)
-
-              if (temp && unformattedArgs.length === i + 1) {
-                ar.push(...temp.split(' '))
-              }
-            })
-
-            return ar.filter((a) => a)
-          }
-
-          const parseArgs = (ar: string[]) => {
-            return ar.map((arg) => {
-              const url = QuackJSUtils.Validator('URL', arg) && new URL(arg)
-              const num = QuackJSUtils.Validator('Number', arg) && new Number(arg)
-              const date = QuackJSUtils.Validator('Date', arg) && new Date(arg)
-
-              if (url) return url
-              else if (!isNaN(num as number)) return num
-              else if ((date as Date).toString() !== 'Invalid Date') return date
-              else return arg
-            })
-          }
-
-          let args: any[] = QuackJS.config.doubleQuoteArgs ? generateDobuleQuoteArgs() : unformattedArgs
-          args = QuackJS.config.parseArgs ? parseArgs(args) : args
-
-          const vars: number[] = [_.findIndex(QuackJS.commands, { name: commandName }), _.findIndex(QuackJS.commands, (e: QuackJSCommand) => e.aliases.includes(commandName))].filter((e) => e !== -1)
-
-          const command: QuackJSCommand = QuackJS.commands[vars[0]] || undefined
-
-          if (command)
-            if (command.permission === 'everyone') command.execute(client, message, args)
-            else if (message.member?.roles.cache.find((role) => role.id === command.permission || role.name === command.permission)) command.execute(client, message, args)
-
-          return
-        }
         QuackJS.triggers.forEach((trigger) => {
           if (message.content.match(trigger.trigger)) {
             trigger.execute(client, message)
@@ -147,14 +98,14 @@ export class QuackJS implements QuackJSObject {
       execute(client: DiscordJS.Client, interaction: DiscordJS.Interaction) {
         if (!interaction.isCommand()) return
 
-        const i = _.findIndex(QuackJS.slashCommands, {
+        const i = _.findIndex(QuackJS.commands, {
           name: interaction.commandName,
         })
 
         if (i === -1) return
 
         try {
-          QuackJS.slashCommands[i].execute(interaction)
+          QuackJS.commands[i].execute(interaction)
         } catch (error: any) {
           Utils.Error(error)
           interaction.reply({
@@ -174,7 +125,7 @@ export class QuackJS implements QuackJSObject {
         ;(async () => {
           if (!client.application?.owner) await client.application?.fetch()
 
-          for (const command of QuackJS.slashCommands) {
+          for (const command of QuackJS.commands) {
             const cpermission = command.permission
 
             if (command.guilds.length === 0) {
@@ -206,7 +157,7 @@ export class QuackJS implements QuackJSObject {
     })
 
     try {
-      QuackJSUtils.DB.authenticate()
+      this.sequelize.authenticate()
     } catch (error: any) {
       QuackJSUtils.Error(new Error(error))
     }
@@ -277,12 +228,8 @@ export class QuackJS implements QuackJSObject {
     })
   }
 
-  public CreateCommand(command: QuackJSCommand) {
-    this.commands.push(command)
-  }
-
-  public CreateSlash(slashCommand: QuackJSSlashCommand) {
-    this.slashCommands.push(slashCommand)
+  public CreateCommand(slashCommand: QuackJSSlashCommand) {
+    this.commands.push(slashCommand)
   }
 
   public CreateEvent(event: QuackJSEvent) {
