@@ -9,7 +9,6 @@ import Log from './modules/log'
 import YAML from './modules/yaml'
 import DB from './modules/database'
 import Discord from './modules/discord'
-import Variables from './modules/variables'
 
 import * as path from 'path'
 
@@ -18,7 +17,6 @@ export const QuackJSUtils = {
   YAML,
   Log,
   Discord,
-  Variables,
   DB,
 }
 
@@ -32,6 +30,7 @@ export class QuackJS implements QuackJSObject {
   public files: string[]
   public configs: Record<string, object>
   public modules: QuackJSModule[]
+  public variables: Record<string, object>
 
   private token: string
 
@@ -46,6 +45,7 @@ export class QuackJS implements QuackJSObject {
     this.files = []
     this.configs = {}
     this.modules = []
+    this.variables = {}
 
     this.client = new DiscordJS.Client({
       partials: ['MESSAGE', 'CHANNEL', 'REACTION'],

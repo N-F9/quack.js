@@ -5,10 +5,10 @@ export declare const QuackJSUtils: {
         Get(file: string): object | null | undefined;
         Generate(file: string, contents: string | object): void;
     };
-    Log: (message: any, type?: "i" | "s" | "e" | "w") => void;
+    Log: (message: string, type?: "i" | "s" | "e" | "w") => void;
     Discord: {
         Embed(message: import("../global").QuackJSMessage, placeholders?: Record<string, any> | undefined): DiscordJS.MessageOptions;
-        Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: import("../global").QuackJSPromptOptions): Promise<unknown>;
+        Prompt(message: DiscordJS.Message<boolean>, member: DiscordJS.GuildMember, options: import("../global").QuackJSPromptOptions): Promise<unknown>;
         CreateRole(guild: DiscordJS.Guild, options: DiscordJS.CreateRoleOptions): void;
         DeleteRole(guild: DiscordJS.Guild, finder: string | number): void;
         HasRole(member: DiscordJS.GuildMember, finder: string | number): Boolean;
@@ -20,8 +20,7 @@ export declare const QuackJSUtils: {
         DeleteCategory(guild: DiscordJS.Guild, finder: string | number): void;
         MoveChannelToCategory(guild: DiscordJS.Guild, channel: string | number, category: string | number): void;
     };
-    Variables: Record<string, any>;
-    DB: import("sequelize/types").Sequelize;
+    DB: import("sequelize/dist").Sequelize;
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;
     MkDir(name: string): boolean;
@@ -43,6 +42,7 @@ export declare class QuackJS implements QuackJSObject {
     files: string[];
     configs: Record<string, object>;
     modules: QuackJSModule[];
+    variables: Record<string, object>;
     private token;
     constructor(token: string, config: QuackJSConfig);
     Start(QuackJS: QuackJS): Promise<void>;

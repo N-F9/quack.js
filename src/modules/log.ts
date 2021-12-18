@@ -2,7 +2,7 @@ import { gray, blue, white, red, green, yellow } from 'picocolors'
 import * as fs from 'fs'
 import Utils from './utils'
 
-const Log = (message: any, type: 'i' | 'e' | 's' | 'w' = 'i') => {
+const Log = (message: string, type: 'i' | 'e' | 's' | 'w' = 'i') => {
   const time = Utils.Time()
 
   const YMD = `${time.year}-${Utils.PadWithZeros(time.month, 2)}-${Utils.PadWithZeros(time.date, 2)}`
