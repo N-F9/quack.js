@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import path from 'path'
 import { QuackJSTime } from '../../global'
 import Log from './log'
 
@@ -21,6 +22,20 @@ const Utils = {
 	Error(e: Error): void {
 		fs.appendFileSync('errors.txt', `${Utils.Time().TZ}\n${e.stack}\n───────────────\n`)
 		Log('An error has occured!', 'e')
+	},
+
+	GetFiles(dir: string, allFiles: string[] = []) {
+		let files: string[] = fs.readdirSync(dir)
+
+		files.forEach(file => {
+			if (fs.lstatSync(dir + '/' + file).isDirectory()) {
+				allFiles = this.GetFiles(dir + '/' + file, allFiles) 
+			} else {
+				allFiles?.push(path.join(process.cwd(), dir, '/', file))
+			}
+		})
+
+		return allFiles
 	},
 
 	MkDir(name: string): boolean {

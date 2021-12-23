@@ -2,6 +2,7 @@ import { QuackJSTime } from '../../global';
 declare const Utils: {
     Time(date?: Date): QuackJSTime;
     Error(e: Error): void;
+    GetFiles(dir: string, allFiles?: string[]): string[];
     MkDir(name: string): boolean;
     PadWithZeros(number: number, length: number): string;
     Random(min: number, max: number): number;
