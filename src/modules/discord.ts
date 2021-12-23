@@ -1,5 +1,6 @@
+import { QuackJSMessage, QuackJSPromptOptions } from '../../global'
+
 import * as DiscordJS from 'discord.js'
-import { QuackJSEmbed, QuackJSMessage, QuackJSPromptOptions } from '../../global'
 import Utils from './utils'
 
 const Discord = {

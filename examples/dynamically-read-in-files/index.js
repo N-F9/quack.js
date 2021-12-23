@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { QuackJS } = require('../../')
+const { QuackJS, QuackJSUtils } = require('../../')
 const fs = require('fs')
 
 const Quack = new QuackJS(process.env.TOKEN, {
@@ -7,10 +7,10 @@ const Quack = new QuackJS(process.env.TOKEN, {
   logsFolder: false,
 }) 
 
-const files = fs.readdirSync('./src')
+const files = QuackJSUtils.GetFiles('./src')
 
 for (const file of files) {
-  const execute = require(`./src/${file}`)
+  const execute = require(file)
   execute(Quack)
 }
 

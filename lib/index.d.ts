@@ -20,7 +20,7 @@ export declare const QuackJSUtils: {
     };
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;
-    GetFiles(dir: string, allFiles?: string[]): string[];
+    GetFiles(directory: string): string[];
     MkDir(name: string): boolean;
     PadWithZeros(number: number, length: number): string;
     Random(min: number, max: number): number;

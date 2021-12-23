@@ -1,6 +1,7 @@
+import { QuackJSTime } from '../../global'
+
 import * as fs from 'fs'
 import path from 'path'
-import { QuackJSTime } from '../../global'
 import Log from './log'
 
 const Utils = {
@@ -24,18 +25,22 @@ const Utils = {
 		Log('An error has occured!', 'e')
 	},
 
-	GetFiles(dir: string, allFiles: string[] = []) {
-		let files: string[] = fs.readdirSync(dir)
+	GetFiles(directory: string) {
+		const recursivelyGetFiles = (dir: string, allFiles: string[] = []) => {
+			let files: string[] = fs.readdirSync(dir)
 
-		files.forEach(file => {
-			if (fs.lstatSync(dir + '/' + file).isDirectory()) {
-				allFiles = this.GetFiles(dir + '/' + file, allFiles) 
-			} else {
-				allFiles?.push(path.join(process.cwd(), dir, '/', file))
-			}
-		})
+			files.forEach(file => {
+				if (fs.lstatSync(dir + '/' + file).isDirectory()) {
+					allFiles = recursivelyGetFiles(dir + '/' + file, allFiles) 
+				} else {
+					allFiles?.push(path.join(process.cwd(), dir, '/', file))
+				}
+			})
 
-		return allFiles
+			return allFiles
+		}
+
+		return recursivelyGetFiles(directory)
 	},
 
 	MkDir(name: string): boolean {

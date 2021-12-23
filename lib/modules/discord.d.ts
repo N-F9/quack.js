@@ -1,5 +1,5 @@
-import * as DiscordJS from 'discord.js';
 import { QuackJSMessage, QuackJSPromptOptions } from '../../global';
+import * as DiscordJS from 'discord.js';
 declare const Discord: {
     Embed(message: QuackJSMessage, placeholders?: Record<string, any> | undefined): DiscordJS.MessageOptions;
     Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: QuackJSPromptOptions): Promise<unknown>;
