@@ -2,6 +2,8 @@ import { QuackJSTime } from '../../global'
 
 import * as fs from 'fs'
 import path from 'path'
+import ms from 'ms'
+
 import Log from './log'
 
 const Utils = {
@@ -96,6 +98,8 @@ const Utils = {
 			Log(`Created backup of ${file}`, 's')
 		})
 	},
+
+	MS: ms,
 }
 
 export default Utils

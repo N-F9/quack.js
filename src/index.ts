@@ -4,6 +4,7 @@ import * as DiscordJS from 'discord.js'
 import _ from 'lodash'
 import * as logs from 'discord-logs'
 import { Sequelize } from 'sequelize'
+import { scheduleJob } from 'node-schedule'
 
 import Utils from './modules/utils'
 import Log from './modules/log'
@@ -111,6 +112,15 @@ export class QuackJS implements QuackJSObject {
 		this.CreateEvent({
 			name: 'ready',
 			execute(client: DiscordJS.Client) {
+				if (QuackJS.config.backups) {
+					QuackJS.config.backups.forEach(backup => {
+						QuackJSUtils.Backup(backup.file)
+						scheduleJob(backup.scheduling, () => {
+							QuackJSUtils.Backup(backup.file)
+						})
+					})
+				}
+
 				const commandsNames = QuackJS.commands.map((c) => c.name)
 				if (new Set(commandsNames).size !== commandsNames.length) Log('Two or more commands have the same name!', 'w')
 				;(async () => {

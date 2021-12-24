@@ -1,4 +1,5 @@
 import { QuackJSTime } from '../../global';
+import ms from 'ms';
 declare const Utils: {
     Time(date?: Date): QuackJSTime;
     Error(e: Error): void;
@@ -10,5 +11,6 @@ declare const Utils: {
     GenerateID(length?: number, base?: number): string;
     Emoji(e: string): string;
     Backup(file: string): void;
+    MS: typeof ms;
 };
 export default Utils;

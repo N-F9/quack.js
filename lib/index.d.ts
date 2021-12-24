@@ -1,3 +1,4 @@
+/// <reference types="ms" />
 import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
 import { Sequelize } from 'sequelize';
@@ -28,6 +29,7 @@ export declare const QuackJSUtils: {
     GenerateID(length?: number, base?: number): string;
     Emoji(e: string): string;
     Backup(file: string): void;
+    MS: typeof import("ms");
 };
 export declare class QuackJS implements QuackJSObject {
     config: QuackJSConfig;

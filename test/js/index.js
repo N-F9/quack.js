@@ -23,9 +23,15 @@ console.log(QuackJSUtils.GetFiles('./src'))
 // console.log(QuackJSUtils.PadWithZeros(10, 24))
 // console.log(QuackJSUtils.Random(0, 34))
 // console.log(QuackJSUtils.Error(new Error('test')))
+console.log(QuackJSUtils.MS('2 days'))
 
 const Quack = new QuackJS(process.env.TOKEN, {
-  backups: true,
+  backups: [
+    {
+      file: 'database.sqlite',
+      scheduling: '0 0 23 * * *'
+    }
+  ],
   logsFolder: true,
 }) 
 

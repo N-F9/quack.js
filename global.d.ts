@@ -7,9 +7,10 @@ import * as Sequelize from 'sequelize'
 
 declare type QuackJSConfig = {
   logsFolder?: boolean 
-  backups?: boolean
+  backups?: QuackJSBackup[]
   intents?: DiscordJS.Intents[]
   database?: Sequelize.Options
+
 }
 
 declare interface QuackJSObject {
@@ -91,4 +92,9 @@ declare type QuackJSMessage = {
 declare type QuackJSPromptOptions = {
   type: 'message' | 'reaction'
   emoji?: string
+}
+
+declare type QuackJSBackup = {
+  file: string
+  scheduling: string
 }
