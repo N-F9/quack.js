@@ -9,11 +9,13 @@ import { scheduleJob } from 'node-schedule'
 import Utils from './modules/utils'
 import Log from './modules/log'
 import Discord from './modules/discord'
+import Color from './modules/color'
 
 export const QuackJSUtils = {
 	...Utils,
 	Log,
 	Discord,
+	Color
 }
 
 export class QuackJS implements QuackJSObject {

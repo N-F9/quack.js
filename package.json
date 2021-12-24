@@ -30,6 +30,7 @@
     "test": "test"
   },
   "dependencies": {
+    "color": "^4.1.0",
     "discord-logs": "^2.0.1",
     "discord.js": "^13.4.0",
     "dotenv": "^10.0.0",
@@ -43,6 +44,7 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
+    "@types/color": "^3.0.2",
     "@types/js-yaml": "^4.0.5",
     "@types/lodash": "^4.14.178",
     "@types/node": "^17.0.0",

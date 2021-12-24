@@ -24,6 +24,7 @@ console.log(QuackJSUtils.GetFiles('./src'))
 // console.log(QuackJSUtils.Random(0, 34))
 // console.log(QuackJSUtils.Error(new Error('test')))
 console.log(QuackJSUtils.MS('2 days'))
+console.log(QuackJSUtils.Color('hsla(262, 59%, 81%, 0.5)'))
 
 const Quack = new QuackJS(process.env.TOKEN, {
   backups: [

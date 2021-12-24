@@ -19,6 +19,7 @@ export declare const QuackJSUtils: {
         GetChannel(guild: DiscordJS.Guild, finder: string | DiscordJS.Channel): DiscordJS.GuildChannel | DiscordJS.ThreadChannel | undefined;
         MoveChannelToCategory(guild: DiscordJS.Guild, channel: string | DiscordJS.Channel, category: string | DiscordJS.CategoryChannel): void;
     };
+    Color: (color: string) => number;
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;
     GetFiles(directory: string): string[];
