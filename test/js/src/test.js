@@ -30,7 +30,12 @@ module.exports = (QuackJS) => {
     guilds: ['728269506710995034'],
     execute(interaction) {
       console.log(interaction)
-      interaction.reply('yay!')
+      interaction.reply(QuackJSUtils.Discord.Embed({
+        embeds: [{
+          color: QuackJSUtils.Color('rgb(0, 173, 255)'),
+          title: 'test'
+        }]
+      }))
     }
   })
 }

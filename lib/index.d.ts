@@ -1,7 +1,7 @@
 /// <reference types="ms" />
 import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
-import { Sequelize } from 'sequelize';
+import { Model, ModelCtor, Sequelize } from 'sequelize';
 export declare const QuackJSUtils: {
     Log: (message: string, type?: "i" | "s" | "e" | "w") => void;
     Discord: {
@@ -40,11 +40,13 @@ export declare class QuackJS implements QuackJSObject {
     events: QuackJSEvent[];
     variables: Record<string, object>;
     sequelize: Sequelize;
+    models: Record<string, ModelCtor<Model<any, any>>>;
     private token;
     constructor(token: string, config: QuackJSConfig);
     Start(QuackJS: QuackJS): Promise<void>;
     private StartEvents;
     private Login;
+    AddModel(name: string, model: ModelCtor<Model<any, any>>): void;
     CreateCommand(slashCommand: QuackJSSlashCommand): void;
     CreateEvent(event: QuackJSEvent): void;
     CreateTrigger(trigger: QuackJSTrigger): void;

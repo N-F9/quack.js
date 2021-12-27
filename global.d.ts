@@ -10,7 +10,6 @@ declare type QuackJSConfig = {
   backups?: QuackJSBackup[]
   intents?: DiscordJS.Intents[]
   database?: Sequelize.Options
-
 }
 
 declare interface QuackJSObject {
@@ -20,6 +19,7 @@ declare interface QuackJSObject {
   events: QuackJSEvent[]
   triggers: QuackJSTrigger[]
   sequelize: Sequelize.Sequelize
+  models: Record<string, Sequelize.ModelCtor<Sequelize.Model<any, any>>>
 }
 
 declare type QuackJSSlashCommand = {

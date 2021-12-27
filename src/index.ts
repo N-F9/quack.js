@@ -3,7 +3,7 @@ import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJ
 import * as DiscordJS from 'discord.js'
 import _ from 'lodash'
 import * as logs from 'discord-logs'
-import { Sequelize } from 'sequelize'
+import { Model, ModelCtor, Sequelize } from 'sequelize'
 import { scheduleJob } from 'node-schedule'
 
 import Utils from './modules/utils'
@@ -26,6 +26,7 @@ export class QuackJS implements QuackJSObject {
 	public events: QuackJSEvent[]
 	public variables: Record<string, object>
 	public sequelize: Sequelize
+	public models: Record<string, ModelCtor<Model<any, any>>>
 
 	private token: string
 
@@ -45,6 +46,8 @@ export class QuackJS implements QuackJSObject {
 				logging: false,
 			},
 		)
+
+		this.models = {}
 
 		this.client = new DiscordJS.Client({
 			partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -69,7 +72,7 @@ export class QuackJS implements QuackJSObject {
 		})
 	}
 
-	async Start(QuackJS: QuackJS) {
+	public async Start(QuackJS: QuackJS) {
 		if (QuackJS.config.logsFolder) QuackJSUtils.MkDir('logs')
 		if (QuackJS.config.logsFolder) QuackJSUtils.MkDir('logs/console')
 		if (QuackJS.config.backups) QuackJSUtils.MkDir('backups')
@@ -179,6 +182,11 @@ export class QuackJS implements QuackJSObject {
 		return new Promise((resolve, _reject) => {
 			resolve(this.client.login(this.token))
 		})
+	}
+
+	public AddModel(name: string, model: ModelCtor<Model<any, any>>) {
+		this.models[name] = model
+		this.sequelize.sync()
 	}
 
 	public CreateCommand(slashCommand: QuackJSSlashCommand) {

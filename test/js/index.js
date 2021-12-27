@@ -1,6 +1,7 @@
 require('dotenv').config()
 const { QuackJS, QuackJSUtils } = require('../../')
 const fs = require('fs')
+const { DataTypes } = require('sequelize')
 
 // console.log(QuackJSUtils.Discord.Embed({
 //   embeds: [
@@ -36,6 +37,18 @@ const Quack = new QuackJS(process.env.TOKEN, {
   logsFolder: true,
 }) 
 
+const Example = Quack.sequelize.define('example', {
+  name: DataTypes.STRING,
+  stars: DataTypes.NUMBER
+})
+
+Quack.AddModel('example', Example)
+
+Quack.models.example.create({
+  name: 'num',
+  stars: 2134
+})
+
 const files = fs.readdirSync('./src')
 
 for (const file of files) {
@@ -44,3 +57,5 @@ for (const file of files) {
 }
 
 Quack.Start(Quack)
+
+console.log(Quack.models)
