@@ -24,7 +24,7 @@ export class QuackJS implements QuackJSObject {
 	public commands: QuackJSSlashCommand[]
 	public triggers: QuackJSTrigger[]
 	public events: QuackJSEvent[]
-	public variables: Record<string, object>
+	public variables: Record<string, any>
 	public sequelize: Sequelize
 	public models: Record<string, ModelCtor<Model<any, any>>>
 
@@ -35,8 +35,8 @@ export class QuackJS implements QuackJSObject {
 		this.config = config
 
 		this.commands = []
-		this.events = []
 		this.triggers = []
+		this.events = []
 		this.variables = {}
 
 		this.sequelize = new Sequelize(

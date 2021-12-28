@@ -38,7 +38,7 @@ export declare class QuackJS implements QuackJSObject {
     commands: QuackJSSlashCommand[];
     triggers: QuackJSTrigger[];
     events: QuackJSEvent[];
-    variables: Record<string, object>;
+    variables: Record<string, any>;
     sequelize: Sequelize;
     models: Record<string, ModelCtor<Model<any, any>>>;
     private token;
