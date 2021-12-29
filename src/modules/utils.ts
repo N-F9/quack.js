@@ -29,11 +29,11 @@ const Utils = {
 
 	GetFiles(directory: string) {
 		const recursivelyGetFiles = (dir: string, allFiles: string[] = []) => {
-			let files: string[] = fs.readdirSync(dir)
+			const files: string[] = fs.readdirSync(dir)
 
-			files.forEach(file => {
+			files.forEach((file) => {
 				if (fs.lstatSync(dir + '/' + file).isDirectory()) {
-					allFiles = recursivelyGetFiles(dir + '/' + file, allFiles) 
+					allFiles = recursivelyGetFiles(dir + '/' + file, allFiles)
 				} else {
 					allFiles?.push(path.join(process.cwd(), dir, '/', file))
 				}

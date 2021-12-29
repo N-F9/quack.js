@@ -15,7 +15,7 @@ export const QuackJSUtils = {
 	...Utils,
 	Log,
 	Discord,
-	Color
+	Color,
 }
 
 export class QuackJS implements QuackJSObject {
@@ -118,7 +118,7 @@ export class QuackJS implements QuackJSObject {
 			name: 'ready',
 			execute(client: DiscordJS.Client) {
 				if (QuackJS.config.backups) {
-					QuackJS.config.backups.forEach(backup => {
+					QuackJS.config.backups.forEach((backup) => {
 						QuackJSUtils.Backup(backup.file)
 						scheduleJob(backup.scheduling, () => {
 							QuackJSUtils.Backup(backup.file)
