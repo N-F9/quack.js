@@ -11,7 +11,7 @@
 [Documentation/Wiki](https://github.com/N-F9/quack.js/wiki) |
 [NPM](https://www.npmjs.com/package/@n-f9/quack.js) |
 [Github](https://www.npmjs.com/package/@n-f9/quack.js) |
-[Website](https://n-f9.github.io/quack.js-website/) |
+[Website](https://quack.nickf.me/) |
 [Issues](https://github.com/N-F9/quack.js/issues)
 
 ```
