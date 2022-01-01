@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Currently, all version above and including 0.0.5 are supported
+Currently, all version above and including 0.0.5 are supported.
 
 | Version | Supported          |
 | ------- | ------------------ |

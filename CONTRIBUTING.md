@@ -8,7 +8,7 @@ Welcome and thank you for your interest in contributing to Quack.js!
 - [pull requests](https://github.com/N-F9/quack.js/pulls)
 
 #### Testing
-All tests are inlcuded under the [test directory](https://github.com/N-F9/quack.js/tree/master/test). Here you are able to preform basic tests of the framework.
+All tests are included under the [test directory](https://github.com/N-F9/quack.js/tree/master/test). Here you can perform basic tests of the framework.
 
 #### Submitting Changes
 Changes will either go through issues or pull requests. 
