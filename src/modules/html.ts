@@ -9,12 +9,12 @@ class HTML {
 		this.DOM = new jsdom.JSDOM(html)
 	}
 
-	public static convertMarkdownToHTML(markdown: string) {
+	public static ConvertMarkdownToHTML(markdown: string) {
 		const converter = new showdown.Converter()
 		return converter.makeHtml(markdown)
 	}
 
-	public exportToHTML() {
+	public ExportToHTML() {
 		return minimize
 			.minify(
 				this.DOM.serialize(),
@@ -30,7 +30,7 @@ class HTML {
 	}
 
 	public toString() {
-		return this.exportToHTML()
+		return this.ExportToHTML()
 	}
 }
 

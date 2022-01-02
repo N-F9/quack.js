@@ -35,8 +35,8 @@ div.innerHTML = QuackJSUtils.HTML.convertMarkdownToHTML('# test')
 html.DOM.window.document.querySelector('body').appendChild(html.DOM.window.document.createElement('div'))
 html.DOM.window.document.querySelector('body').appendChild(div)
 
-console.log(QuackJSUtils.HTML.convertMarkdownToHTML('# test'))
-console.log(html.exportToHTML())
+console.log(QuackJSUtils.HTML.ConvertMarkdownToHTML('# test'))
+console.log(html.ExportToHTML())
 console.log(html.toString())
 
 const Quack = new QuackJS(process.env.TOKEN, {
