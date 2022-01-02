@@ -27,6 +27,18 @@ console.log(QuackJSUtils.GetFiles('./src'))
 console.log(QuackJSUtils.MS('2 days'))
 console.log(QuackJSUtils.Color('hsla(262, 59%, 81%, 0.5)'))
 
+const html = new QuackJSUtils.HTML()
+
+const div = html.DOM.window.document.createElement('div')
+div.innerHTML = QuackJSUtils.HTML.convertMarkdownToHTML('# test')
+
+html.DOM.window.document.querySelector('body').appendChild(html.DOM.window.document.createElement('div'))
+html.DOM.window.document.querySelector('body').appendChild(div)
+
+console.log(QuackJSUtils.HTML.convertMarkdownToHTML('# test'))
+console.log(html.exportToHTML())
+console.log(html.toString())
+
 const Quack = new QuackJS(process.env.TOKEN, {
   backups: [
     {

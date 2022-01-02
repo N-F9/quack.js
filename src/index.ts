@@ -10,12 +10,14 @@ import Utils from './modules/utils'
 import Log from './modules/log'
 import Discord from './modules/discord'
 import Color from './modules/color'
+import HTML from './modules/html'
 
 export const QuackJSUtils = {
 	...Utils,
 	Log,
 	Discord,
 	Color,
+	HTML,
 }
 
 export class QuackJS implements QuackJSObject {

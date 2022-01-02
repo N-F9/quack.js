@@ -2,6 +2,7 @@
 import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
 import { Model, ModelCtor, Sequelize } from 'sequelize';
+import HTML from './modules/html';
 export declare const QuackJSUtils: {
     Log: (message: string, type?: "i" | "s" | "e" | "w") => void;
     Discord: {
@@ -20,6 +21,7 @@ export declare const QuackJSUtils: {
         MoveChannelToCategory(guild: DiscordJS.Guild, channel: string | DiscordJS.Channel, category: string | DiscordJS.CategoryChannel): void;
     };
     Color: (color: string) => number;
+    HTML: typeof HTML;
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;
     GetFiles(directory: string): string[];
