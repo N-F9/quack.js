@@ -5,5 +5,6 @@ declare class HTML {
     static ConvertMarkdownToHTML(markdown: string): string;
     ExportToHTML(): string;
     toString(): string;
+    get document(): Document;
 }
 export default HTML;

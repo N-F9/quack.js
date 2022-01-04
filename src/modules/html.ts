@@ -32,6 +32,10 @@ class HTML {
 	public toString() {
 		return this.ExportToHTML()
 	}
+
+	public get document(): Document {
+		return this.DOM.window.document
+	}
 }
 
 export default HTML

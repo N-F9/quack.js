@@ -30,10 +30,10 @@ console.log(QuackJSUtils.Color('hsla(262, 59%, 81%, 0.5)'))
 const html = new QuackJSUtils.HTML()
 
 const div = html.DOM.window.document.createElement('div')
-div.innerHTML = QuackJSUtils.HTML.convertMarkdownToHTML('# test')
+div.innerHTML = QuackJSUtils.HTML.ConvertMarkdownToHTML('# test')
 
 html.DOM.window.document.querySelector('body').appendChild(html.DOM.window.document.createElement('div'))
-html.DOM.window.document.querySelector('body').appendChild(div)
+html.document.querySelector('body').appendChild(div)
 
 console.log(QuackJSUtils.HTML.ConvertMarkdownToHTML('# test'))
 console.log(html.ExportToHTML())
