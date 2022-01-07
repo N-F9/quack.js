@@ -18,6 +18,7 @@
   "license": "MIT",
   "files": [
     "lib/**/*",
+    "locales/**/*",
     "global.d.ts",
     "README.md"
   ],

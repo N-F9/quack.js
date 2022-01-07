@@ -61,10 +61,17 @@ Quack.models.example.create({
   stars: 2134
 })
 
-const files = fs.readdirSync('./src')
+// const files = fs.readdirSync('./src')
+
+// for (const file of files) {
+//   const execute = require(`./src/${file}`)
+//   execute(Quack)
+// }
+
+const files = QuackJSUtils.GetFiles('./src')
 
 for (const file of files) {
-  const execute = require(`./src/${file}`)
+  const execute = require('./' + file)
   execute(Quack)
 }
 

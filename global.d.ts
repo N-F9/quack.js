@@ -1,6 +1,5 @@
 import * as DiscordJS from 'discord.js'
 import * as Sequelize from 'sequelize'
-// import { QuackJS } from './src/'
 
 // https://stackoverflow.com/a/65948871
 // https://stackoverflow.com/a/62081238
@@ -10,6 +9,7 @@ declare type QuackJSConfig = {
   backups?: QuackJSBackup[]
   intents?: DiscordJS.Intents[]
   database?: Sequelize.Options
+  locale?: 'en-US'
 }
 
 declare interface QuackJSObject {

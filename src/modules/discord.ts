@@ -2,6 +2,7 @@ import { QuackJSMessage, QuackJSPromptOptions } from '../../global'
 
 import * as DiscordJS from 'discord.js'
 import Utils from './utils'
+import Locale from '../handlers/locale'
 
 const Discord = {
 	Embed(message: QuackJSMessage, placeholders?: Record<string, any>): DiscordJS.MessageOptions {
@@ -42,7 +43,7 @@ const Discord = {
 					resolve(c)
 				})
 			} else if (options.type === 'reaction') {
-				if (options.emoji == null) reject(Utils.Error(new Error('Invalid Emoji')))
+				if (options.emoji == null) (async () => reject(Utils.Error(new Error((await Locale()).discord.errors.emoji))))()
 				const filter = (reaction: DiscordJS.MessageReaction, user: DiscordJS.User) => user.id === member.id && reaction.emoji.name === options.emoji
 
 				message.awaitReactions({ filter, max: 1 }).then((collected) => {
@@ -59,8 +60,8 @@ const Discord = {
 
 	DeleteRole(guild: DiscordJS.Guild, finder: string) {
 		const roleDeleted = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
-		if (roleDeleted == null) throw Utils.Error(new Error('Role does not exist'))
-		roleDeleted.delete()
+		if (roleDeleted == null) (async () => Utils.Error(new Error((await Locale()).discord.errors.role)))()
+		roleDeleted?.delete()
 	},
 
 	HasRole(member: DiscordJS.GuildMember, finder: string): Boolean {
@@ -69,14 +70,14 @@ const Discord = {
 
 	GiveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string) {
 		const role = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
-		if (role == null) throw Utils.Error(new Error('Role does not exist'))
-		return member.roles.add(role)
+		if (role == null) (async () => Utils.Error(new Error((await Locale()).discord.errors.role)))()
+		return member.roles.add(role as DiscordJS.Role)
 	},
 
 	RemoveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string) {
 		const role = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
-		if (role == null) throw Utils.Error(new Error('Role does not exist'))
-		return member.roles.remove(role)
+		if (role == null) (async () => Utils.Error(new Error((await Locale()).discord.errors.role)))()
+		return member.roles.remove(role as DiscordJS.Role)
 	},
 
 	CreateChannel(guild: DiscordJS.Guild, name: string, options: DiscordJS.GuildChannelCreateOptions) {
@@ -88,7 +89,7 @@ const Discord = {
 
 	DeleteChannel(guild: DiscordJS.Guild, finder: string) {
 		const channel = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_TEXT')
-		if (channel == null) throw Utils.Error(new Error('Channel does not exist'))
+		if (channel == null) (async () => Utils.Error(new Error((await Locale()).discord.errors.channel)))()
 		channel?.delete()
 	},
 
@@ -101,7 +102,7 @@ const Discord = {
 
 	DeleteCategory(guild: DiscordJS.Guild, finder: string) {
 		const category = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_CATEGORY')
-		if (category == null) throw Utils.Error(new Error('Category does not exist'))
+		if (category == null) (async () => Utils.Error(new Error((await Locale()).discord.errors.category)))()
 		category?.delete()
 	},
 
@@ -116,9 +117,9 @@ const Discord = {
 		const newCategory = this.GetChannel(guild, category)
 		const newChannel = this.GetChannel(guild, channel)
 
-		if (!newCategory) throw Utils.Error(new Error('Category channel does not exist'))
-		if (!newChannel) throw Utils.Error(new Error('Channel does not exist'))
-		;(newChannel as DiscordJS.GuildChannel).setParent(newCategory.id)
+		if (!newCategory) (async () => Utils.Error(new Error((await Locale()).discord.errors.category)))()
+		if (!newChannel) (async () => Utils.Error(new Error((await Locale()).discord.errors.channel)))()
+		;(newChannel as DiscordJS.GuildChannel).setParent((newCategory as DiscordJS.CategoryChannel).id)
 	},
 }
 

@@ -1,8 +1,10 @@
 import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global'
 
 import * as DiscordJS from 'discord.js'
-import _ from 'lodash'
 import * as logs from 'discord-logs'
+import * as fs from 'fs'
+import path from 'path'
+import _ from 'lodash'
 import { Model, ModelCtor, Sequelize } from 'sequelize'
 import { scheduleJob } from 'node-schedule'
 
@@ -11,6 +13,7 @@ import Log from './modules/log'
 import Discord from './modules/discord'
 import Color from './modules/color'
 import HTML from './modules/html'
+import Locale from './handlers/locale'
 
 export const QuackJSUtils = {
 	...Utils,
@@ -18,6 +21,8 @@ export const QuackJSUtils = {
 	Discord,
 	Color,
 	HTML,
+
+	Locale,
 }
 
 export class QuackJS implements QuackJSObject {
@@ -50,6 +55,13 @@ export class QuackJS implements QuackJSObject {
 		)
 
 		this.models = {}
+
+		fs.writeFileSync(
+			path.join(__dirname, `../locales/settings.json`),
+			JSON.stringify({
+				location: config.locale || 'en_US',
+			}),
+		)
 
 		this.client = new DiscordJS.Client({
 			partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -95,7 +107,7 @@ export class QuackJS implements QuackJSObject {
 
 		this.CreateEvent({
 			name: 'interactionCreate',
-			execute(client: DiscordJS.Client, interaction: DiscordJS.Interaction) {
+			async execute(client: DiscordJS.Client, interaction: DiscordJS.Interaction) {
 				if (!interaction.isCommand()) return
 
 				const i = _.findIndex(QuackJS.commands, {
@@ -109,7 +121,7 @@ export class QuackJS implements QuackJSObject {
 				} catch (error: any) {
 					Utils.Error(error)
 					interaction.reply({
-						content: 'There was an error while executing this command!',
+						content: (await Locale()).commands.errors.execution,
 						ephemeral: true,
 					})
 				}
@@ -118,7 +130,7 @@ export class QuackJS implements QuackJSObject {
 
 		this.CreateEvent({
 			name: 'ready',
-			execute(client: DiscordJS.Client) {
+			async execute(client: DiscordJS.Client) {
 				if (QuackJS.config.backups) {
 					QuackJS.config.backups.forEach((backup) => {
 						QuackJSUtils.Backup(backup.file)
@@ -129,7 +141,7 @@ export class QuackJS implements QuackJSObject {
 				}
 
 				const commandsNames = QuackJS.commands.map((c) => c.name)
-				if (new Set(commandsNames).size !== commandsNames.length) Log('Two or more commands have the same name!', 'w')
+				if (new Set(commandsNames).size !== commandsNames.length) Log((await Locale()).commands.errors.names, 'w')
 				;(async () => {
 					if (!client.application?.owner) await client.application?.fetch()
 
@@ -155,7 +167,7 @@ export class QuackJS implements QuackJSObject {
 										})
 									}
 								} catch (error) {
-									Utils.Error(new Error('An error occurred while creating guild specific commands!'))
+									Utils.Error(new Error((await Locale()).commands.errors.creation))
 								}
 							}
 						}

@@ -22,6 +22,7 @@ export declare const QuackJSUtils: {
     };
     Color: (color: string) => number;
     HTML: typeof HTML;
+    Locale: () => Promise<any>;
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;
     GetFiles(directory: string): string[];
