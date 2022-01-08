@@ -20,7 +20,7 @@ npm i @n-f9/quack.js
 
 A Discord.js framework for all of your needs! From prototyping or production needs, this framework can handle it all.
 
-**THIS FRAMEWORK IS A WORK IN PROGRESS! SOME ELEMENTS MAY NOT WORK!**
+**THIS FRAMEWORK IS A WORK IN PROGRESS! SOME ELEMENTS AND FEATURES MAY NOT WORK!**
 
 #### Why Quack?
 
