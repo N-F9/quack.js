@@ -5,6 +5,7 @@ const fs = require('fs')
 const Quack = new QuackJS(process.env.TOKEN, {
   backups: false,
   logsFolder: false,
+  database: false
 }) 
 
 Quack.CreateCommand({

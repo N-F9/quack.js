@@ -5,7 +5,7 @@ import * as logs from 'discord-logs'
 import * as fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
-import { Model, ModelCtor, Sequelize } from 'sequelize'
+import { Model, ModelCtor, Options, Sequelize } from 'sequelize'
 import { scheduleJob } from 'node-schedule'
 
 import Utils from './modules/utils'
@@ -32,7 +32,7 @@ export class QuackJS implements QuackJSObject {
 	public triggers: QuackJSTrigger[]
 	public events: QuackJSEvent[]
 	public variables: Record<string, any>
-	public sequelize: Sequelize
+	public sequelize: Sequelize | undefined
 	public models: Record<string, ModelCtor<Model<any, any>>>
 
 	private token: string
@@ -46,13 +46,15 @@ export class QuackJS implements QuackJSObject {
 		this.events = []
 		this.variables = {}
 
-		this.sequelize = new Sequelize(
-			config.database || {
-				dialect: 'sqlite',
-				storage: 'database.sqlite',
-				logging: false,
-			},
-		)
+		const defaultDatabase: Options = {
+			dialect: 'sqlite',
+			storage: 'database.sqlite',
+			logging: false,
+		}
+		if (typeof config.database === 'boolean') {
+			if (config.database) this.sequelize = new Sequelize(defaultDatabase)
+			else this.sequelize = undefined
+		} else this.sequelize = new Sequelize(config.database || defaultDatabase)
 
 		this.models = {}
 
@@ -177,7 +179,7 @@ export class QuackJS implements QuackJSObject {
 		})
 
 		try {
-			this.sequelize.authenticate()
+			this.sequelize?.authenticate()
 		} catch (error: any) {
 			QuackJSUtils.Error(new Error(error))
 		}
@@ -200,7 +202,7 @@ export class QuackJS implements QuackJSObject {
 
 	public AddModel(name: string, model: ModelCtor<Model<any, any>>) {
 		this.models[name] = model
-		this.sequelize.sync()
+		this.sequelize?.sync()
 	}
 
 	public CreateCommand(slashCommand: QuackJSSlashCommand) {

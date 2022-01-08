@@ -42,7 +42,7 @@ export declare class QuackJS implements QuackJSObject {
     triggers: QuackJSTrigger[];
     events: QuackJSEvent[];
     variables: Record<string, any>;
-    sequelize: Sequelize;
+    sequelize: Sequelize | undefined;
     models: Record<string, ModelCtor<Model<any, any>>>;
     private token;
     constructor(token: string, config: QuackJSConfig);

@@ -8,7 +8,7 @@ declare type QuackJSConfig = {
   logsFolder?: boolean 
   backups?: QuackJSBackup[]
   intents?: DiscordJS.Intents[]
-  database?: Sequelize.Options
+  database?: Sequelize.Options | boolean
   locale?: 'en-US'
 }
 
@@ -18,7 +18,7 @@ declare interface QuackJSObject {
   commands: QuackJSSlashCommand[]
   events: QuackJSEvent[]
   triggers: QuackJSTrigger[]
-  sequelize: Sequelize.Sequelize
+  sequelize: Sequelize.Sequelize | undefined
   models: Record<string, Sequelize.ModelCtor<Sequelize.Model<any, any>>>
 }
 
