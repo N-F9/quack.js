@@ -16,6 +16,8 @@ const { DataTypes } = require('sequelize')
 //   '{test}': 'this is a test!'
 // }))
 
+QuackJSUtils.Debug(QuackJSUtils.MS('2 days'))
+QuackJSUtils.Debug(() => QuackJSUtils.MS('2 days'))
 console.log(QuackJSUtils.GetFiles('./src'))
 // console.log(QuackJSUtils.GenerateID(10, 36))
 // console.log(QuackJSUtils.Time())
@@ -74,6 +76,9 @@ for (const file of files) {
   const execute = require('./' + file)
   execute(Quack)
 }
+
+
+QuackJSUtils.Debug(Quack)
 
 Quack.Start(Quack)
 

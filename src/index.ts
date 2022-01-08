@@ -13,6 +13,7 @@ import Log from './modules/log'
 import Discord from './modules/discord'
 import Color from './modules/color'
 import HTML from './modules/html'
+import Debug from './modules/debug'
 import Locale from './handlers/locale'
 
 export const QuackJSUtils = {
@@ -21,6 +22,7 @@ export const QuackJSUtils = {
 	Discord,
 	Color,
 	HTML,
+	Debug,
 
 	Locale,
 }

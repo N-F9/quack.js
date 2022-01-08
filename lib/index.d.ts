@@ -4,7 +4,7 @@ import * as DiscordJS from 'discord.js';
 import { Model, ModelCtor, Sequelize } from 'sequelize';
 import HTML from './modules/html';
 export declare const QuackJSUtils: {
-    Log: (message: string, type?: "i" | "s" | "e" | "w") => void;
+    Log: (message: string, type?: "i" | "s" | "d" | "e" | "w") => void;
     Discord: {
         Embed(message: import("../global").QuackJSMessage, placeholders?: Record<string, any> | undefined): DiscordJS.MessageOptions;
         Prompt(message: DiscordJS.Message<boolean>, member: DiscordJS.GuildMember, options: import("../global").QuackJSPromptOptions): Promise<unknown>;
@@ -22,6 +22,7 @@ export declare const QuackJSUtils: {
     };
     Color: (color: string) => number;
     HTML: typeof HTML;
+    Debug: (obj: Object | Function, name?: string) => void;
     Locale: () => Promise<any>;
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;
