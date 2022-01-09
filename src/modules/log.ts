@@ -17,7 +17,7 @@ const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') => {
 	if (type === 'd') title = magenta('QuackJS')
 
 	console.log(gray(`(${YMD} ${HMS}) (CODE: ${type.toUpperCase()}) `) + title + gray(' » ') + white(message))
-	if (fs.existsSync(`./logs/console/`)) fs.appendFileSync(`./logs/console/${YMD}.txt`, `${`(${YMD} ${HMS})`} (CODE: ${type.toUpperCase()}) QuackJS » ${message}\n`)
+	if (fs.existsSync(`./logs/console/`)) fs.appendFileSync(`./logs/console/${YMD}.log`, `${`(${YMD} ${HMS})`} (CODE: ${type.toUpperCase()}) QuackJS » ${message}\n`)
 }
 
 export default Log
