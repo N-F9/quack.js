@@ -5,7 +5,6 @@ module.exports = (QuackJS) => {
     name: 'test',
     trigger: /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,
     execute(client, message) {
-      // console.log(client, message)
       message.channel.send('testtest').then(m => {
         m.react('👍')
         QuackJSUtils.Discord.Prompt(m, message.member, {
@@ -14,11 +13,11 @@ module.exports = (QuackJS) => {
         }).then(c => {
           console.log(c)
         })
-        // QuackJSUtils.Discord.Prompt(m, message.member, {
-        //   type: 'message'
-        // }).then(c => {
-        //   console.log(c)
-        // })
+        QuackJSUtils.Discord.Prompt(m, message.member, {
+          type: 'message'
+        }).then(c => {
+          console.log(c)
+        })
       })
     }
   })
