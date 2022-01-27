@@ -1,6 +1,5 @@
 require('dotenv').config()
 const { QuackJS, QuackJSUtils } = require('../../')
-const fs = require('fs')
 const { DataTypes } = require('sequelize')
 
 console.log(QuackJSUtils.Discord.Embed({
