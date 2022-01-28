@@ -4,7 +4,7 @@ import * as fs from 'fs'
 import path from 'path'
 import ms from 'ms'
 
-import Log from './log'
+import { Log } from './log'
 import Locale from '../handlers/locale'
 
 const Utils = {

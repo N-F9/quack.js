@@ -9,21 +9,20 @@ import { Model, ModelCtor, Options, Sequelize } from 'sequelize'
 import { scheduleJob } from 'node-schedule'
 
 import Utils from './modules/utils'
-import Log from './modules/log'
+import { Log, Debug } from './modules/log'
 import Discord from './modules/discord'
-import Color from './modules/color'
 import HTML from './modules/html'
-import Debug from './modules/debug'
+import Color from './handlers/color'
 import Locale from './handlers/locale'
 
 export const QuackJSUtils = {
 	...Utils,
 	Log,
-	Discord,
-	Color,
-	HTML,
 	Debug,
+	Discord,
+	HTML,
 
+	Color,
 	Locale,
 }
 

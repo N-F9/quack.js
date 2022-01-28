@@ -2,7 +2,7 @@ import { gray, blue, white, red, green, yellow, magenta } from 'picocolors'
 import * as fs from 'fs'
 import Utils from './utils'
 
-const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') => {
+export const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') => {
 	const time = Utils.Time()
 
 	const YMD = `${time.year}-${Utils.PadWithZeros(time.month, 2)}-${Utils.PadWithZeros(time.date, 2)}`
@@ -20,4 +20,14 @@ const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') => {
 	if (fs.existsSync(`./logs/console/`)) fs.appendFileSync(`./logs/console/${YMD}.log`, `${`(${YMD} ${HMS})`} (CODE: ${type.toUpperCase()}) QuackJS » ${message}\n`)
 }
 
-export default Log
+export const Debug = (obj: Function | Object, name: string = 'none') => {
+	if (typeof obj === 'function') {
+		const timeStart = new Date()
+		const returnFromObj = obj()
+		const timeEnd = new Date()
+		Log(name + ' ' + returnFromObj + ' ' + (timeEnd.getTime() - timeStart.getTime()) + 'ms', 'd')
+		return
+	}
+
+	Log(name + ' ' + obj.constructor.name + ' ' + (obj === null || obj === undefined), 'd')
+}
