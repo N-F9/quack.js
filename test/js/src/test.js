@@ -1,6 +1,6 @@
-const { QuackJSUtils } = require('../../../lib')
+import { QuackJSUtils } from '../../../lib/index.js'
 
-module.exports = (QuackJS) => {
+export default (QuackJS) => {
   QuackJS.CreateTrigger({
     name: 'test',
     trigger: /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,

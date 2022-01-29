@@ -1,6 +1,6 @@
-import { gray, blue, white, red, green, yellow, magenta } from 'picocolors'
+import pc from 'picocolors'
 import * as fs from 'fs'
-import Utils from './utils'
+import Utils from './utils.js'
 
 export const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') => {
 	const time = Utils.Time()
@@ -10,13 +10,13 @@ export const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') =>
 
 	let title = ''
 
-	if (type === 'i') title = blue('QuackJS')
-	if (type === 'e') title = red('QuackJS')
-	if (type === 's') title = green('QuackJS')
-	if (type === 'w') title = yellow('QuackJS')
-	if (type === 'd') title = magenta('QuackJS')
+	if (type === 'i') title = pc.blue('QuackJS')
+	if (type === 'e') title = pc.red('QuackJS')
+	if (type === 's') title = pc.green('QuackJS')
+	if (type === 'w') title = pc.yellow('QuackJS')
+	if (type === 'd') title = pc.magenta('QuackJS')
 
-	console.log(gray(`(${YMD} ${HMS}) (CODE: ${type.toUpperCase()}) `) + title + gray(' » ') + white(message))
+	console.log(pc.gray(`(${YMD} ${HMS}) (CODE: ${type.toUpperCase()}) `) + title + pc.gray(' » ') + pc.white(message))
 	if (fs.existsSync(`./logs/console/`)) fs.appendFileSync(`./logs/console/${YMD}.log`, `${`(${YMD} ${HMS})`} (CODE: ${type.toUpperCase()}) QuackJS » ${message}\n`)
 }
 

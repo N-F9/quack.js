@@ -1,7 +1,10 @@
-const Locale = async () => {
-	// @ts-ignore
-	const data = (await import(`../../locales/settings.json`)).default
-	return (await import(`../../locales/${data.location}.json`)).default
+import { osLocaleSync } from 'os-locale'
+import locales from '../locales.js'
+
+const osLocale: string = osLocaleSync()
+
+const Locale = () => {
+	return locales[osLocale as keyof typeof locales] || locales.en_US
 }
 
 export default Locale

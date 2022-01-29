@@ -8,13 +8,13 @@ import _ from 'lodash'
 import { Model, ModelStatic, Options, Sequelize } from 'sequelize'
 import { scheduleJob } from 'node-schedule'
 
-import Utils from './modules/utils'
-import { Log, Debug } from './modules/log'
-import Discord from './modules/discord'
-import HTML from './modules/html'
-import Color from './handlers/color'
-import Locale from './handlers/locale'
-import Variables from './handlers/variables'
+import Utils from './modules/utils.js'
+import { Log, Debug } from './modules/log.js'
+import Discord from './modules/discord.js'
+import HTML from './modules/html.js'
+import Color from './handlers/color.js'
+import Locale from './handlers/locale.js'
+import Variables from './handlers/variables.js'
 
 export const QuackJSUtils = {
 	...Utils,
@@ -59,12 +59,12 @@ export class QuackJS implements QuackJSObject {
 
 		this.models = {}
 
-		fs.writeFileSync(
-			path.join(__dirname, `../locales/settings.json`),
-			JSON.stringify({
-				location: config.locale || 'en_US',
-			}),
-		)
+		// fs.writeFileSync(
+		// 	path.join(__dirname, `../locales/settings.json`),
+		// 	JSON.stringify({
+		// 		location: config.locale || 'en_US',
+		// 	}),
+		// )
 
 		this.client = new DiscordJS.Client({
 			partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -124,7 +124,7 @@ export class QuackJS implements QuackJSObject {
 				} catch (error: any) {
 					Utils.Error(error)
 					interaction.reply({
-						content: (await Locale()).commands.errors.execution,
+						content: Locale().commands.errors.execution,
 						ephemeral: true,
 					})
 				}
@@ -144,7 +144,7 @@ export class QuackJS implements QuackJSObject {
 				}
 
 				const commandsNames = QuackJS.commands.map((c) => c.name)
-				if (new Set(commandsNames).size !== commandsNames.length) Log((await Locale()).commands.errors.names, 'w')
+				if (new Set(commandsNames).size !== commandsNames.length) Log(Locale().commands.errors.names, 'w')
 				;(async () => {
 					if (!client.application?.owner) await client.application?.fetch()
 
@@ -170,7 +170,7 @@ export class QuackJS implements QuackJSObject {
 										})
 									}
 								} catch (error) {
-									Utils.Error(new Error((await Locale()).commands.errors.creation))
+									Utils.Error(new Error(Locale().commands.errors.creation))
 								}
 							}
 						}

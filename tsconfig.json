@@ -1,15 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
+    "target": "ESNext",
+		"module": "ESNext",
     "declaration": true,
     "outDir": "./lib",
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true
   },
-  // "files": ["global.d.ts"],
   "include": ["src", "global.d.ts"],
-  "exclude": ["node_modules", "lib", "**/__tests__/*"],
-  // "lib": ["es2015"]
+  "exclude": ["node_modules", "lib", "**/__tests__/*"]
 }

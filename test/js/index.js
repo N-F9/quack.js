@@ -1,6 +1,7 @@
-require('dotenv').config()
-const { QuackJS, QuackJSUtils } = require('../../')
-const { DataTypes } = require('sequelize')
+import dotenv from 'dotenv'
+dotenv.config()
+import { QuackJS, QuackJSUtils } from '../../lib/index.js'
+import { DataTypes } from 'sequelize'
 
 console.log(QuackJSUtils.Discord.Embed({
   embeds: [
@@ -65,7 +66,7 @@ Quack.models.example.create({
 const files = QuackJSUtils.GetFiles('./src')
 
 for (const file of files) {
-  const execute = require('./' + file)
+  const execute = (await import('./' + file)).default
   execute(Quack)
 }
 

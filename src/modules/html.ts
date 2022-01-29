@@ -1,6 +1,6 @@
 import jsdom from 'jsdom'
 import showdown from 'showdown'
-import minimize from '@minify-html/core'
+import { minify } from 'html-minifier'
 
 class HTML {
 	public DOM: jsdom.JSDOM
@@ -15,18 +15,11 @@ class HTML {
 	}
 
 	public ExportToHTML() {
-		return minimize
-			.minify(
-				this.DOM.serialize(),
-				minimize.createConfiguration({
-					do_not_minify_doctype: true,
-					keep_html_and_head_opening_tags: true,
-					keep_comments: false,
-					minify_css: true,
-					minify_js: true,
-				}),
-			)
-			.toString()
+		return minify(this.DOM.serialize(), {
+			minifyCSS: true,
+			minifyJS: true,
+			minifyURLs: true,
+		})
 	}
 
 	public toString() {

@@ -2,7 +2,7 @@
 import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
 import { Model, ModelStatic, Sequelize } from 'sequelize';
-import HTML from './modules/html';
+import HTML from './modules/html.js';
 export declare const QuackJSUtils: {
     Log: (message: string, type?: "i" | "s" | "d" | "e" | "w") => void;
     Debug: (obj: Object | Function, name?: string) => void;
@@ -23,7 +23,31 @@ export declare const QuackJSUtils: {
     };
     HTML: typeof HTML;
     Color: (color: string) => number;
-    Locale: () => Promise<any>;
+    Locale: () => {
+        commands: {
+            errors: {
+                execution: string;
+                names: string;
+                creation: string;
+            };
+        };
+        utils: {
+            errors: {
+                error: string;
+            };
+            success: {
+                backup: string;
+            };
+        };
+        discord: {
+            errors: {
+                emoji: string;
+                role: string;
+                channel: string;
+                category: string;
+            };
+        };
+    };
     Variables: Record<string, any>;
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;

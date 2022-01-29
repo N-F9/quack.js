@@ -1,2 +1,2 @@
-module.exports = (QuackJS) => {
+export default (QuackJS) => {
 }

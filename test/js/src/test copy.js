@@ -1,6 +1,6 @@
-const { QuackJSUtils } = require('../../../lib')
+import { QuackJSUtils } from '../../../lib/index.js'
 
-module.exports = (QuackJS) => {
+export default (QuackJS) => {
   QuackJS.CreateEvent({
     name: 'ready',
     execute(client) {

@@ -4,8 +4,8 @@ import * as fs from 'fs'
 import path from 'path'
 import ms from 'ms'
 
-import { Log } from './log'
-import Locale from '../handlers/locale'
+import { Log } from './log.js'
+import Locale from '../handlers/locale.js'
 
 const Utils = {
 	Time(date = new Date()): QuackJSTime {
@@ -25,7 +25,7 @@ const Utils = {
 
 	Error(e: Error): void {
 		fs.appendFileSync('errors.txt', `${Utils.Time().TZ}\n${e.stack}\n───────────────\n`)
-		;(async () => Log((await Locale()).utils.errors.error, 'e'))()
+		Log(Locale().utils.errors.error, 'e')
 	},
 
 	GetFiles(directory: string) {
@@ -96,7 +96,7 @@ const Utils = {
 
 		fs.copyFile(file, `./backups/${time.year}-${time.month}-${time.date}-${file}`, (err) => {
 			if (err) return this.Error(err)
-			;(async () => Log((await Locale()).utils.success.backup.replace(/{file}/g, file), 's'))()
+			;(async () => Log(Locale().utils.success.backup.replace(/{file}/g, file), 's'))()
 		})
 	},
 
