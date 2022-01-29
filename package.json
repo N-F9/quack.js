@@ -13,9 +13,6 @@
     "type": "git",
     "url": "git+https://github.com/N-F9/quack.js.git"
   },
-  "bin": {
-    "create-quack-project": "bin/create-quack-project.js"
-  },
   "keywords": [],
   "author": "Nick Ferguson",
   "license": "MIT",
