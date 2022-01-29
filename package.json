@@ -8,9 +8,9 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-		"update": "ncu -u && npm update",
-		"compile": "npm run lint && npm run format && npm run build",
-		"test": "cd test/js && node . && cd ../.."
+    "update": "ncu -u && npm update",
+    "compile": "npm run lint && npm run format && npm run build",
+    "test": "cd test/js && node . && cd ../.."
   },
   "repository": {
     "type": "git",

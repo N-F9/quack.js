@@ -14,6 +14,7 @@ import Discord from './modules/discord'
 import HTML from './modules/html'
 import Color from './handlers/color'
 import Locale from './handlers/locale'
+import Variables from './handlers/variables'
 
 export const QuackJSUtils = {
 	...Utils,
@@ -24,6 +25,7 @@ export const QuackJSUtils = {
 
 	Color,
 	Locale,
+	Variables,
 }
 
 export class QuackJS implements QuackJSObject {
@@ -32,7 +34,6 @@ export class QuackJS implements QuackJSObject {
 	public commands: QuackJSSlashCommand[]
 	public triggers: QuackJSTrigger[]
 	public events: QuackJSEvent[]
-	public variables: Record<string, any>
 	public sequelize: Sequelize | undefined
 	public models: Record<string, ModelStatic<Model<any, any>>>
 
@@ -45,7 +46,6 @@ export class QuackJS implements QuackJSObject {
 		this.commands = []
 		this.triggers = []
 		this.events = []
-		this.variables = {}
 
 		const defaultDatabase: Options = {
 			dialect: 'sqlite',

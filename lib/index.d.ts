@@ -1,7 +1,7 @@
 /// <reference types="ms" />
 import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
-import { Model, ModelCtor, Sequelize } from 'sequelize';
+import { Model, ModelStatic, Sequelize } from 'sequelize';
 import HTML from './modules/html';
 export declare const QuackJSUtils: {
     Log: (message: string, type?: "i" | "s" | "d" | "e" | "w") => void;
@@ -24,6 +24,7 @@ export declare const QuackJSUtils: {
     HTML: typeof HTML;
     Color: (color: string) => number;
     Locale: () => Promise<any>;
+    Variables: Record<string, any>;
     Time(date?: Date): import("../global").QuackJSTime;
     Error(e: Error): void;
     GetFiles(directory: string): string[];
@@ -42,15 +43,14 @@ export declare class QuackJS implements QuackJSObject {
     commands: QuackJSSlashCommand[];
     triggers: QuackJSTrigger[];
     events: QuackJSEvent[];
-    variables: Record<string, any>;
     sequelize: Sequelize | undefined;
-    models: Record<string, ModelCtor<Model<any, any>>>;
+    models: Record<string, ModelStatic<Model<any, any>>>;
     private token;
     constructor(token: string, config: QuackJSConfig);
     Start(QuackJS: QuackJS): Promise<void>;
     private StartEvents;
     private Login;
-    AddModel(name: string, model: ModelCtor<Model<any, any>>): void;
+    AddModel(name: string, model: ModelStatic<Model<any, any>>): void;
     CreateCommand(slashCommand: QuackJSSlashCommand): void;
     CreateEvent(event: QuackJSEvent): void;
     CreateTrigger(trigger: QuackJSTrigger): void;
