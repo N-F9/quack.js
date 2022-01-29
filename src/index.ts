@@ -5,7 +5,7 @@ import * as logs from 'discord-logs'
 import * as fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
-import { Model, ModelCtor, Options, Sequelize } from 'sequelize'
+import { Model, ModelStatic, Options, Sequelize } from 'sequelize'
 import { scheduleJob } from 'node-schedule'
 
 import Utils from './modules/utils'
@@ -34,7 +34,7 @@ export class QuackJS implements QuackJSObject {
 	public events: QuackJSEvent[]
 	public variables: Record<string, any>
 	public sequelize: Sequelize | undefined
-	public models: Record<string, ModelCtor<Model<any, any>>>
+	public models: Record<string, ModelStatic<Model<any, any>>>
 
 	private token: string
 
@@ -201,7 +201,7 @@ export class QuackJS implements QuackJSObject {
 		})
 	}
 
-	public AddModel(name: string, model: ModelCtor<Model<any, any>>) {
+	public AddModel(name: string, model: ModelStatic<Model<any, any>>) {
 		this.models[name] = model
 		this.sequelize?.sync()
 	}
