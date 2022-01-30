@@ -1,3 +1,8 @@
+/**
+ * A function for grabbing the language file.
+ *
+ * @return {*}
+ */
 declare const Locale: () => {
     commands: {
         errors: {

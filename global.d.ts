@@ -44,6 +44,7 @@ declare type QuackJSTrigger = {
 }
 
 declare type QuackJSTime = {
+	ms: number
   UTC: string
   ISO: string
   TZ: string

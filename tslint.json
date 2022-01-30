@@ -6,6 +6,7 @@
     "forin": [false],
     "variable-name": [false],
     "ban-types": [false],
-    "no-construct": [false]
+    "no-construct": [false],
+		"jsdoc-format": [false]
   }
 }

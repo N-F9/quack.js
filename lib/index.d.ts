@@ -8,13 +8,13 @@ export declare const QuackJSUtils: {
     Debug: (obj: Object | Function, name?: string) => void;
     Discord: {
         Embed(message: import("../global").QuackJSMessage, placeholders?: Record<string, any> | undefined): DiscordJS.MessageOptions;
-        Prompt(message: DiscordJS.Message<boolean>, member: DiscordJS.GuildMember, options: import("../global").QuackJSPromptOptions): Promise<unknown>;
+        Prompt(message: DiscordJS.Message<boolean>, member: DiscordJS.GuildMember, options: import("../global").QuackJSPromptOptions): Promise<DiscordJS.Message<boolean> | DiscordJS.MessageReaction | undefined>;
         CreateRole(guild: DiscordJS.Guild, options: DiscordJS.CreateRoleOptions): void;
         DeleteRole(guild: DiscordJS.Guild, finder: string): void;
-        HasRole(member: DiscordJS.GuildMember, finder: string): Boolean;
+        HasRole(member: DiscordJS.GuildMember, finder: string): boolean;
         GiveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string): Promise<DiscordJS.GuildMember>;
         RemoveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string): Promise<DiscordJS.GuildMember>;
-        CreateChannel(guild: DiscordJS.Guild, name: string, options: DiscordJS.GuildChannelCreateOptions): Promise<DiscordJS.CategoryChannel | DiscordJS.NewsChannel | DiscordJS.StageChannel | DiscordJS.StoreChannel | DiscordJS.TextChannel | DiscordJS.VoiceChannel>;
+        CreateChannel(guild: DiscordJS.Guild, name: string, options: DiscordJS.GuildChannelCreateOptions): Promise<DiscordJS.TextChannel>;
         DeleteChannel(guild: DiscordJS.Guild, finder: string): void;
         CreateCategory(guild: DiscordJS.Guild, name: string, options: Object): Promise<DiscordJS.CategoryChannel>;
         DeleteCategory(guild: DiscordJS.Guild, finder: string): void;
@@ -61,6 +61,13 @@ export declare const QuackJSUtils: {
     Backup(file: string): void;
     MS: typeof import("ms");
 };
+/**
+ * The main class for creating and managing Discord bots
+ *
+ * @export
+ * @class QuackJS
+ * @implements {QuackJSObject}
+ */
 export declare class QuackJS implements QuackJSObject {
     config: QuackJSConfig;
     client: DiscordJS.Client;

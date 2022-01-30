@@ -2,7 +2,13 @@ import pc from 'picocolors'
 import * as fs from 'fs'
 import Utils from './utils.js'
 
-export const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') => {
+export /**
+ * A function for logging a specific message.
+ *
+ * @param {string} message
+ * @param {('i' | 'e' | 's' | 'w' | 'd')} [type='i']
+ */
+const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') => {
 	const time = Utils.Time()
 
 	const YMD = `${time.year}-${Utils.PadWithZeros(time.month, 2)}-${Utils.PadWithZeros(time.date, 2)}`
@@ -20,7 +26,13 @@ export const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') =>
 	if (fs.existsSync(`./logs/console/`)) fs.appendFileSync(`./logs/console/${YMD}.log`, `${`(${YMD} ${HMS})`} (CODE: ${type.toUpperCase()}) QuackJS » ${message}\n`)
 }
 
-export const Debug = (obj: Function | Object, name: string = 'none') => {
+export /**
+ * A function for debugging Functions or Objects
+ *
+ * @param {(Function | Object)} obj
+ * @param {string} [name='none']
+ */
+const Debug = (obj: Function | Object, name: string = 'none') => {
 	if (typeof obj === 'function') {
 		const timeStart = new Date()
 		const returnFromObj = obj()

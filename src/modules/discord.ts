@@ -5,6 +5,13 @@ import Utils from './utils.js'
 import Locale from '../handlers/locale.js'
 
 const Discord = {
+	/**
+	 * A function for generating an embed with ease.
+	 *
+	 * @param {QuackJSMessage} message
+	 * @param {Record<string, any>} [placeholders]
+	 * @return {*}  {DiscordJS.MessageOptions}
+	 */
 	Embed(message: QuackJSMessage, placeholders?: Record<string, any>): DiscordJS.MessageOptions {
 		let content = message.content
 
@@ -34,7 +41,15 @@ const Discord = {
 		}
 	},
 
-	Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: QuackJSPromptOptions) {
+	/**
+	 * A function for prompting the user for input; either from a message input or a reaction input.
+	 *
+	 * @param {DiscordJS.Message} message
+	 * @param {DiscordJS.GuildMember} member
+	 * @param {QuackJSPromptOptions} options
+	 * @return {*}  {(Promise<DiscordJS.MessageReaction | DiscordJS.Message<boolean> | undefined>)}
+	 */
+	Prompt(message: DiscordJS.Message, member: DiscordJS.GuildMember, options: QuackJSPromptOptions): Promise<DiscordJS.MessageReaction | DiscordJS.Message<boolean> | undefined> {
 		return new Promise((resolve, reject) => {
 			if (options.type === 'message') {
 				const filter = (res: DiscordJS.Message) => res.author.id === member.id
@@ -54,65 +69,142 @@ const Discord = {
 		})
 	},
 
+	/**
+	 * A function for creating roles.
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {DiscordJS.CreateRoleOptions} options
+	 */
 	CreateRole(guild: DiscordJS.Guild, options: DiscordJS.CreateRoleOptions) {
 		guild.roles.create(options).then().catch(Utils.Error)
 	},
 
+	/**
+	 * A function for deleting roles.
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {string} finder
+	 */
 	DeleteRole(guild: DiscordJS.Guild, finder: string) {
 		const roleDeleted = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
 		if (roleDeleted == null) (async () => Utils.Error(new Error(Locale().discord.errors.role)))()
 		roleDeleted?.delete()
 	},
 
-	HasRole(member: DiscordJS.GuildMember, finder: string): Boolean {
+	/**
+	 * A function for checking if a user has a role.
+	 *
+	 * @param {DiscordJS.GuildMember} member
+	 * @param {string} finder
+	 * @return {*}  {boolean}
+	 */
+	HasRole(member: DiscordJS.GuildMember, finder: string): boolean {
 		return member.roles.cache.some((role) => role.name === finder || role.id === finder)
 	},
 
-	GiveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string) {
+	/**
+	 * A function for giving a user a role.
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {DiscordJS.GuildMember} member
+	 * @param {string} finder
+	 * @return {*}  {Promise<DiscordJS.GuildMember>}
+	 */
+	GiveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string): Promise<DiscordJS.GuildMember> {
 		const role = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
 		if (role == null) (async () => Utils.Error(new Error(Locale().discord.errors.role)))()
 		return member.roles.add(role as DiscordJS.Role)
 	},
 
-	RemoveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string) {
+	/**
+	 * A function for removing a role from a user.
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {DiscordJS.GuildMember} member
+	 * @param {string} finder
+	 * @return {*}  {Promise<DiscordJS.GuildMember>}
+	 */
+	RemoveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string): Promise<DiscordJS.GuildMember> {
 		const role = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
 		if (role == null) (async () => Utils.Error(new Error(Locale().discord.errors.role)))()
 		return member.roles.remove(role as DiscordJS.Role)
 	},
 
-	CreateChannel(guild: DiscordJS.Guild, name: string, options: DiscordJS.GuildChannelCreateOptions) {
+	/**
+	 * A function for creating a channel.
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {string} name
+	 * @param {DiscordJS.GuildChannelCreateOptions} options
+	 * @return {*}  {Promise<DiscordJS.TextChannel>}
+	 */
+	CreateChannel(guild: DiscordJS.Guild, name: string, options: DiscordJS.GuildChannelCreateOptions): Promise<DiscordJS.TextChannel> {
 		return guild.channels.create(name, {
 			type: 'GUILD_TEXT',
 			...options,
-		})
+		}) as Promise<DiscordJS.TextChannel>
 	},
 
+	/**
+	 * A function for deleting a channel
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {string} finder
+	 */
 	DeleteChannel(guild: DiscordJS.Guild, finder: string) {
 		const channel = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_TEXT')
 		if (channel == null) (async () => Utils.Error(new Error(Locale().discord.errors.channel)))()
 		channel?.delete()
 	},
 
-	CreateCategory(guild: DiscordJS.Guild, name: string, options: Object) {
+	/**
+	 * A function for creating category channels.
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {string} name
+	 * @param {Object} options
+	 * @return {*}  {Promise<DiscordJS.CategoryChannel>}
+	 */
+	CreateCategory(guild: DiscordJS.Guild, name: string, options: Object): Promise<DiscordJS.CategoryChannel> {
 		return guild.channels.create(name, {
 			type: 'GUILD_CATEGORY',
 			...options,
 		})
 	},
 
+	/**
+	 * A function for deleting a category channel.
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {string} finder
+	 */
 	DeleteCategory(guild: DiscordJS.Guild, finder: string) {
 		const category = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_CATEGORY')
 		if (category == null) (async () => Utils.Error(new Error(Locale().discord.errors.category)))()
 		category?.delete()
 	},
 
-	GetChannel(guild: DiscordJS.Guild, finder: string | DiscordJS.Channel) {
+	/**
+	 * A function for getting a channel
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {(string | DiscordJS.Channel)} finder
+	 * @return {*}  {(DiscordJS.ThreadChannel | DiscordJS.GuildChannel | undefined)}
+	 */
+	GetChannel(guild: DiscordJS.Guild, finder: string | DiscordJS.Channel): DiscordJS.ThreadChannel | DiscordJS.GuildChannel | undefined {
 		let channel: DiscordJS.GuildChannel | DiscordJS.ThreadChannel | undefined
 		if (typeof finder === 'string') channel = guild.channels.cache.find((c) => c.name === finder || c.id === finder)
 		else channel = guild.channels.cache.find((c) => c.id === finder.id)
 		return channel
 	},
 
+	/**
+	 * A function for moving a channel to a category
+	 *
+	 * @param {DiscordJS.Guild} guild
+	 * @param {(string | DiscordJS.Channel)} channel
+	 * @param {(string | DiscordJS.CategoryChannel)} category
+	 */
 	MoveChannelToCategory(guild: DiscordJS.Guild, channel: string | DiscordJS.Channel, category: string | DiscordJS.CategoryChannel) {
 		const newCategory = this.GetChannel(guild, category)
 		const newChannel = this.GetChannel(guild, channel)

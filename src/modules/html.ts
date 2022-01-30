@@ -2,6 +2,11 @@ import jsdom from 'jsdom'
 import showdown from 'showdown'
 import { minify } from 'html-minifier'
 
+/**
+ * A class for creating HTML pages utilizing jsdom and showdown.
+ *
+ * @class HTML
+ */
 class HTML {
 	public DOM: jsdom.JSDOM
 
@@ -9,12 +14,26 @@ class HTML {
 		this.DOM = new jsdom.JSDOM(html)
 	}
 
-	public static ConvertMarkdownToHTML(markdown: string) {
+	/**
+	 * A function for converting Markdown code to HTML code.
+	 *
+	 * @static
+	 * @param {string} markdown
+	 * @return {*}  {string}
+	 * @memberof HTML
+	 */
+	public static ConvertMarkdownToHTML(markdown: string): string {
 		const converter = new showdown.Converter()
 		return converter.makeHtml(markdown)
 	}
 
-	public ExportToHTML() {
+	/**
+	 * This method will export the DOM to a string containing the minified HTML.
+	 *
+	 * @return {*}  {string}
+	 * @memberof HTML
+	 */
+	public ExportToHTML(): string {
 		return minify(this.DOM.serialize(), {
 			minifyCSS: true,
 			minifyJS: true,
@@ -22,10 +41,23 @@ class HTML {
 		})
 	}
 
-	public toString() {
+	/**
+	 * This method will return a string representation of the HTML class.
+	 *
+	 * @return {*}  {string}
+	 * @memberof HTML
+	 */
+	public toString(): string {
 		return this.ExportToHTML()
 	}
 
+	/**
+	 * A getter for the document from the DOM.
+	 *
+	 * @readonly
+	 * @type {Document}
+	 * @memberof HTML
+	 */
 	public get document(): Document {
 		return this.DOM.window.document
 	}

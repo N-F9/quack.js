@@ -2,8 +2,6 @@ import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJ
 
 import * as DiscordJS from 'discord.js'
 import * as logs from 'discord-logs'
-import * as fs from 'fs'
-import path from 'path'
 import _ from 'lodash'
 import { Model, ModelStatic, Options, Sequelize } from 'sequelize'
 import { scheduleJob } from 'node-schedule'
@@ -28,6 +26,13 @@ export const QuackJSUtils = {
 	Variables,
 }
 
+/**
+ * The main class for creating and managing Discord bots
+ *
+ * @export
+ * @class QuackJS
+ * @implements {QuackJSObject}
+ */
 export class QuackJS implements QuackJSObject {
 	public config: QuackJSConfig
 	public client: DiscordJS.Client
@@ -58,13 +63,6 @@ export class QuackJS implements QuackJSObject {
 		} else this.sequelize = new Sequelize(config.database || defaultDatabase)
 
 		this.models = {}
-
-		// fs.writeFileSync(
-		// 	path.join(__dirname, `../locales/settings.json`),
-		// 	JSON.stringify({
-		// 		location: config.locale || 'en_US',
-		// 	}),
-		// )
 
 		this.client = new DiscordJS.Client({
 			partials: ['MESSAGE', 'CHANNEL', 'REACTION'],

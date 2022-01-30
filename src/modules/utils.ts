@@ -8,9 +8,16 @@ import { Log } from './log.js'
 import Locale from '../handlers/locale.js'
 
 const Utils = {
+	/**
+	 * A function which returns an object containing useful time numbers and information.
+	 *
+	 * @param {*} [date=new Date()]
+	 * @return {*}  {QuackJSTime}
+	 */
 	Time(date = new Date()): QuackJSTime {
 		const d = new Date(date)
 		return {
+			ms: d.getTime(),
 			UTC: d.toUTCString(),
 			ISO: d.toISOString(),
 			TZ: d.toString(),
@@ -23,12 +30,23 @@ const Utils = {
 		}
 	},
 
+	/**
+	 * A function for handling errors.
+	 *
+	 * @param {Error} e
+	 */
 	Error(e: Error): void {
 		fs.appendFileSync('errors.txt', `${Utils.Time().TZ}\n${e.stack}\n───────────────\n`)
 		Log(Locale().utils.errors.error, 'e')
 	},
 
-	GetFiles(directory: string) {
+	/**
+	 * A function for grabbing all of the files in a directory.
+	 *
+	 * @param {string} directory
+	 * @return {*} {string[]}
+	 */
+	GetFiles(directory: string): string[] {
 		const recursivelyGetFiles = (dir: string, allFiles: string[] = []) => {
 			const files: string[] = fs.readdirSync(dir)
 
@@ -46,6 +64,12 @@ const Utils = {
 		return recursivelyGetFiles(directory)
 	},
 
+	/**
+	 * A function for creating directories
+	 *
+	 * @param {string} name
+	 * @return {*}  {boolean}
+	 */
 	MkDir(name: string): boolean {
 		if (!fs.existsSync(`./${name}`)) {
 			fs.mkdirSync(`./${name}`)
@@ -55,6 +79,13 @@ const Utils = {
 		}
 	},
 
+	/**
+	 * A function for padding a number with zeros; usefully for ticketing modules.
+	 *
+	 * @param {number} number
+	 * @param {number} length
+	 * @return {*}  {string}
+	 */
 	PadWithZeros(number: number, length: number): string {
 		let n = '' + number
 		while (n.length < length) {
@@ -63,18 +94,38 @@ const Utils = {
 		return n
 	},
 
-	Random(min: number, max: number) {
+	/**
+	 * A function for generating a random number between min and max inclusively.
+	 *
+	 * @param {number} min
+	 * @param {number} max
+	 * @return {*}  {number}
+	 */
+	Random(min: number, max: number): number {
 		return Math.floor(Math.random() * (max + 1 - min)) + min
 	},
 
-	RandomizeCapitalization(string: string) {
+	/**
+	 * A function for randomly capitalizing a string.
+	 *
+	 * @param {string} string
+	 * @return {*}  {string}
+	 */
+	RandomizeCapitalization(string: string): string {
 		return string
 			.split('')
 			.map((chr) => (Utils.Random(0, 1) ? chr.toLowerCase() : chr.toUpperCase()))
 			.join('')
 	},
 
-	GenerateID(length: number = 8, base: number = 16) {
+	/**
+	 * A function for generating a random id.
+	 *
+	 * @param {number} [length=8]
+	 * @param {number} [base=16]
+	 * @return {*}  {string}
+	 */
+	GenerateID(length: number = 8, base: number = 16): string {
 		const id = 'x'
 			.repeat(length)
 			.split('')
@@ -87,16 +138,21 @@ const Utils = {
 		return Utils.RandomizeCapitalization(id)
 	},
 
-	Emoji(e: string) {
+	Emoji(e: string): string {
 		return e.replace(/<:.+:|>/g, '')
 	},
 
-	Backup(file: string) {
+	/**
+	 * A function for generating a backup of a file.
+	 *
+	 * @param {string} file
+	 */
+	Backup(file: string): void {
 		const time = Utils.Time()
 
 		fs.copyFile(file, `./backups/${time.year}-${time.month}-${time.date}-${file}`, (err) => {
 			if (err) return this.Error(err)
-			;(async () => Log(Locale().utils.success.backup.replace(/{file}/g, file), 's'))()
+			Log(Locale().utils.success.backup.replace(/{file}/g, file), 's')
 		})
 	},
 
