@@ -1,7 +1,7 @@
 /**
  * A function for grabbing the language file.
  *
- * @return {*}
+ * @returns The locale of given location if it is created under `locales.ts`.
  */
 export declare const Locale: () => {
     commands: {

@@ -3,7 +3,7 @@ dotenv.config()
 import { QuackJS, QuackJSUtils } from '../../lib/index.js'
 import { DataTypes } from 'sequelize'
 
-console.log(QuackJSUtils.Embed({
+console.log(QuackJSUtils.Discord.Embed({
   embeds: [
     {
       title: 'tesadt {test}',

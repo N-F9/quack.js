@@ -1,4 +1,4 @@
-import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global'
+import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from './global'
 
 import * as DiscordJS from 'discord.js'
 import * as logs from 'discord-logs'
@@ -11,10 +11,6 @@ export * as QuackJSUtils from './utils.js'
 
 /**
  * The main class for creating and managing Discord bots
- *
- * @export
- * @class QuackJS
- * @implements {QuackJSObject}
  */
 export class QuackJS implements QuackJSObject {
 	public config: QuackJSConfig
@@ -27,6 +23,12 @@ export class QuackJS implements QuackJSObject {
 
 	private token: string
 
+	/**
+	 * Creates an instance of QuackJS.
+	 *
+	 * @param token - The Discord bot's token.
+	 * @param config - The config of the Discord bot.
+	 */
 	constructor(token: string, config: QuackJSConfig) {
 		this.token = token
 		this.config = config
@@ -70,6 +72,11 @@ export class QuackJS implements QuackJSObject {
 		})
 	}
 
+	/**
+	 * Starts the Discord bot.
+	 *
+	 * @param QuackJS - The parameter of this class.
+	 */
 	public async Start(QuackJS: QuackJS) {
 		if (QuackJS.config.logsFolder) Utils.MkDir('logs')
 		if (QuackJS.config.logsFolder) Utils.MkDir('logs/console')
@@ -182,19 +189,40 @@ export class QuackJS implements QuackJSObject {
 		})
 	}
 
+	/**
+	 * A method for adding models for the Database.
+	 *
+	 * @param name - The name of the model.
+	 * @param model - The model to be used for the Database.
+	 */
 	public AddModel(name: string, model: ModelStatic<Model<any, any>>) {
 		this.models[name] = model
 		this.sequelize?.sync()
 	}
 
+	/**
+	 * Adds a slash command to the object.
+	 *
+	 * @param slashCommand - The slash command to be added.
+	 */
 	public CreateCommand(slashCommand: QuackJSSlashCommand) {
 		this.commands.push(slashCommand)
 	}
 
+	/**
+	 * Adds an event to the object.
+	 *
+	 * @param event - The event to be added.
+	 */
 	public CreateEvent(event: QuackJSEvent) {
 		this.events.push(event)
 	}
 
+	/**
+	 * Adds a trigger to the object.
+	 *
+	 * @param trigger - The trigger to be added.
+	 */
 	public CreateTrigger(trigger: QuackJSTrigger) {
 		this.triggers.push(trigger)
 	}
