@@ -8,8 +8,6 @@ const osLocale: string = osLocaleSync()
  *
  * @return {*}
  */
-const Locale = () => {
+export const Locale = () => {
 	return locales[osLocale as keyof typeof locales] || locales.en_US
 }
-
-export default Locale

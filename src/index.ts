@@ -5,26 +5,9 @@ import * as logs from 'discord-logs'
 import _ from 'lodash'
 import { Model, ModelStatic, Options, Sequelize } from 'sequelize'
 import { scheduleJob } from 'node-schedule'
+import * as Utils from './utils.js'
 
-import Utils from './modules/utils.js'
-import { Log, Debug } from './modules/log.js'
-import Discord from './modules/discord.js'
-import HTML from './modules/html.js'
-import Color from './handlers/color.js'
-import Locale from './handlers/locale.js'
-import Variables from './handlers/variables.js'
-
-export const QuackJSUtils = {
-	...Utils,
-	Log,
-	Debug,
-	Discord,
-	HTML,
-
-	Color,
-	Locale,
-	Variables,
-}
+export * as QuackJSUtils from './utils.js'
 
 /**
  * The main class for creating and managing Discord bots
@@ -88,9 +71,9 @@ export class QuackJS implements QuackJSObject {
 	}
 
 	public async Start(QuackJS: QuackJS) {
-		if (QuackJS.config.logsFolder) QuackJSUtils.MkDir('logs')
-		if (QuackJS.config.logsFolder) QuackJSUtils.MkDir('logs/console')
-		if (QuackJS.config.backups) QuackJSUtils.MkDir('backups')
+		if (QuackJS.config.logsFolder) Utils.MkDir('logs')
+		if (QuackJS.config.logsFolder) Utils.MkDir('logs/console')
+		if (QuackJS.config.backups) Utils.MkDir('backups')
 
 		logs.default(QuackJS.client)
 
@@ -120,9 +103,9 @@ export class QuackJS implements QuackJSObject {
 				try {
 					QuackJS.commands[i].execute(interaction)
 				} catch (error: any) {
-					Utils.Error(error)
+					Utils.Exception(error)
 					interaction.reply({
-						content: Locale().commands.errors.execution,
+						content: Utils.Locale().commands.errors.execution,
 						ephemeral: true,
 					})
 				}
@@ -134,15 +117,15 @@ export class QuackJS implements QuackJSObject {
 			async execute(client: DiscordJS.Client) {
 				if (QuackJS.config.backups) {
 					QuackJS.config.backups.forEach((backup) => {
-						QuackJSUtils.Backup(backup.file)
+						Utils.Backup(backup.file)
 						scheduleJob(backup.scheduling, () => {
-							QuackJSUtils.Backup(backup.file)
+							Utils.Backup(backup.file)
 						})
 					})
 				}
 
 				const commandsNames = QuackJS.commands.map((c) => c.name)
-				if (new Set(commandsNames).size !== commandsNames.length) Log(Locale().commands.errors.names, 'w')
+				if (new Set(commandsNames).size !== commandsNames.length) Utils.Log(Utils.Locale().commands.errors.names, 'w')
 				;(async () => {
 					if (!client.application?.owner) await client.application?.fetch()
 
@@ -168,7 +151,7 @@ export class QuackJS implements QuackJSObject {
 										})
 									}
 								} catch (error) {
-									Utils.Error(new Error(Locale().commands.errors.creation))
+									Utils.Exception(new Error(Utils.Locale().commands.errors.creation))
 								}
 							}
 						}
@@ -180,7 +163,7 @@ export class QuackJS implements QuackJSObject {
 		try {
 			this.sequelize?.authenticate()
 		} catch (error: any) {
-			QuackJSUtils.Error(new Error(error))
+			Utils.Exception(new Error(error))
 		}
 
 		await this.StartEvents()

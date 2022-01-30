@@ -3,7 +3,7 @@
  *
  * @return {*}
  */
-declare const Locale: () => {
+export declare const Locale: () => {
     commands: {
         errors: {
             execution: string;
@@ -28,4 +28,3 @@ declare const Locale: () => {
         };
     };
 };
-export default Locale;

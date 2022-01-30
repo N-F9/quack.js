@@ -4,5 +4,4 @@
  * @param {string} color
  * @return {*} {number}
  */
-declare const Color: (color: string) => number;
-export default Color;
+export declare const Color: (color: string) => number;

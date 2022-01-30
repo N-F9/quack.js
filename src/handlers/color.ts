@@ -6,9 +6,7 @@ import * as col from 'color'
  * @param {string} color
  * @return {*} {number}
  */
-const Color = (color: string): number => {
+export const Color = (color: string): number => {
 	const c = col.default(color)
 	return parseInt(c.hex().substring(1), 16)
 }
-
-export default Color

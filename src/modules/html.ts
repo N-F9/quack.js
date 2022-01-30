@@ -7,7 +7,7 @@ import { minify } from 'html-minifier'
  *
  * @class HTML
  */
-class HTML {
+export class HTML {
 	public DOM: jsdom.JSDOM
 
 	constructor(html: string = '<!DOCTYPE html><html><body></body></html>') {
@@ -62,5 +62,3 @@ class HTML {
 		return this.DOM.window.document
 	}
 }
-
-export default HTML

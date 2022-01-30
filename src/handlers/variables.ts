@@ -1,3 +1,1 @@
-const Variables: Record<string, any> = {}
-
-export default Variables
+export const Variables: Record<string, any> = {}

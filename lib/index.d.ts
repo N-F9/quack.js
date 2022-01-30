@@ -1,66 +1,7 @@
-/// <reference types="ms" />
 import { QuackJSConfig, QuackJSEvent, QuackJSObject, QuackJSSlashCommand, QuackJSTrigger } from '../global';
 import * as DiscordJS from 'discord.js';
 import { Model, ModelStatic, Sequelize } from 'sequelize';
-import HTML from './modules/html.js';
-export declare const QuackJSUtils: {
-    Log: (message: string, type?: "i" | "s" | "d" | "e" | "w") => void;
-    Debug: (obj: Object | Function, name?: string) => void;
-    Discord: {
-        Embed(message: import("../global").QuackJSMessage, placeholders?: Record<string, any> | undefined): DiscordJS.MessageOptions;
-        Prompt(message: DiscordJS.Message<boolean>, member: DiscordJS.GuildMember, options: import("../global").QuackJSPromptOptions): Promise<DiscordJS.Message<boolean> | DiscordJS.MessageReaction | undefined>;
-        CreateRole(guild: DiscordJS.Guild, options: DiscordJS.CreateRoleOptions): void;
-        DeleteRole(guild: DiscordJS.Guild, finder: string): void;
-        HasRole(member: DiscordJS.GuildMember, finder: string): boolean;
-        GiveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string): Promise<DiscordJS.GuildMember>;
-        RemoveRole(guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string): Promise<DiscordJS.GuildMember>;
-        CreateChannel(guild: DiscordJS.Guild, name: string, options: DiscordJS.GuildChannelCreateOptions): Promise<DiscordJS.TextChannel>;
-        DeleteChannel(guild: DiscordJS.Guild, finder: string): void;
-        CreateCategory(guild: DiscordJS.Guild, name: string, options: Object): Promise<DiscordJS.CategoryChannel>;
-        DeleteCategory(guild: DiscordJS.Guild, finder: string): void;
-        GetChannel(guild: DiscordJS.Guild, finder: string | DiscordJS.Channel): DiscordJS.GuildChannel | DiscordJS.ThreadChannel | undefined;
-        MoveChannelToCategory(guild: DiscordJS.Guild, channel: string | DiscordJS.Channel, category: string | DiscordJS.CategoryChannel): void;
-    };
-    HTML: typeof HTML;
-    Color: (color: string) => number;
-    Locale: () => {
-        commands: {
-            errors: {
-                execution: string;
-                names: string;
-                creation: string;
-            };
-        };
-        utils: {
-            errors: {
-                error: string;
-            };
-            success: {
-                backup: string;
-            };
-        };
-        discord: {
-            errors: {
-                emoji: string;
-                role: string;
-                channel: string;
-                category: string;
-            };
-        };
-    };
-    Variables: Record<string, any>;
-    Time(date?: Date): import("../global").QuackJSTime;
-    Error(e: Error): void;
-    GetFiles(directory: string): string[];
-    MkDir(name: string): boolean;
-    PadWithZeros(number: number, length: number): string;
-    Random(min: number, max: number): number;
-    RandomizeCapitalization(string: string): string;
-    GenerateID(length?: number, base?: number): string;
-    Emoji(e: string): string;
-    Backup(file: string): void;
-    MS: typeof import("ms");
-};
+export * as QuackJSUtils from './utils.js';
 /**
  * The main class for creating and managing Discord bots
  *

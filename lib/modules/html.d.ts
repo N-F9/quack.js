@@ -4,7 +4,7 @@ import jsdom from 'jsdom';
  *
  * @class HTML
  */
-declare class HTML {
+export declare class HTML {
     DOM: jsdom.JSDOM;
     constructor(html?: string);
     /**
@@ -39,4 +39,3 @@ declare class HTML {
      */
     get document(): Document;
 }
-export default HTML;
