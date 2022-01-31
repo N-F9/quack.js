@@ -1,5 +1,7 @@
-require('dotenv').config()
-const { QuackJS, QuackJSUtils } = require('../../')
+import dotenv from 'dotenv'
+import { QuackJS, QuackJSUtils } from '../../lib/index.js'
+
+dotenv.config()
 
 const Quack = new QuackJS(process.env.TOKEN, {
   backups: false,
@@ -10,7 +12,7 @@ const Quack = new QuackJS(process.env.TOKEN, {
 const files = QuackJSUtils.GetFiles('./src')
 
 for (const file of files) {
-  const execute = require('./' + file)
+  const execute = (await import('./' + file)).default
   execute(Quack)
 }
 

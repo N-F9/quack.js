@@ -1,6 +1,4 @@
-const { QuackJSUtils } = require('../../../lib')
-
-module.exports = (QuackJS) => {
+export default (QuackJS) => {
   QuackJS.CreateCommand({
     name: 'ping',
     description: 'Ping',

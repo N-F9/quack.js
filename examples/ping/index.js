@@ -1,6 +1,7 @@
-require('dotenv').config()
-const { QuackJS } = require('../../')
-const fs = require('fs')
+import dotenv from 'dotenv'
+import { QuackJS } from '../../lib/index.js'
+
+dotenv.config()
 
 const Quack = new QuackJS(process.env.TOKEN, {
   backups: false,
