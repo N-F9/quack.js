@@ -1,4 +1,4 @@
-import { QuackJSMessage, QuackJSPromptOptions } from '../global';
+import { QuackJSMessage, QuackJSPromptOptions } from '../../global';
 import * as DiscordJS from 'discord.js';
 /**
  * A function for generating an embed with ease.

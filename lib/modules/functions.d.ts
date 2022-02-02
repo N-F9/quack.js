@@ -1,4 +1,4 @@
-import { QuackJSTime } from '../global';
+import { QuackJSTime } from '../../global';
 import ms from 'ms';
 /**
  * A function which returns an object containing useful time numbers and information.
