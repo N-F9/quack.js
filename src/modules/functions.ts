@@ -1,4 +1,4 @@
-import { QuackJSTime } from '../global'
+import { QuackJSTime } from '../../global'
 
 import * as fs from 'fs'
 import path from 'path'
