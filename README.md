@@ -8,7 +8,7 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/n-f9/quack.js?style=flat-square)
 
 
-[Documentation/Wiki](https://github.com/N-F9/quack.js/wiki) |
+[Documentation/Wiki](https://n-f9.gitbook.io/quack.js/) |
 [NPM](https://www.npmjs.com/package/@n-f9/quack.js) |
 [Github](https://www.npmjs.com/package/@n-f9/quack.js) |
 [Website](https://quack.nickf.me/) |
