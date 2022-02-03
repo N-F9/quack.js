@@ -12,7 +12,8 @@
 [NPM](https://www.npmjs.com/package/@n-f9/quack.js) |
 [Github](https://www.npmjs.com/package/@n-f9/quack.js) |
 [Website](https://quack.nickf.me/) |
-[Issues](https://github.com/N-F9/quack.js/issues)
+[Issues](https://github.com/N-F9/quack.js/issues) | 
+[Discord Server](https://discord.gg/MVmkwfkv7q)
 
 ```
 npm i @n-f9/quack.js
