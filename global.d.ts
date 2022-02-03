@@ -84,8 +84,8 @@ declare type QuackJSEmbed = {
 }
 
 declare type QuackJSMessage = {
-	embeds: QuackJSEmbed[]
-	content: string
+	embeds?: QuackJSEmbed[]
+	content?: string
 	files?: DiscordJS.MessageAttachment[]
 	components?: (DiscordJS.MessageActionRow | (Required<DiscordJS.BaseMessageComponentOptions> & DiscordJS.MessageActionRowOptions))[]
 }

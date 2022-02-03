@@ -27,9 +27,10 @@ export const Embed = (message: QuackJSMessage, placeholders?: Record<string, any
 			return obj
 		}
 
-		for (const [i, embed] of message.embeds.entries()) {
-			message.embeds[i] = Replacer(embed)
-		}
+		if (message.embeds)
+			for (const [i, embed] of message.embeds.entries()) {
+				message.embeds[i] = Replacer(embed)
+			}
 	}
 
 	return {
