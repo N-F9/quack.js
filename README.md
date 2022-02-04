@@ -7,7 +7,6 @@
 ![npm](https://img.shields.io/npm/dw/@n-f9/quack.js?style=flat-square)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/n-f9/quack.js?style=flat-square)
 
-
 [Documentation/Wiki](https://n-f9.gitbook.io/quack.js/) |
 [NPM](https://www.npmjs.com/package/@n-f9/quack.js) |
 [Github](https://www.npmjs.com/package/@n-f9/quack.js) |
@@ -21,8 +20,6 @@ npm i @n-f9/quack.js
 
 A Discord.js framework for all of your needs! From prototyping or production needs, this framework can handle it all.
 
-**THIS FRAMEWORK IS A WORK IN PROGRESS! SOME ELEMENTS AND FEATURES MAY NOT WORK!**
-
 #### Why Quack?
 
 Quack.js provides structure and utilities to help the developer save time. The framework aids in the simplification of code, making it easier to debug, test, and edit.
@@ -32,3 +29,9 @@ Check out the [contributing file](https://github.com/N-F9/quack.js/blob/master/C
 
 #### I need some help!
 For basic help, check out the [wiki](https://github.com/N-F9/quack.js/wiki)! If you need some more help then create an [issue](https://github.com/N-F9/quack.js/issues).
+<<<<<<< HEAD
+=======
+
+#### Something doesn't work!
+If any errors or bugs occur, please create an [issue](https://github.com/N-F9/quack.js/issues).
+>>>>>>> 0f07997 (readme update)
