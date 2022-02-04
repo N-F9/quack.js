@@ -29,9 +29,6 @@ Check out the [contributing file](https://github.com/N-F9/quack.js/blob/master/C
 
 #### I need some help!
 For basic help, check out the [wiki](https://github.com/N-F9/quack.js/wiki)! If you need some more help then create an [issue](https://github.com/N-F9/quack.js/issues).
-<<<<<<< HEAD
-=======
 
 #### Something doesn't work!
 If any errors or bugs occur, please create an [issue](https://github.com/N-F9/quack.js/issues).
->>>>>>> 0f07997 (readme update)
