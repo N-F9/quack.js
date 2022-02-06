@@ -18,7 +18,7 @@
     "url": "git+https://github.com/N-F9/quack.js.git"
   },
   "keywords": [],
-  "author": "Nick Ferguson",
+  "author": "n-f9",
   "license": "MIT",
   "files": [
     "lib/**/*",
@@ -29,7 +29,7 @@
   "bugs": {
     "url": "https://github.com/N-F9/quack.js/issues"
   },
-  "homepage": "https://n-f9.github.io/quack.js-website/",
+  "homepage": "https://quack.nickf.me/",
   "directories": {
     "lib": "lib",
     "test": "test"
