@@ -47,6 +47,12 @@ export class QuackJS implements QuackJSObject {
 			else this.sequelize = undefined
 		} else this.sequelize = new Sequelize(config.database || defaultDatabase)
 
+		try {
+			this.sequelize?.authenticate()
+		} catch (error: any) {
+			Utils.Exception(new Error(error))
+		}
+
 		this.models = {}
 
 		this.client = new DiscordJS.Client({
@@ -166,12 +172,6 @@ export class QuackJS implements QuackJSObject {
 				})()
 			},
 		})
-
-		try {
-			this.sequelize?.authenticate()
-		} catch (error: any) {
-			Utils.Exception(new Error(error))
-		}
 
 		await this.StartEvents()
 		await this.Login()
