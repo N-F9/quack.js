@@ -101,7 +101,7 @@ export const PadWithZeros = (number: number, length: number): string => {
  * @returns A random number between `min` and `max`.
  */
 export const Random = (min: number, max: number): number => {
-	return Math.floor(Math.random() * (max + 1 - min)) + min
+	return Math.floor(crypto.randomInt(max + 1 - min) + min); // Reference #1
 }
 
 /**
@@ -129,7 +129,7 @@ export const GenerateID = (length: number = 8, base: number = 16): string => {
 		.repeat(length)
 		.split('')
 		.map(() =>
-			Math.floor(Math.random() * base)
+			Math.floor(crypto.randomInt(base)) // Reference #1
 				.toString(base)
 				.slice(-1),
 		)
