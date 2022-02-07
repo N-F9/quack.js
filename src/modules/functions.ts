@@ -3,6 +3,7 @@ import { QuackJSTime } from '../../global'
 import * as fs from 'fs'
 import path from 'path'
 import ms from 'ms'
+import crypto from 'crypto'
 
 import { Log } from './log.js'
 import { Locale } from '../handlers/locale.js'
@@ -101,7 +102,7 @@ export const PadWithZeros = (number: number, length: number): string => {
  * @returns A random number between `min` and `max`.
  */
 export const Random = (min: number, max: number): number => {
-	return Math.floor(crypto.randomInt(max + 1 - min) + min); // Reference #1
+	return Math.floor(crypto.randomInt(max + 1 - min) + min) // Reference #1
 }
 
 /**

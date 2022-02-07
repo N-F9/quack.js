@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="https://n-f9.github.io/quack.js-website/dancing-duckdancing.gif"/>
-  <h1 align="center">Quack.js</h1>
-  <h4 align="center">"Simplify, simplify, simplify!" - Henry David Thoreau</h4>
+	<img src="https://n-f9.github.io/quack.js-website/dancing-duckdancing.gif"/>
+	<h1 align="center">Quack.js</h1>
+	<h4 align="center">"Simplify, simplify, simplify!" - Henry David Thoreau</h4>
 </p>
 
 ![npm](https://img.shields.io/npm/dw/@n-f9/quack.js?style=flat-square)

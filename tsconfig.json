@@ -1,13 +1,13 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
+	"compilerOptions": {
+		"target": "ESNext",
 		"module": "ESNext",
-    "declaration": true,
-    "outDir": "./lib",
-    "strict": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true
-  },
-  "include": ["src", "global.d.ts"],
-  "exclude": ["node_modules", "lib", "**/__tests__/*"]
+		"declaration": true,
+		"outDir": "./lib",
+		"strict": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true
+	},
+	"include": ["src", "global.d.ts"],
+	"exclude": ["node_modules", "lib", "**/__tests__/*"]
 }
