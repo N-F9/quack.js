@@ -1,7 +1,5 @@
-import dotenv from 'dotenv'
+import 'dotenv/config'
 import { QuackJS, QuackJSUtils } from '../../lib/index.js'
-
-dotenv.config()
 
 const Quack = new QuackJS(process.env.TOKEN, {
 	backups: false,
