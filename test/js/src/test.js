@@ -4,7 +4,7 @@ export default (QuackJS) => {
   QuackJS.CreateTrigger({
     name: 'test',
     trigger: /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,
-    execute(client, message) {
+    async execute(client, message) {
       message.channel.send('testtest').then(m => {
         m.react('👍')
         QuackJSUtils.Discord.Prompt(m, message.member, {
@@ -19,6 +19,20 @@ export default (QuackJS) => {
           console.log(c)
         })
       })
+
+			QuackJSUtils.Discord.CreateRole(message.guild, {
+				name: 'fdsafdsa',
+			}) 
+			QuackJSUtils.Discord.DeleteRole(message.guild, 'fdsafdsa')
+			console.log(QuackJSUtils.Discord.HasRole(message.member, '299672434041421825')) 
+			await QuackJSUtils.Discord.GiveRole(message.guild, message.member, '852313820177104936') 
+			await QuackJSUtils.Discord.RemoveRole(message.guild, message.member, '728334551012606024') 
+			await QuackJSUtils.Discord.CreateChannel(message.guild, 'name', {}) 
+			QuackJSUtils.Discord.DeleteChannel(message.guild, '739927584489341171') 
+			await QuackJSUtils.Discord.CreateCategory(message.guild, 'name', {}) 
+			QuackJSUtils.Discord.DeleteChannel(message.guild, '931943891417038948') 
+			QuackJSUtils.Discord.MoveChannelToCategory(message.guild, '941148218304122990', '941148218857750528')
+
     }
   })
 
