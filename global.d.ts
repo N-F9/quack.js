@@ -9,7 +9,6 @@ declare type QuackJSConfig = {
 	backups?: QuackJSBackup[]
 	intents?: DiscordJS.Intents[]
 	database?: Sequelize.Options | boolean
-	locale?: 'en-US'
 }
 
 declare interface QuackJSObject {
