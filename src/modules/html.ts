@@ -13,7 +13,7 @@ export class HTML {
 	 *
 	 * @param html - The base HTML to be used thoughout the object.
 	 */
-	constructor(html: string = '<!DOCTYPE html><html><body></body></html>') {
+	constructor(html = '<!DOCTYPE html><html><body></body></html>') {
 		this.DOM = new jsdom.JSDOM(html)
 	}
 

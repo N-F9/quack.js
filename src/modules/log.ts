@@ -32,7 +32,7 @@ export const Log = (message: string, type: 'i' | 'e' | 's' | 'w' | 'd' = 'i') =>
  * @param obj - The object/function to be tested.
  * @param name - The name of the debug call.
  */
-export const Debug = (obj: Function | Object, name: string = 'none') => {
+export const Debug = (obj: Function | Object, name = 'none') => {
 	if (typeof obj === 'function') {
 		const timeStart = new Date()
 		const returnFromObj = obj()

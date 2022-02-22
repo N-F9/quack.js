@@ -125,7 +125,7 @@ export const RandomizeCapitalization = (string: string): string => {
  * @param base - The base for which the id will be.
  * @returns Returns a random id with a base of `base` and length of `length`.
  */
-export const GenerateID = (length: number = 8, base: number = 16): string => {
+export const GenerateID = (length = 8, base = 16): string => {
 	const id = 'x'
 		.repeat(length)
 		.split('')

@@ -1,0 +1,16 @@
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+parser: "@typescript-eslint/parser"
+plugins:
+  - "@typescript-eslint"
+rules:
+  no-shadow: off
+  no-use-before-define: off
+  "@typescript-eslint/no-shadow": off
+  "@typescript-eslint/no-use-before-define": off
+  "@typescript-eslint/no-inferrable-types": warn
+  "@typescript-eslint/ban-types": off
+  "@typescript-eslint/no-explicit-any": off
+  "@typescript-eslint/no-unused-vars": off
+  
