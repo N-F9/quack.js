@@ -1,6 +1,6 @@
 {
 	"name": "@n-f9/quack.js",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A Discord.js bot framework for any purpose!",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -17,8 +17,22 @@
 		"type": "git",
 		"url": "git+https://github.com/N-F9/quack.js.git"
 	},
-	"keywords": [],
-	"author": "n-f9",
+	"keywords": [
+		"nodejs", 
+		"javascript", 
+		"bot", 
+		"framework", 
+		"discord",
+		"discord-bot", 
+		"discord-js", 
+		"frameworks",
+		"discord-framework"
+	],
+	"author": {
+    "name": "Nick Ferguson",
+    "email": "ndferguson@protonmail.com",
+    "url": "https://nickf.me"
+  },
 	"license": "MIT",
 	"files": [
 		"lib/**/*",
