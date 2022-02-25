@@ -84,8 +84,10 @@ export class QuackJS implements QuackJSObject {
 	 * @param QuackJS - The parameter of this class.
 	 */
 	public async Start(QuackJS: QuackJS) {
-		if (QuackJS.config.logsFolder) Utils.MkDir('logs')
-		if (QuackJS.config.logsFolder) Utils.MkDir('logs/console')
+		if (QuackJS.config.logsFolder) {
+			Utils.MkDir('logs')
+			Utils.MkDir('logs/console')
+		}
 		if (QuackJS.config.backups) Utils.MkDir('backups')
 
 		logs.default(QuackJS.client)
