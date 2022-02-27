@@ -29,10 +29,10 @@
 		"discord-framework"
 	],
 	"author": {
-    "name": "Nick Ferguson",
-    "email": "ndferguson@protonmail.com",
-    "url": "https://nickf.me"
-  },
+		"name": "Nick Ferguson",
+		"email": "ndferguson@protonmail.com",
+		"url": "https://nickf.me"
+	},
 	"license": "MIT",
 	"files": [
 		"lib/**/*",
