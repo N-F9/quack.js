@@ -77,7 +77,6 @@ Quack.Start(Quack)
 console.log(Quack.models)
 
 console.log(QuackJSUtils.Color('rgb(100, 100, 100)'), "Color")
-console.log(QuackJSUtils.Locale())
 console.log(QuackJSUtils.Variables)
 console.log(QuackJSUtils.Time())
 console.log(QuackJSUtils.Exception(new Error('test')))

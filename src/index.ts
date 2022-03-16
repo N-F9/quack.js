@@ -120,7 +120,7 @@ export class QuackJS implements QuackJSObject {
 				} catch (error: any) {
 					Utils.Exception(error)
 					interaction.reply({
-						content: Utils.Locale().commands.errors.execution,
+						content: 'There was an error while executing this command!',
 						ephemeral: true,
 					})
 				}
@@ -140,7 +140,7 @@ export class QuackJS implements QuackJSObject {
 				}
 
 				const commandsNames = QuackJS.commands.map((c) => c.name)
-				if (new Set(commandsNames).size !== commandsNames.length) Utils.Log(Utils.Locale().commands.errors.names, 'w')
+				if (new Set(commandsNames).size !== commandsNames.length) Utils.Log('Two or more commands have the same name!', 'w')
 				;(async () => {
 					if (!client.application?.owner) await client.application?.fetch()
 
@@ -166,7 +166,7 @@ export class QuackJS implements QuackJSObject {
 										})
 									}
 								} catch (error) {
-									Utils.Exception(new Error(Utils.Locale().commands.errors.creation))
+									Utils.Exception(new Error('An error occurred while creating guild specific commands!'))
 								}
 							}
 						}

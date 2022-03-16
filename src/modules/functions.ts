@@ -6,7 +6,6 @@ import ms from 'ms'
 import crypto from 'crypto'
 
 import { Log } from './log.js'
-import { Locale } from '../handlers/locale.js'
 
 /**
  * A function which returns an object containing useful time numbers and information.
@@ -37,7 +36,7 @@ export const Time = (date = new Date()): QuackJSTime => {
  */
 export const Exception = (e: Error): void => {
 	fs.appendFileSync('errors.txt', `${Time().TZ}\n${e.stack}\n───────────────\n`)
-	Log(Locale().utils.errors.error, 'e')
+	Log('An error has occurred!', 'e')
 }
 
 /**
@@ -158,7 +157,7 @@ export const Backup = (file: string): void => {
 
 	fs.copyFile(file, `./backups/${time.year}-${time.month}-${time.date}-${file}`, (err) => {
 		if (err) return Exception(err)
-		Log(Locale().utils.success.backup.replace(/{file}/g, file), 's')
+		Log(`Created backup of ${file}`, 's')
 	})
 }
 

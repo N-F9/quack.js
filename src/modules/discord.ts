@@ -2,7 +2,6 @@ import { QuackJSMessage, QuackJSPromptOptions } from '../../global'
 
 import * as DiscordJS from 'discord.js'
 import { Exception } from './functions.js'
-import { Locale } from '../handlers/locale.js'
 
 /**
  * A function for generating an embed with ease.
@@ -58,7 +57,7 @@ export const Prompt = (message: DiscordJS.Message, member: DiscordJS.GuildMember
 				resolve(c)
 			})
 		} else if (options.type === 'reaction') {
-			if (options.emoji == null) (async () => reject(Exception(new Error(Locale().discord.errors.emoji))))()
+			if (options.emoji == null) Exception(new Error('Invalid Emoji'))
 			const filter = (reaction: DiscordJS.MessageReaction, user: DiscordJS.User) => user.id === member.id && reaction.emoji.name === options.emoji
 
 			message.awaitReactions({ filter, max: 1 }).then((collected) => {
@@ -87,7 +86,7 @@ export const CreateRole = (guild: DiscordJS.Guild, options: DiscordJS.CreateRole
  */
 export const DeleteRole = (guild: DiscordJS.Guild, finder: string) => {
 	const roleDeleted = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
-	if (roleDeleted == null) (async () => Exception(new Error(Locale().discord.errors.role)))()
+	if (roleDeleted == null) Exception(new Error('Role does not exist!'))
 	roleDeleted?.delete()
 }
 
@@ -112,7 +111,7 @@ export const HasRole = (member: DiscordJS.GuildMember, finder: string): boolean 
  */
 export const GiveRole = (guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string): Promise<DiscordJS.GuildMember> => {
 	const role = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
-	if (role == null) (async () => Exception(new Error(Locale().discord.errors.role)))()
+	if (role == null) Exception(new Error('Role does not exist!'))
 	return member.roles.add(role as DiscordJS.Role)
 }
 
@@ -126,7 +125,7 @@ export const GiveRole = (guild: DiscordJS.Guild, member: DiscordJS.GuildMember, 
  */
 export const RemoveRole = (guild: DiscordJS.Guild, member: DiscordJS.GuildMember, finder: string): Promise<DiscordJS.GuildMember> => {
 	const role = guild.roles.cache.find((role) => role.name === finder || role.id === finder)
-	if (role == null) (async () => Exception(new Error(Locale().discord.errors.role)))()
+	if (role == null) Exception(new Error('Role does not exist'))
 	return member.roles.remove(role as DiscordJS.Role)
 }
 
@@ -153,7 +152,7 @@ export const CreateChannel = (guild: DiscordJS.Guild, name: string, options: Dis
  */
 export const DeleteChannel = (guild: DiscordJS.Guild, finder: string) => {
 	const channel = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_TEXT')
-	if (channel == null) (async () => Exception(new Error(Locale().discord.errors.channel)))()
+	if (channel == null) Exception(new Error('Channel does not exist'))
 	channel?.delete()
 }
 
@@ -180,7 +179,7 @@ export const CreateCategory = (guild: DiscordJS.Guild, name: string, options: Di
  */
 export const DeleteCategory = (guild: DiscordJS.Guild, finder: string) => {
 	const category = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_CATEGORY')
-	if (category == null) (async () => Exception(new Error(Locale().discord.errors.category)))()
+	if (category == null) Exception(new Error('Category does not exist'))
 	category?.delete()
 }
 
@@ -209,7 +208,7 @@ export const MoveChannelToCategory = (guild: DiscordJS.Guild, channel: string | 
 	const newCategory = GetChannel(guild, category)
 	const newChannel = GetChannel(guild, channel)
 
-	if (!newCategory) (async () => Exception(new Error(Locale().discord.errors.category)))()
-	if (!newChannel) (async () => Exception(new Error(Locale().discord.errors.channel)))()
+	if (!newCategory) Exception(new Error('Category does not exist!'))
+	if (!newChannel) Exception(new Error('Channel does not exist!'))
 	;(newChannel as DiscordJS.GuildChannel).setParent((newCategory as DiscordJS.CategoryChannel).id)
 }
