@@ -105,3 +105,28 @@ export declare const GetChannel: (guild: DiscordJS.Guild, finder: string | Disco
  * @param category - The category which the `channel` will be moved to.
  */
 export declare const MoveChannelToCategory: (guild: DiscordJS.Guild, channel: string | DiscordJS.Channel, category: string | DiscordJS.CategoryChannel) => void;
+/**
+ * An object for the limits of Discord.
+ */
+export declare const LIMITS: {
+    EMBED: {
+        TITLE: number;
+        DESCRIPTION: number;
+        FIELDS: number;
+        FIELD: {
+            NAME: number;
+            VALUE: number;
+        };
+        FOOTER: {
+            TEXT: number;
+        };
+        AUTHOR: {
+            NAME: number;
+        };
+    };
+    MESSAGE: {
+        EMBED: number;
+        EMBEDS: number;
+        CONTENT: number;
+    };
+};

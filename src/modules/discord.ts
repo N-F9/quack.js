@@ -212,3 +212,29 @@ export const MoveChannelToCategory = (guild: DiscordJS.Guild, channel: string | 
 	if (!newChannel) Exception(new Error('Channel does not exist!'))
 	;(newChannel as DiscordJS.GuildChannel).setParent((newCategory as DiscordJS.CategoryChannel).id)
 }
+
+/**
+ * An object for the limits of Discord.
+ */
+export const LIMITS = {
+	EMBED: {
+		TITLE: 256, // Characters
+		DESCRIPTION: 4096, // Characters
+		FIELDS: 25, // Number of fields
+		FIELD: {
+			NAME: 256, // Characters
+			VALUE: 1024, // Characters
+		},
+		FOOTER: {
+			TEXT: 2048, // Characters
+		},
+		AUTHOR: {
+			NAME: 256, // Characters
+		},
+	},
+	MESSAGE: {
+		EMBED: 6000, // Total characters of all embeds
+		EMBEDS: 10, // Total number of embeds per message
+		CONTENT: 2000, // Characters
+	},
+}
