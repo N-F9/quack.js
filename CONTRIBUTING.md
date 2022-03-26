@@ -1,6 +1,6 @@
 # Contributing to Quack.js
 
-Welcome and thank you for your interest in contributing to Quack.js!
+Welcome and thank you for your interest in contributing to Quack.js! The main/master branch is the development branch. 
 
 #### Links
 - [wiki](https://github.com/N-F9/quack.js/wiki)
