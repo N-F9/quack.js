@@ -1,2 +1,1 @@
-export default (QuackJS) => {
-}
+export default (QuackJS) => {}

@@ -6,6 +6,6 @@ export default (QuackJS) => {
 		guilds: ['728269506710995034'],
 		execute(interaction) {
 			interaction.reply('pong!')
-		}
+		},
 	})
 }

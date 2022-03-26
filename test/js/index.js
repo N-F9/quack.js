@@ -2,18 +2,23 @@ import 'dotenv/config'
 import { QuackJS, QuackJSUtils } from '../../lib/index.js'
 import { DataTypes } from 'sequelize'
 
-console.log(QuackJSUtils.Discord.Embed({
-  embeds: [
-    {
-      title: 'tesadt {test}',
-      footer: {
-        text: '{test}'
-      }
-    }
-  ]
-}, {
-  '{test}': 'this is a test!'
-}))
+console.log(
+	QuackJSUtils.Discord.Embed(
+		{
+			embeds: [
+				{
+					title: 'tesadt {test}',
+					footer: {
+						text: '{test}',
+					},
+				},
+			],
+		},
+		{
+			'{test}': 'this is a test!',
+		},
+	),
+)
 
 QuackJSUtils.Debug(QuackJSUtils.MS('2 days'))
 QuackJSUtils.Debug(() => QuackJSUtils.MS('2 days'))
@@ -41,34 +46,33 @@ console.log(html.ExportToHTML())
 console.log(html.toString())
 
 const Quack = new QuackJS(process.env.TOKEN, {
-  backups: [
-    {
-      file: 'database.sqlite',
-      scheduling: '0 0 23 * * *'
-    }
-  ],
-  logsFolder: true,
-}) 
+	backups: [
+		{
+			file: 'database.sqlite',
+			scheduling: '0 0 23 * * *',
+		},
+	],
+	logsFolder: true,
+})
 
 const Example = Quack.sequelize.define('example', {
-  name: DataTypes.STRING,
-  stars: DataTypes.NUMBER
+	name: DataTypes.STRING,
+	stars: DataTypes.NUMBER,
 })
 
 Quack.AddModel('example', Example)
 
 Quack.models.example.create({
-  name: 'num',
-  stars: 2134
+	name: 'num',
+	stars: 2134,
 })
 
 const files = QuackJSUtils.GetFiles('./src')
 
 for (const file of files) {
-  const execute = (await import('./' + file)).default
-  execute(Quack)
+	const execute = (await import('./' + file)).default
+	execute(Quack)
 }
-
 
 QuackJSUtils.Debug(Quack)
 
@@ -76,7 +80,7 @@ Quack.Start(Quack)
 
 console.log(Quack.models)
 
-console.log(QuackJSUtils.Color('rgb(100, 100, 100)'), "Color")
+console.log(QuackJSUtils.Color('rgb(100, 100, 100)'), 'Color')
 console.log(QuackJSUtils.Variables)
 console.log(QuackJSUtils.Time())
 console.log(QuackJSUtils.Exception(new Error('test')))

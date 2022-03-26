@@ -4,8 +4,8 @@ import { QuackJS, QuackJSUtils } from '../../lib/index.js'
 const Quack = new QuackJS(process.env.TOKEN, {
 	backups: false,
 	logsFolder: false,
-	database: false
-}) 
+	database: false,
+})
 
 const files = QuackJSUtils.GetFiles('./src')
 

@@ -6,7 +6,7 @@
 	"types": "lib/index.d.ts",
 	"scripts": {
 		"build": "tsc",
-		"format": "prettier --write \"src/**/*.ts\"",
+		"format": "prettier --write \"{src,test,examples}/**/*.{ts,js,json}\"",
 		"lint": "npx eslint ./src",
 		"update": "ncu -u && npm update",
 		"compile": "npm run lint && npm run format && npm run build",
