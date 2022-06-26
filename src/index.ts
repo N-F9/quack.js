@@ -116,7 +116,13 @@ export class QuackJS implements QuackJSObject {
 				if (i === -1) return
 
 				try {
-					QuackJS.commands[i].execute(interaction)
+					if (Utils.Discord.HasRole(interaction.member as DiscordJS.GuildMember, QuackJS.commands[i].permission) || QuackJS.commands[i].permission === 'everyone')
+						QuackJS.commands[i].execute(interaction)
+					else
+						interaction.reply({
+							content: 'Invalid permissions!',
+							ephemeral: true,
+						})
 				} catch (error: any) {
 					Utils.Exception(error)
 					interaction.reply({
@@ -154,17 +160,17 @@ export class QuackJS implements QuackJSObject {
 								try {
 									const c = await client.guilds.cache.get(guild)?.commands.create(command)
 
-									if (cpermission !== 'everyone') {
-										c?.permissions.add({
-											permissions: [
-												{
-													id: cpermission,
-													type: 'ROLE',
-													permission: true,
-												},
-											],
-										})
-									}
+									// if (cpermission !== 'everyone') {
+									// 	c?.permissions.add({
+									// 		permissions: [
+									// 			{
+									// 				id: cpermission,
+									// 				type: 'ROLE',
+									// 				permission: true,
+									// 			},
+									// 		],
+									// 	})
+									// }
 								} catch (error) {
 									Utils.Exception(new Error('An error occurred while creating guild specific commands!'))
 								}

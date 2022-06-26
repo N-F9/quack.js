@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { QuackJS, QuackJSUtils } from '../../lib/index.js'
+import { QuackJS, QuackJSUtils } from '../lib/index.js'
 import { DataTypes } from 'sequelize'
 
 console.log(

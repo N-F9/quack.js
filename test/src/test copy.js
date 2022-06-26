@@ -1,4 +1,4 @@
-import { QuackJSUtils } from '../../../lib/index.js'
+import { QuackJSUtils } from '../../lib/index.js'
 
 export default (QuackJS) => {
 	QuackJS.CreateEvent({

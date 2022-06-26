@@ -168,7 +168,7 @@ export const CreateCategory = (guild: DiscordJS.Guild, name: string, options: Di
 	return guild.channels.create(name, {
 		type: 'GUILD_CATEGORY',
 		...options,
-	}) as Promise<DiscordJS.CategoryChannel>
+	}) as unknown as Promise<DiscordJS.CategoryChannel>
 }
 
 /**
