@@ -1,4 +1,4 @@
-import { QuackJSMessage, QuackJSPromptOptions } from '../../global';
+import { QuackJSPromptOptions } from '../../global';
 import * as DiscordJS from 'discord.js';
 /**
  * A function for generating an embed with ease.
@@ -7,7 +7,7 @@ import * as DiscordJS from 'discord.js';
  * @param placeholders - The placerholders to be replaced within the `message`.
  * @returns The formatted Discord Message Options.
  */
-export declare const Embed: (message: QuackJSMessage, placeholders?: Record<string, any>) => DiscordJS.MessageOptions;
+export declare const Embed: (message: DiscordJS.MessageOptions, placeholders?: Record<string, any>) => DiscordJS.MessageOptions;
 /**
  * A function for prompting the user for input; either from a message input or a reaction input.
  *

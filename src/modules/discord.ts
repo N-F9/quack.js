@@ -1,4 +1,4 @@
-import { QuackJSMessage, QuackJSPromptOptions } from '../../global'
+import { QuackJSPromptOptions } from '../../global'
 
 import * as DiscordJS from 'discord.js'
 import { Exception } from './functions.js'
@@ -10,7 +10,7 @@ import { Exception } from './functions.js'
  * @param placeholders - The placerholders to be replaced within the `message`.
  * @returns The formatted Discord Message Options.
  */
-export const Embed = (message: QuackJSMessage, placeholders?: Record<string, any>): DiscordJS.MessageOptions => {
+export const Embed = (message: DiscordJS.MessageOptions, placeholders?: Record<string, any>): DiscordJS.MessageOptions => {
 	let content = message.content
 
 	for (const placeholder in placeholders) {
@@ -33,7 +33,7 @@ export const Embed = (message: QuackJSMessage, placeholders?: Record<string, any
 	}
 
 	return {
-		embeds: message.embeds as unknown as DiscordJS.MessageEmbed[],
+		embeds: message.embeds as unknown as DiscordJS.EmbedBuilder[],
 		content,
 		files: message.files,
 		components: message.components,
@@ -138,8 +138,9 @@ export const RemoveRole = (guild: DiscordJS.Guild, member: DiscordJS.GuildMember
  * @returns The text channel.
  */
 export const CreateChannel = (guild: DiscordJS.Guild, name: string, options: DiscordJS.GuildChannelCreateOptions): Promise<DiscordJS.TextChannel> => {
-	return guild.channels.create(name, {
-		type: 'GUILD_TEXT',
+	return guild.channels.create({
+		...{ name: name },
+		type: DiscordJS.ChannelType.GuildText,
 		...options,
 	}) as Promise<DiscordJS.TextChannel>
 }
@@ -151,7 +152,7 @@ export const CreateChannel = (guild: DiscordJS.Guild, name: string, options: Dis
  * @param finder - The parameter which the function will search for.
  */
 export const DeleteChannel = (guild: DiscordJS.Guild, finder: string) => {
-	const channel = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_TEXT')
+	const channel = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === DiscordJS.ChannelType.GuildText)
 	if (channel == null) Exception(new Error('Channel does not exist'))
 	channel?.delete()
 }
@@ -165,8 +166,9 @@ export const DeleteChannel = (guild: DiscordJS.Guild, finder: string) => {
  * @returns The category channel.
  */
 export const CreateCategory = (guild: DiscordJS.Guild, name: string, options: DiscordJS.GuildChannelCreateOptions): Promise<DiscordJS.CategoryChannel> => {
-	return guild.channels.create(name, {
-		type: 'GUILD_CATEGORY',
+	return guild.channels.create({
+		...{ name: name },
+		type: DiscordJS.ChannelType.GuildCategory,
 		...options,
 	}) as unknown as Promise<DiscordJS.CategoryChannel>
 }
@@ -178,7 +180,7 @@ export const CreateCategory = (guild: DiscordJS.Guild, name: string, options: Di
  * @param finder - The parameter which the function will search for.
  */
 export const DeleteCategory = (guild: DiscordJS.Guild, finder: string) => {
-	const category = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === 'GUILD_CATEGORY')
+	const category = guild.channels.cache.find((c) => (c.name === finder || c.id === finder) && c.type === DiscordJS.ChannelType.GuildCategory)
 	if (category == null) Exception(new Error('Category does not exist'))
 	category?.delete()
 }

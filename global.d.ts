@@ -7,7 +7,7 @@ import * as Sequelize from 'sequelize'
 declare type QuackJSConfig = {
 	logsFolder?: boolean
 	backups?: QuackJSBackup[]
-	intents?: DiscordJS.Intents[]
+	intents?: DiscordJS.GatewayIntentBits[]
 	database?: Sequelize.Options | boolean
 }
 
@@ -53,40 +53,6 @@ declare type QuackJSTime = {
 	hours: number
 	minutes: number
 	seconds: number
-}
-
-declare type QuackJSField = {
-	name: string
-	value: string
-	inline?: boolean
-}
-
-declare type QuackJSEmbed = {
-	color?: number | string
-	title?: string
-	url?: string
-	author?: {
-		name?: string
-		icon_url?: string
-		url?: string
-	}
-	description?: string
-	thumbnail?: string
-	fields?: QuackJSField[]
-	image?: string
-	timestamp?: Date | string | number
-	footer?: {
-		text?: string
-		icon_url?: string
-	}
-	content?: string
-}
-
-declare type QuackJSMessage = {
-	embeds?: QuackJSEmbed[]
-	content?: string
-	files?: DiscordJS.MessageAttachment[]
-	components?: (DiscordJS.MessageActionRow | (Required<DiscordJS.BaseMessageComponentOptions> & DiscordJS.MessageActionRowOptions))[]
 }
 
 declare type QuackJSPromptOptions = {
