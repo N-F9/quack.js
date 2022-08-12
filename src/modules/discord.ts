@@ -33,8 +33,8 @@ export const Embed = (message: DiscordJS.MessageOptions, placeholders?: Record<s
 	}
 
 	return {
-		embeds: message.embeds as unknown as DiscordJS.EmbedBuilder[],
-		content,
+		embeds: message.embeds,
+		content: content,
 		files: message.files,
 		components: message.components,
 	}
